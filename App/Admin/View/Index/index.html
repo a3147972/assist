@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>{:C('ADMIN_TITLE')}</title>
+    <include file="Public/style" />
+  </head>
+
+  <body>
+    <include file="Public/header" />
+    <div id="container">
+      <div id="sidebar" class="sidebar-fixed">
+        <include file="Public/menu" />
+        <div id="divider" class="resizeable">
+        </div>
+      </div>
+      <div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  后台首页
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="page-header">
+            <div class="page-title">
+              <h3>
+                后台首页
+              </h3>
+              <span>
+                欢迎使用{:C('ADMIN_TITLE')}
+              </span>
+            </div>
+          </div>
+          <div class="row row-bg">
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    标题
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <include file="Public/script" />
+  </body>
+
+</html>
