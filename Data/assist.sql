@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2015-11-06 15:30:38
+Date: 2015-11-06 18:40:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -167,7 +167,7 @@ CREATE TABLE `think_user` (
   `city` varchar(64) NOT NULL,
   `alipay_account` varchar(64) NOT NULL,
   `bank_name` varchar(64) NOT NULL COMMENT '银行名称',
-  `bank_address` varchar(64) NOT NULL COMMENT '开户行',
+  `bank_address` varchar(64) CHARACTER SET utf8mb4 NOT NULL COMMENT '开户行',
   `bank_code` varchar(64) NOT NULL COMMENT '银行卡号',
   `bank_account` varchar(64) NOT NULL COMMENT '户主',
   `iban_code` varchar(64) DEFAULT NULL,
