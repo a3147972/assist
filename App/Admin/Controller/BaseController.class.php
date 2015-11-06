@@ -30,7 +30,12 @@ class BaseController extends Controller
         $map = method_exists($this, '_filter') ? $this->_filter() : array();
 
         //查询数据
-        $list = $model->_list($map, '', $order, $page, $page_size);
+        if (method_exists($model, 'lists')) {
+            $list = $model->lists($map, '', $order, $page, $page_size);
+        } else {
+            $list = $model->_list($map, '', $order, $page, $page_size);
+        }
+
         $count = $model->_count($map);
 
         //分页处理

@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>{:C('ADMIN_TITLE')}</title>
+    <include file="Public/style" />
+  </head>
+
+  <body>
+    <include file="Public/header" />
+    <div id="container">
+      <div id="sidebar" class="sidebar-fixed">
+        <include file="Public/menu" />
+        <div id="divider" class="resizeable">
+        </div>
+      </div>
+      <div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="{:U('Index/index')}">
+                  后台首页
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="page-header">
+            <div class="page-title">
+              <h3>
+                收益钱包充值
+              </h3>
+            </div>
+          </div>
+          <div class="row row-bg">
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    收益钱包充值
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="{:U('changeStatus')}" onSubmit="return ajaxForm(this)" method="post">
+                  <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        金额:
+                      </label>
+                      <div class="col-md-10">
+                        <input type="text" name="money" class="form-control">
+                      </div>
+                    </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                      操作类型:
+                    </label>
+                    <div class="col-md-10">
+                      <select name="status" id="input17" class="select2-select-00 col-md-12 full-width-fix">
+                          <option value="1">增加</option>
+                          <option value="2">减少</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                      原因:
+                    </label>
+                    <div class="col-md-10">
+                      <textarea rows="3" cols="5" name="desc" class="auto form-control"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-md-10">
+                      <eq name="action" value="edit">
+                        <input type="hidden" name="user_id" value="{:I('id')}">
+                      </eq>
+                      <button class="btn btn-success" type="submit">
+                        提交
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <include file="Public/script" />
+  </body>
+
+</html>

@@ -27,6 +27,9 @@ class UserModel extends BaseModel
     );
 
     protected $_auto = array(
+        array('c_money', 0, 1, 'string'),
+        array('r_money', 0, 1, 'string'),
+        array('pin', 1, 1, 'string'),
         array('create_time', 'time', 1, 'function'),
         array('modify_time', 'time', 3, 'function'),
         array('password', 'auto_password', 3, 'callback'),
@@ -167,9 +170,10 @@ class UserModel extends BaseModel
         if (empty($list)) {
             return array();
         }
+
         //查询会员级别表数据
-        $leve_id = array_column($list, 'level_id');
-        $leve_id = array_unique($level_id);
+        $level_id = array_column($list, 'level_id');
+        $level_id = array_unique($level_id);
 
         $level_map['id'] = array('in', $level_id);
         $level_fields = 'id as level_id, name as level_name';
@@ -177,7 +181,7 @@ class UserModel extends BaseModel
         $level_list = array_column($level_list, null, 'level_id');
 
         foreach ($list as $_k => $_v) {
-            $list = array_merge($_v, $level_list[$_v['level_id']]);
+            $list[$_k] = array_merge($_v, $level_list[$_v['level_id']]);
         }
 
         return $list;

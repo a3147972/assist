@@ -59,7 +59,7 @@
                   </div>
                 </div>
                 <div class="widget-content">
-                    <eq name="action" value="add">
+                <eq name="action" value="add">
                   <form class="form-horizontal row-border" action="{:U('insert')}" onSubmit="return ajaxForm(this)" method="post">
                 <else />
                   <form class="form-horizontal row-border" action="{:U('update')}" onSubmit="return ajaxForm(this)" method="post">
@@ -74,6 +74,18 @@
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label">
+                      会员级别
+                    </label>
+                    <div class="col-md-10">
+                      <select name="level_id" id="input17" class="select2-select-00 col-md-12 full-width-fix">
+                        <volist name="level_list" id="level_vo">
+                          <option value="{$level_vo.id}" <if condition="$vo['level_id'] eq $level_vo['id']">selected</if>>{$level_vo.name}</option>
+                        </volist>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
                     密码:
                     </label>
                     <div class="col-md-10">
@@ -82,10 +94,130 @@
                   </div>
                   <div class="form-group">
                     <label class="col-md-2 control-label">
-                    昵称:
+                    安全密码:
                     </label>
                     <div class="col-md-10">
-                      <input type="text" name="nickname" class="form-control" placeholder="昵称" value="{$vo.nickname}">
+                      <input type="text" name="pay_password" class="form-control" placeholder="安全密码" value="">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    姓名:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="name" class="form-control" placeholder="姓名" value="{$vo.name}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    年龄:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="age" class="form-control" placeholder="姓名" value="{$vo.age}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    性别:
+                    </label>
+                    <div class="col-md-10">
+                      <label class="radio-inline">
+                          <input type="radio" name="sex" value="1" <eq name="vo.sex" value="1">checked="checked"</eq>>
+                          男
+                      </label>
+                      <label class="radio-inline">
+                          <input type="radio" name="sex" value="2" <eq name="vo.sex" value="2">checked="checked"</eq>>
+                          女
+                      </label>
+                      <label class="radio-inline">
+                          <input type="radio" name="sex" value="3"
+                          <eq name="action" value="edit">
+                            <eq name="vo.sex" value="3">checked="checked"</eq>
+                          <else />
+                            checked="checked"
+                          </eq>>
+                          保密
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    电话:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="phone" class="form-control" placeholder="电话" value="{$vo.phone}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    邮箱:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="email" class="form-control" placeholder="邮箱" value="{$vo.email}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    省份:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="province" class="form-control" placeholder="省份" value="{$vo.province}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    城市:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="city" class="form-control" placeholder="城市" value="{$vo.city}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    支付宝账号:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="alipay_account" class="form-control" placeholder="支付宝账号" value="{$vo.alipay_account}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    银行名称:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="bank_name" class="form-control" placeholder="银行名称" value="{$vo.bank_name}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    开户行:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="bank_address" class="form-control" placeholder="开户行" value="{$vo.bank_address}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    银行卡号:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="bank_code" class="form-control" placeholder="银行卡号" value="{$vo.bank_code}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    户主:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="bank_account" class="form-control" placeholder="户主" value="{$vo.bank_account}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    IBAN:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="iban_code" class="form-control" placeholder="IBAN" value="{$vo.iban_code}">
                     </div>
                   </div>
                   <div class="form-group">

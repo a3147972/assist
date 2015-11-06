@@ -7,7 +7,7 @@ class UserController extends BaseController
 {
     public function _before_add()
     {
-        $level_list = D('UserLevel')->_list();
+        $level_list = D('UserLevel')->_list(array(), '', 'id asc');
         $this->assign('level_list', $level_list);
     }
 
