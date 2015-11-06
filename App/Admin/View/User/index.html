@@ -95,9 +95,9 @@
                         </td>
                         <td>{$vo.level_name}</td>
                         <td>{$vo.name}</td>
-                        <td>{$vo.c_money}</td>
-                        <td>{$vo.r_money}</td>
-                        <td>{$vo.pin}</td>
+                        <td><a href="{:U('CLog/index', array('user_id'=>$vo['id']))}">{$vo.c_money}</a></td>
+                        <td><a href="{:U('RLog/index', array('user_id'=>$vo['id']))}">{$vo.r_money}</a></td>
+                        <td><a href="{:U('PinLog/index', array('user_id'=>$vo['id']))}">{$vo.pin}</a></td>
                         <td>
                           <switch name="vo.status">
                             <case value="1">正常</case>

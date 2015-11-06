@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>{:C('ADMIN_TITLE')}</title>
+    <include file="Public/style" />
+  </head>
+
+  <body>
+    <include file="Public/header" />
+    <div id="container">
+      <div id="sidebar" class="sidebar-fixed">
+        <include file="Public/menu" />
+        <div id="divider" class="resizeable">
+        </div>
+      </div>
+      <div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="{:U('Index/index')}">
+                  后台首页
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="page-header">
+            <div class="page-title">
+              <h3>
+                新增公告
+              </h3>
+            </div>
+          </div>
+          <div class="row row-bg">
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    新增公告
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content">
+                  <eq name="action" value="add">
+                    <form class="form-horizontal row-border" action="{:U('insert')}" onSubmit="return ajaxForm(this)" method="post">
+                  <else />
+                    <form class="form-horizontal row-border" action="{:U('update')}" onSubmit="return ajaxForm(this)" method="post">
+                  </eq>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    标题:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="title" class="form-control" placeholder="用户名" value="{$vo.title}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        内容:
+                      </label>
+                      <div class="col-md-10">
+                        <textarea name="content" data-type="editor" id="editor1">{$vo.content}</textarea>
+                      </div>
+                    </div>
+                  <div class="form-group">
+                    <div class="col-md-10">
+                      <eq name="action" value="edit">
+                        <input type="hidden" name="id" value="{$vo.id}">
+                      </eq>
+                      <button class="btn btn-success" type="submit">
+                        提交
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <include file="Public/script" />
+  </body>
+</html>

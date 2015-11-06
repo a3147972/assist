@@ -75,3 +75,15 @@
     </script>
     <script type="text/javascript" src="__PUBLIC__/assets/js/common.js">
     </script>
+<script type="text/javascript" src="__PUBLIC__/plugins/editor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/plugins/editor/ueditor.all.js"></script>
+<script>
+    if ($('textarea[data-type=editor]')){
+        $('textarea[data-type=editor]').each(function(i, e) {
+            var id = $(this).attr('id');
+            UE.getEditor(id,{
+                initialFrameHeight:500,
+            });
+        })
+    }
+</script>

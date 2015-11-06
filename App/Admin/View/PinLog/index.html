@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>{:C('ADMIN_TITLE')}</title>
+    <include file="Public/style" />
+  </head>
+
+  <body>
+    <include file="Public/header" />
+    <div id="container">
+      <div id="sidebar" class="sidebar-fixed">
+        <include file="Public/menu" />
+        <div id="divider" class="resizeable">
+        </div>
+      </div>
+      <div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="{:U('Index/index')}">
+                  后台首页
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="page-header">
+            <div class="page-title">
+              <h3>
+                门票记录
+              </h3>
+            </div>
+          </div>
+          <div class="row row-bg">
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    门票记录
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="widget-content">
+                    <table class="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>
+                          ID
+                        </th>
+                        <th>用户ID</th>
+                        <th>用户名</th>
+                        <th>数量</th>
+                        <th>操作来源</th>
+                        <th>描述</th>
+                        <th>创建时间</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <volist name="list" id="vo">
+                        <tr>
+                        <td>
+                          {$vo.id}
+                        </td>
+                        <td>{$vo.user_id}</td>
+                        <td>
+                          {$vo.username}
+                        </td>
+                        <td>
+                          <switch name="vo.type">
+                            <case value="1">+{$vo.amount}</case>
+                            <case value="2">-{$vo.amount}</case>
+                          </switch>
+                        </td>
+                        <td></td>
+                        <td>{$vo.desc}</td>
+                        <td>
+                          {:date('Y-m-d H:i:s', $vo['create_time'])}
+                        </td>
+                      </tr>
+                      </volist>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <include file="Public/script" />
+  </body>
+
+</html>
