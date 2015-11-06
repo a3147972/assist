@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>{:C('ADMIN_TITLE')}</title>
+    <include file="Public/style" />
+  </head>
+
+  <body>
+    <include file="Public/header" />
+    <div id="container">
+      <div id="sidebar" class="sidebar-fixed">
+        <include file="Public/menu" />
+        <div id="divider" class="resizeable">
+        </div>
+      </div>
+      <div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="{:U('Index/index')}">
+                  后台首页
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="page-header">
+            <div class="page-title">
+              <h3>
+                新增会员级别
+              </h3>
+            </div>
+          </div>
+          <div class="row row-bg">
+
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    新增会员级别
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content">
+                  <eq name="action" value="add">
+                    <form class="form-horizontal row-border" action="{:U('insert')}" onSubmit="return ajaxForm(this)" method="post">
+                  <else />
+                    <form class="form-horizontal row-border" action="{:U('update')}" onSubmit="return ajaxForm(this)" method="post">
+                  </eq>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    级别名称:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="name" class="form-control" placeholder="用户名" value="{$vo.name}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    每日最大排队次数:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="queue_max_time_day" class="form-control" placeholder="每日最大排队次数" value="{$vo.queue_max_time_day}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    每月最大排队次数:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="queque_max_time_month" class="form-control" placeholder="每月最大排队次数" value="{$vo.queque_max_time_month}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    每月最少排队次数:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="queue_min_time_month" class="form-control" placeholder="每月最少排队次数" value="{$vo.queue_min_time_month}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    推荐奖励百分比:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="recommend_reward" class="form-control" placeholder="推荐奖励百分比" value="{$vo.recommend_reward}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    管理奖励百分比:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="manage_reward" class="form-control" placeholder="管理奖励百分比" value="{$vo.manage_reward}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    7天最高收益:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="earnings_max_7_day" class="form-control" placeholder="7天最高收益" value="{$vo.earnings_max_7_day}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    升级规则:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="upgrade_count" class="form-control" placeholder="升级规则,需要多少直线下级可以升级" value="{$vo.upgrade_count}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    拉黑罚金:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="black_penalty" class="form-control" placeholder="拉黑罚金" value="{$vo.black_penalty}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-2 control-label">
+                    冻结罚金:
+                    </label>
+                    <div class="col-md-10">
+                      <input type="text" name="freeze_penalty" class="form-control" placeholder="冻结罚金" value="{$vo.freeze_penalty}">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-10">
+                      <eq name="action" value="edit">
+                        <input type="hidden" name="id" value="{$vo.id}">
+                      </eq>
+                      <button class="btn btn-success" type="submit">
+                        提交
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <include file="Public/script" />
+  </body>
+
+</html>

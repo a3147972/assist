@@ -1,12 +1,63 @@
 <?php
 namespace Common\Model;
 
-use Common\BaseModel;
+use Common\Model\BaseModel;
 
 class UserModel extends BaseModel
 {
     protected $tableName = 'user';
     protected $selectFields = 'id, pid, level_id, username, password, pay_password, c_money, r_money, pin, name, age, sex, phone, email, province, city, alipay_account, bank_name, bank_address, bank_code, bank_account, iban_code, status, create_time';
+
+    protected $_validate = array(
+        array('username', 'require', '请输入用户名', 1),
+        array('username', '', '用户已存在', 0, 'unique', 1),
+        array('level_id', 'require', '请选择会员级别', 1),
+        array('password', 'validate_password', '请输入密码', 1, 'callback'),
+        array('pay_password', 'validate_password', '请输入支付密码', 1, 'callback'),
+        array('name', 'require', '请输入姓名', 1),
+        array('phone', 'require', '请输入联系电话', 1),
+        array('email', 'require', '请输入邮箱', 1),
+        array('province', 'require', '请选择身份', 1),
+        array('city', 'require', '请选择市区', 1),
+        array('alipay_account', 'require', '请输入支付宝账号', 1),
+        array('bank_name', 'require', '请输入银行名称', 1),
+        array('bank_address', 'require', '请输入开户行', 1),
+        array('bank_code', 'require', '请输入银行卡号', 1),
+        array('bank_account', 'require', '请输入户主', 1),
+    );
+
+    protected $_auto = array(
+        array('create_time', 'time', 1, 'function'),
+        array('modify_time', 'time', 3, 'function'),
+        array('password', 'auto_password', 3, 'callback'),
+        array('pay_password', 'auto_password', 3, 'callback'),
+        array('password', '', 2, 'ignore'),
+        array('pay_password', '', 2, 'ignore'),
+    );
+
+    protected function validate_password($v)
+    {
+        $id = I('post.id');
+        if (empty($id) && empty($v)) {
+            return false;
+        }
+        return true;
+    }
+
+    public function auto_password($v)
+    {
+        $id = I('post.id');
+
+        if (empty($id)) {
+            return md5($v);
+        } else {
+            if (empty($v)) {
+                return '';
+            } else {
+                return md5($v);
+            }
+        }
+    }
 
     public function getFieldByUserId($user_id, $field)
     {
@@ -97,5 +148,38 @@ class UserModel extends BaseModel
         }
 
         return false;
+    }
+
+    /**
+     * 查询多条数据
+     * @method _list
+     * @param  array   $map       查询条件
+     * @param  string  $field     查询字段
+     * @param  string  $order     排序规则,默认主键倒序
+     * @param  integer $page      分页数,默认1
+     * @param  integer $page_size 分页条数,默认10
+     * @return array              查询出的数据
+     */
+    public function lists($map = array(), $field = '', $order = '', $page = 0, $page_size = 10)
+    {
+        $list = $this->_list($map = array(), $field = '', $order = '', $page = 0, $page_size = 10);
+
+        if (empty($list)) {
+            return array();
+        }
+        //查询会员级别表数据
+        $leve_id = array_column($list, 'level_id');
+        $leve_id = array_unique($level_id);
+
+        $level_map['id'] = array('in', $level_id);
+        $level_fields = 'id as level_id, name as level_name';
+        $level_list = D('UserLevel')->_list($level_map, $level_fields);
+        $level_list = array_column($level_list, null, 'level_id');
+
+        foreach ($list as $_k => $_v) {
+            $list = array_merge($_v, $level_list[$_v['level_id']]);
+        }
+
+        return $list;
     }
 }

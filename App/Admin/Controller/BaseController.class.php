@@ -10,7 +10,7 @@ class BaseController extends Controller
     public function _initialize()
     {
         if (!session('uid')) {
-            redirect(U('Login/index'));
+            // redirect(U('Login/index'));
         }
     }
 
@@ -21,13 +21,12 @@ class BaseController extends Controller
     {
         $page = I('page', 1);
         $page_size = I('page_size', 10);
-        $order = I('order', '');
 
         $model = D(CONTROLLER_NAME);
 
         //查询值
         $pk = $model->getPk();
-        $order = empty($order) ? $pk . ' desc' : $order;
+        $order = empty($this->order) ? $pk . ' desc' : $this->order;
         $map = method_exists($this, '_filter') ? $this->_filter() : array();
 
         //查询数据

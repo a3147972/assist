@@ -1,7 +1,7 @@
 <?php
 namespace Common\Model;
 
-use Common\BaseModel;
+use Common\Model\BaseModel;
 
 class RLogModel extends BaseModel
 {
@@ -24,7 +24,7 @@ class RLogModel extends BaseModel
      * @param  int  $user_id 会员id
      * @param  integer $type    操作类型 1-增加 2-减少
      * @param  integer $money   操作金额
-     * @param  integer $source  操作来源
+     * @param  integer $source  操作来源 1-收益 2-后台操作
      * @param  string  $desc    操作描述
      * @return bool           成功返回true,失败返回false
      */

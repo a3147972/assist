@@ -1,7 +1,7 @@
 <?php
 namespace Common\Model;
 
-use Common\BaseModel;
+use Common\Model\BaseModel;
 
 class AboutModel extends BaseModel
 {

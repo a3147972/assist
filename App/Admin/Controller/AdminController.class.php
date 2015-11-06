@@ -21,6 +21,12 @@ class AdminController extends BaseController
             $this->error('超级管理员不可删除');
         }
     }
+
+    /**
+     * 状态更改
+     * @param int $id 管理员id
+     * @param int $status 状态 1-正常 0-禁用
+     */
     public function is_enable()
     {
         $id = I('id');
