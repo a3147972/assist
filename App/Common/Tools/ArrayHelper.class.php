@@ -4,17 +4,48 @@ namespace Common\Tools;
 class ArrayHelper
 {
     /**
-     * 二维数组替换key
-     * @param array &$array  要操作的数组
-     * @param string $key     原key名
-     * @param string $new_key 新key名
+     * 二维数组替换key(支持一维)
+     * @method array_key_replace
+     * @param  array         $array   要操作的数据
+     * @param  array|string         $old_key 旧的key name
+     * @param  array|string         $new_key 新key name
      */
-    public static function ArrayKeyReplace(&$array, $key, $new_key)
+    public static function array_key_replace($array, $old_key, $new_key)
     {
-        array_walk($array, function (&$value) use ($key, $new_key) {
-            $value[$new_key] = $value[$key];
-            unset($value[$key]);
-        });
+        if (empty($array)) {
+            return $array;
+        }
+
+        $level = is_array(reset($array)) ? 2 : 1; //判断数组维数
+
+        $old_key = !is_array($old_key) ? array($old_key) : $old_key;
+        $new_key = !is_array($new_key) ? array($new_key) : $new_key;
+        if (count($old_key) != count($new_key)) {
+            return false;
+        }
+
+        if ($level === 1) {
+            //一维数组
+            $keys = array_keys($array);
+            $keys = array_combine($keys, $keys);
+            $replace_keys = array_combine($old_key, $new_key);
+            $keys = array_replace($keys, $replace_keys);
+            $values = array_values($array);
+            $array = array_combine($keys, $values);
+        } else {
+            //二维数组
+            $keys = array_keys(reset($array));
+
+            $keys = array_combine($keys, $keys);
+            $replace_keys = array_combine($old_key, $new_key);
+            $keys = array_replace($keys, $replace_keys);
+            foreach ($array as $_k => $_v) {
+                $values = array_values($array[$_k]);
+                $_v = array_combine($keys, $values);
+                $array[$_k] = $_v;
+            }
+        }
+        return $array;
     }
 
     /**

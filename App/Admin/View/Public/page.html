@@ -1,0 +1,66 @@
+<div class="table-footer">
+                      <div class="col-md-6"></div>
+                      <div class="col-md-6">
+                        <ul class="pagination">
+                          <volist name="page_list" id="page_vo">
+                            <switch name="page_vo.name">
+                              <case value="first">
+                                <eq name="page_vo.status" value="disabled">
+                                  <li class="disabled">
+                                <else />
+                                  <li>
+                                </eq>
+                                <a href="{$page_vo.url}">
+                                  First
+                                </a>
+                                </li>
+                              </case>
+                              <case value="prev">
+                                <eq name="page_vo.status" value="disabled">
+                                  <li class="disabled">
+                                <else />
+                                  <li>
+                                </eq>
+                                <a href="{$page_vo.url}">
+                                  ← Prev
+                                </a>
+                                </li>
+                              </case>
+                              <case value="list">
+                                <eq name="page_vo.status" value="now">
+                                  <li class="active">
+                                <else />
+                                  <li>
+                                </eq>
+                                <a href="{$page_vo.url}">
+                                  {$page_vo.page}
+                                </a>
+                                </li>
+                              </case>
+                              <case value="next">
+                                <eq name="page_vo.status" value="disabled">
+                                  <li class="disabled">
+                                <else />
+                                  <li>
+                                </eq>
+                                <a href="{$page_vo.url}">
+                                  ← Next
+                                </a>
+                                </li>
+                              </case>
+                              <case value="next">
+                                <eq name="page_vo.status" value="disabled">
+                                  <li class="disabled">
+                                <else />
+                                  <li>
+                                </eq>
+                                <a href="{$page_vo.url}">
+                                  Last
+                                </a>
+                                </li>
+                              </case>
+                            </switch>
+                          </volist>
+                        </ul>
+                      </div>
+                    </div>
