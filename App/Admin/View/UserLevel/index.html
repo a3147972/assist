@@ -81,8 +81,10 @@
                         <th>管理奖励百分比</th>
                         <th>7天最高收益</th>
                         <th>升级规则</th>
-                        <th>拉黑罚金</th>
-                        <th>冻结罚金</th>
+                        <th>拉黑收益钱包罚金</th>
+                        <th>拉黑奖金钱包罚金</th>
+                        <th>冻结收益钱包罚金</th>
+                        <th>冻结奖金钱包罚金</th>
                         <th>
                           操作
                         </th>
@@ -104,8 +106,10 @@
                         <td>{$vo.manage_reward}%</td>
                         <td>{$vo.earnings_max_7_day}元</td>
                         <td>拥有{$vo.upgrade_count}个下线自动升级</td>
-                        <td>{$vo.black_penalty}元</td>
-                        <td>{$vo.freeze_penalty}元</td>
+                        <td>{$vo.black_r_penalty}元</td>
+                        <td>{$vo.black_c_penalty}元</td>
+                        <td>{$vo.freeze_r_penalty}元</td>
+                        <td>{$vo.freeze_c_penalty}元</td>
                         <td>
                           <a href="{:U('edit',array('id'=>$vo['id']))}">编辑</a>
                           <a href="" data-href="{:U('del',array('id'=>$vo['id']))}" onclick="return ajaxBtn(this)">删除</a>

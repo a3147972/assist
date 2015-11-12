@@ -99,12 +99,14 @@
                         <td><a href="{:U('RLog/index', array('user_id'=>$vo['id']))}">{$vo.r_money}</a></td>
                         <td><a href="{:U('PinLog/index', array('user_id'=>$vo['id']))}">{$vo.pin}</a></td>
                         <td>
+                        <a href="{:U('UserStatusLog/index', array('user_id'=>$vo['id']))}">
                           <switch name="vo.status">
                             <case value="1">正常</case>
                             <case value="2">冻结</case>
                             <case value="3">拉黑</case>
                             <case value="0">禁用</case>
                           </switch>
+                        </a>
                         </td>
                         <td>
                           <a href="{:U('add',array('pid'=>$vo['id']))}">增加下级会员</a>

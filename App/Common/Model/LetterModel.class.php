@@ -103,4 +103,19 @@ class LetterModel extends BaseModel
 
         return $list;
     }
+
+    public function get($map = array(), $fields = array(), $order = '')
+    {
+        $info = $this->_get($map, $fields, $order);
+
+        if (empty($info)) {
+            return array();
+        }
+
+        $user_map['id'] = empty($info['user_id']) ? $info['to_user_id'] : $info['user_id'];
+        $user_fields = 'id as user_id, username as user_username, name as user_name';
+        $user_info = D('User')->_get($user_map, $user_fields);
+
+        return array_merge($info, $user_info);
+    }
 }

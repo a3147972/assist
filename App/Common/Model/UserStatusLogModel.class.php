@@ -2,6 +2,7 @@
 namespace Common\Model;
 
 use Common\Model\BaseModel;
+use Common\Tools\ArrayHelper;
 
 class UserStatusLogModel extends BaseModel
 {
@@ -55,5 +56,28 @@ class UserStatusLogModel extends BaseModel
             $this->rollback();
             return false;
         }
+    }
+
+    public function lists()
+    {
+        $list = $this->_list($map, $field, $order, $page, $page_size);
+
+        if (empty($list)) {
+            return array();
+        }
+        //查询会员列表数据
+        $user_id = array_column($list, 'user_id');
+
+        $user_map['id'] = array('in', $user_id);
+
+        $user_list = D('User')->_list($user_map, 'id, username, name');
+        $user_list = ArrayHelper::array_key_replace($user_list, 'id', 'user_id');
+        $user_list = array_column($user_list, null, 'user_id');
+        //合并数据
+        foreach ($list as $_k => $_v) {
+            $list[$_k] = array_merge($_v, $user_list[$_v['user_id']]);
+        }
+
+        return $list;
     }
 }
