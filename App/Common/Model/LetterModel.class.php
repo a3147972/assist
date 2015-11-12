@@ -48,6 +48,23 @@ class LetterModel extends BaseModel
     }
 
     /**
+     * 阅读站内信
+     * @param  int $letter_id 站内信id
+     * @return bool           成功返回true,失败返回false
+     */
+    public function read($letter_id)
+    {
+        $map['id'] = $letter_id;
+
+        $result = $this->where($map)->setField('is_read', 1);
+
+        if ($result) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 站内信记录
      * @param  array   $map       查询条件
      * @param  string  $field     查询字段

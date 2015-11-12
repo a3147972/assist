@@ -6,7 +6,7 @@ use Common\Model\BaseModel;
 class UserModel extends BaseModel
 {
     protected $tableName = 'user';
-    protected $selectFields = 'id, pid, level_id, username, password, pay_password, c_money, r_money, pin, name, age, sex, phone, email, province, city, alipay_account, bank_name, bank_address, bank_code, bank_account, iban_code, status, create_time';
+    protected $selectFields = 'id, pid, level_id, username, password, pay_password, c_money, r_money, pin, name, phone, email, province, city, alipay_account, bank_name, bank_address, bank_code, bank_account, iban_code, status, create_time';
 
     protected $_validate = array(
         array('username', 'require', '请输入用户名', 1),
@@ -29,7 +29,7 @@ class UserModel extends BaseModel
     protected $_auto = array(
         array('c_money', 0, 1, 'string'),
         array('r_money', 0, 1, 'string'),
-        array('pin', 1, 1, 'string'),
+        array('pin', 0, 1, 'string'),
         array('create_time', 'time', 1, 'function'),
         array('modify_time', 'time', 3, 'function'),
         array('password', 'auto_password', 3, 'callback'),
@@ -185,5 +185,62 @@ class UserModel extends BaseModel
         }
 
         return $list;
+    }
+
+    /**
+     * 登录方法
+     */
+    public function login($username, $password)
+    {
+        $map['username'] = $username;
+        $map['status'] = array('not in', '0,-1');
+
+        $info = $this->get($map);
+
+        if (empty($info)) {
+            $this->error = '用户不存在或已被禁用';
+            return false;
+        }
+
+        if ($info['password'] != md5($password)) {
+            $this->error = '密码不正确';
+            return false;
+        }
+
+        return $info;
+    }
+
+    public function get($map = array(), $fields = '', $order = '')
+    {
+        $info = $this->_get($map);
+
+        if (empty($info)) {
+            return false;
+        }
+
+        $level_map['id'] = $info['level_id'];
+        $level_info = D('UserLevel')->_get($level_map);
+
+        $level_info = ArrayHelper::array_key_replace($level_info, array('id', 'name'), array('level_id', 'level_name'));
+
+        $info = array_merge($info, $level_info);
+
+        return $info;
+    }
+
+    /**
+     * 更新session中的用户信息
+     * @param string $field 要更新的用户信息字段
+     * @param obj $value 值
+     */
+    public function UpdateSessionInfo($field, $value)
+    {
+        $user_info = session('user_info');
+
+        $user_info[$field] = $value;
+
+        session('user_info', $user_info);
+
+        return true;
     }
 }

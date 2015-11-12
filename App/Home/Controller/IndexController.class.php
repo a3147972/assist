@@ -1,12 +1,8 @@
 <?php
 namespace Home\Controller;
 
-use Think\Action;
+use Home\Controller\BaseController;
 
-class IndexController extends Action
+class IndexController extends BaseController
 {
-    public function index()
-    {
-        $this->display();
-    }
 }

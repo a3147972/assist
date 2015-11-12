@@ -50,4 +50,35 @@ class PinLogModel extends BaseModel
         }
     }
 
+    /**
+     * 门票操作记录
+     * @param  array   $map       查询条件
+     * @param  string  $field     查询字段
+     * @param  string  $order     排序规则
+     * @param  integer $page      页数
+     * @param  integer $page_size 每页条数
+     * @return array              查询出的数据
+     */
+    public function lists($map = array(), $field = '', $order = '', $page = 0, $page_size = 10)
+    {
+        $list = $this->_list($map, $field, $order, $page, $page_size);
+
+        if (empty($list)) {
+            return array();
+        }
+
+        $user_id = array_column($list, 'user_id');
+        $user_id = array_unique($user_id);
+
+        $user_map['id'] = array('in', $user_id);
+        $user_fields = 'id as user_id,username as user_username,name as user_name';
+        $user_list = D('User')->_list($user_map);
+        $user_list = array_column($user_list, null, 'user_id');
+
+        foreach ($list as $_k => $_v) {
+            $list[$_k] = array_merge($user_list[$_v['user_id']], $_v);
+        }
+
+        return $user_list;
+    }
 }

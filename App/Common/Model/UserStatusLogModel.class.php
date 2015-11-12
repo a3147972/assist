@@ -6,7 +6,7 @@ use Common\Model\BaseModel;
 class UserStatusLogModel extends BaseModel
 {
     protected $tableName = 'user_status_log';
-    protected $selectFields = 'id, user_id, status, money, desc, create_time';
+    protected $selectFields = 'id, user_id, status, desc, create_time';
 
     protected $_validate = array(
         array('user_id', 'require', '请选择要操作的会员', 1),
@@ -34,23 +34,9 @@ class UserStatusLogModel extends BaseModel
         if ($user_info['status'] == $status) {
             return true;
         }
-        //获取罚金
-        $LevelModel = D('UserLevel');
-        $level_map['id'] = $user_info['level_id'];
-        switch ($status) {
-            case 2:
-                $penalty = $LevelModel->where($level_map)->getField('freeze_penalty');
-                break;
-            case 3:
-                $penalty = $LevelModel->where($level_map)->getField('black_penalty');
-                break;
-            default :
-                $penalty = 0;
-        }
 
         $data['user_id'] = $user_id;
         $data['status'] = $desc;
-        $data['money'] = $penalty;
         $data['desc'] = $desc;
 
         if (!$this->create($data)) {
