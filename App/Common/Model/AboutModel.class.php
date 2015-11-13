@@ -6,7 +6,7 @@ use Common\Model\BaseModel;
 class AboutModel extends BaseModel
 {
     protected $tableName = 'about';
-    protected $selectFields = 'id, title, content, create_time';
+    protected $selectFields = 'id, title, info, content, create_time';
 
     protected $_validate = array(
         array('title', 'require', '请输入公告标题', 1),

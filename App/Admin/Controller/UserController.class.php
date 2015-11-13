@@ -131,17 +131,23 @@ class UserController extends BaseController
     public function changeStatus()
     {
         if (IS_POST) {
-            $model = D('UserStatusLog');
+            $model = D('User');
 
             $user_id = I('post.user_id');
             $status = I('post.status');
             $desc = I('post.desc');
+            if (empty($desc)) {
+                $this->error('请输入操作描述');
+            }
+            $model->startTrans();
+            $result = $model->changeStatus($user_id, $status,);
+            $add_log = D('UserStatusLog')->insert($user_id, $status, $desc);
 
-            $result = $model->changeStatus($user_id, $status, $desc);
-
-            if ($result) {
+            if ($result && $add_log) {
+                $model->commit();
                 $this->success('更新会员状态成功');
             } else {
+                $model->rollback();
                 $this->error($model->getError());
             }
         } else {

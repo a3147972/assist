@@ -24,11 +24,20 @@ class UserController extends BaseController
             $this->error($model->getError());
         }
 
-        $result = $model->add();
+        //推荐收益
+        $recommend_reward = D('UserLevel')->where(array('id' => session('user_info.level_id')))->getField('recommend_reward');
+        $recommend_reward = intval(1000 * $recommend_reward / 100);
 
-        if ($result) {
+        $model->startTrans();
+        $result = $model->add();
+        $add_c = $model->changeCMoney(session('user_info.id'), $recommend_reward); //写入推荐收益
+        $add_c_log = D('CLog')->insert(session('user_info.id'), 1, $recommend_reward, 1, '会员' . I('post.username') . '注册推荐奖励'); //写入推荐收益奖励
+
+        if ($result && $add_c && $add_c_log) {
+            $model->commit();
             $this->success('注册成功');
         } else {
+            $model->rollback();
             $this->error('注册失败');
         }
     }

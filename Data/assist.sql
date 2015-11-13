@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2015-11-13 10:00:32
+Date: 2015-11-13 18:51:02
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `think_about`;
 CREATE TABLE `think_about` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL COMMENT '标题',
+  `info` varchar(400) NOT NULL,
   `content` text NOT NULL,
   `create_time` int(11) NOT NULL,
   `modify_time` int(11) NOT NULL,
@@ -65,7 +66,7 @@ CREATE TABLE `think_assist` (
   `create_time` int(11) NOT NULL,
   `modify_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='援助记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of think_assist
@@ -104,7 +105,7 @@ CREATE TABLE `think_earn` (
   `create_time` int(11) NOT NULL,
   `modify_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收益提交记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of think_earn
@@ -187,6 +188,28 @@ CREATE TABLE `think_pin_log` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for think_report
+-- ----------------------------
+DROP TABLE IF EXISTS `think_report`;
+CREATE TABLE `think_report` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(30) NOT NULL,
+  `user_id` int(11) NOT NULL COMMENT '举报人id',
+  `to_user_id` int(11) NOT NULL COMMENT '被举报人',
+  `reson_type` int(11) NOT NULL COMMENT '1-对方未打款 2-对方未确认 3-对方账号有误 4-联系方式有误 0-其他',
+  `reson` text COMMENT '举报原因',
+  `pic` varchar(500) DEFAULT NULL COMMENT '举报图片',
+  `status` int(11) NOT NULL COMMENT '状态 0-等待 1-审核通过 -1:审核不通过',
+  `create_time` int(11) NOT NULL,
+  `modify_time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='举报列表';
+
+-- ----------------------------
+-- Records of think_report
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for think_r_log
 -- ----------------------------
 DROP TABLE IF EXISTS `think_r_log`;
@@ -234,7 +257,7 @@ CREATE TABLE `think_user` (
   `modify_time` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='会员表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of think_user
@@ -263,7 +286,7 @@ CREATE TABLE `think_user_level` (
   `modify_time` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='会员级别表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of think_user_level

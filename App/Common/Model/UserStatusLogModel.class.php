@@ -20,21 +20,16 @@ class UserStatusLogModel extends BaseModel
     );
 
     /**
-     * 更改会员状态
+     * 写入更改会员状态记录
      *
      * @param  integer  $user_id 会员id
      * @param  integer $status  状态 1-正常 0-禁用 2-冻结 3-拉黑
      * @param  string  $desc    描述
      * @return bool             成功返回true,失败返回false
      */
-    public function changeStatus($user_id, $status = 1, $desc = '')
+    public function insert($user_id, $status = 1, $desc = '')
     {
         $UserModel = D('User');
-        $user_info = $UserModel->getField($user_id, 'status,level_id');
-
-        if ($user_info['status'] == $status) {
-            return true;
-        }
 
         $data['user_id'] = $user_id;
         $data['status'] = $desc;
@@ -45,15 +40,11 @@ class UserStatusLogModel extends BaseModel
         }
 
         $user_map['user_id'] = $user_id;
-        $this->startTrans();
-        $result = $UserModel->where($user_map)->setField('status', $status);
         $add_status = $this->add();
 
-        if ($result !== false && $add_status !== false) {
-            $this->commit();
+        if ($add_status !== false) {
             return true;
         } else {
-            $this->rollback();
             return false;
         }
     }

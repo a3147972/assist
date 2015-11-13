@@ -11,7 +11,6 @@ class UserModel extends BaseModel
     protected $_validate = array(
         array('username', 'require', '请输入用户名', 1),
         array('username', '', '用户已存在', 0, 'unique', 1),
-        array('level_id', 'require', '请选择会员级别', 1),
         array('password', 'validate_password', '请输入密码', 1, 'callback'),
         array('pay_password', 'validate_password', '请输入支付密码', 1, 'callback'),
         array('name', 'require', '请输入姓名', 1),
@@ -29,6 +28,7 @@ class UserModel extends BaseModel
     protected $_auto = array(
         array('c_money', 0, 1, 'string'),
         array('r_money', 0, 1, 'string'),
+        array('level_id', 1, 1, 'string'),
         array('pin', 0, 1, 'string'),
         array('create_time', 'time', 1, 'function'),
         array('modify_time', 'time', 3, 'function'),
@@ -151,6 +151,25 @@ class UserModel extends BaseModel
         }
 
         return false;
+    }
+
+    /**
+     * 更改会员状态
+     * @param  int  $user_id 会员id
+     * @param  integer $status  状态 s1-正常 0-禁用 2-冻结 3-拉黑
+     * @return bool            成功返回true,失败返回false
+     */
+    public function changeStatus($user_id, $status = 1)
+    {
+        $map['id'] = $user_id;
+
+        $result = $this->where($map)->setField('status', $status);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
