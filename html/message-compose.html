@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://www.nmm68.com/zh-CN/platform/message-compose -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients"><!-- <![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<script async="" src="./js/analytics.js"></script><script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/modernizr.js"></script>
+<script type="text/javascript" src="./js/selectivizr.js"></script>
+<script type="text/javascript" src="./js/jquery.cookie.js"></script>
+<script type="text/javascript" src="./js/scripts.js"></script>
+<script type="text/javascript" src="./js/remaining.js"></script>
+<script type="text/javascript" src="./js/fn_number_format.js"></script>
+<script type="text/javascript" src="./js/9c2ff1651945cd8b31ec400ad49a89ca.js"></script>
+        <script type="text/javascript">
+            var _gNow = new Date();
+
+            setInterval(function(){
+                $.ajax({
+                    url: '?aj=1&type=check_login',
+                    data: {'uid': 61822233},
+                    dataType: 'json',
+                    error: function(){},
+                    success: function(data){
+                        if(data.loggedout == '1'){
+                            window.location.href = "http://www.nmm68.com/zh-CN/";
+                        }
+                    }
+                })
+            }, 300000); //5min
+        </script>
+
+<script>
+$(document).ready(function() {
+    if($(".tagsinput").length > 0){
+        $(".tagsinput").tagsInput({
+            width: '100%',
+            height:'auto',
+            'defaultText':'Insert User ID',
+            confirmKeys:[13,32],
+            'onChange' : function(obj, val){
+                if(val){
+                    id = obj.attr('id');
+                    $.ajax({
+                        url: '',
+                        data: {'uid': val},
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(data){
+                            var status = data.status;
+                            var validClass = status == 2 ? 'not_valid' : 'valid';
+                            $('#' + id + '_addTag').siblings("*[data-uid=" + val + "]").addClass(validClass);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+        $('select[name=rtype]').click(function(){
+        val = $(this).val();
+
+        if(val == ''){//all members
+            $('.showToggle').fadeOut('200');
+        }
+        else{//particular
+            $('.showToggle').fadeIn('200');
+        }
+    });
+});
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    var gdBtn = $('#gdBtn');
+    var pdBtn = $('#pdBtn');
+
+    pdBtn.click(function(){
+        $(this).toggleClass('active');
+        gdBtn.removeClass('active');
+        $('#pdWrap').stop(true, false).slideToggle('fast');
+        $('#gdWrap').stop(true, false).slideUp('fast').removeClass('open');
+        return false;
+    });
+    // if user status is freeze or just unblock and not yet do the maintain
+    gdBtn.click(function(){
+        $(this).toggleClass('active');
+        pdBtn.removeClass('active');
+        $('#gdWrap').stop(true, false).slideToggle('fast');
+        $('#pdWrap').stop(true, false).slideUp('fast').removeClass('open');
+        return false;
+    });
+
+    // Tooltips
+    $('.tip').tooltip({placement: 'top'});
+    $('.tipr').tooltip({placement: 'right'});
+    $('.tipb').tooltip({placement: 'bottom'});
+    $('.tipl').tooltip({placement: 'left'});
+
+    $("a[href='#top']").click(function() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+
+    var _server_time = new Date(2015, 11-1, 17,
+        18, 33, 37),
+        _server_time2 = new Date(2015, 11-1, 17,
+        18, 33, 37),
+        _local_time = new Date(2015, 11-1, 17,
+        18, 33, 37),
+        _local_time2 = new Date(2015, 11-1, 17,
+        18, 33, 37);
+
+    _timer = setInterval(function(){
+        var now = new Date();
+        true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);        //synchronize & increment 1 second
+        second = _local_time.getTime() + 1000;
+        elapsed = Math.round((second - _local_time2.getTime()) / 1000);
+        if(elapsed < true_elapsed){
+            diff = true_elapsed - elapsed;
+            second += (diff * 1000);
+        }
+        _local_time.setTime(second);
+        second = _server_time.getTime() + 1000;
+        elapsed = Math.round((second - _server_time2.getTime()) / 1000);
+        if(elapsed < true_elapsed){
+            diff = true_elapsed - elapsed;
+            second += (diff * 1000);
+        }
+        _server_time.setTime(second);
+
+        //update server time
+        date_text = padNumber(_server_time.getHours())+':'+padNumber(_server_time.getMinutes())+':'+padNumber(_server_time.getSeconds());
+        date_text += ' ' + _server_time.getDate()+'/'+(_server_time.getMonth()+1)+'/'+_server_time.getFullYear();
+        $('#server_time_text').html(date_text);
+        //update local time
+        date_text = padNumber(_local_time.getHours())+':'+padNumber(_local_time.getMinutes())+':'+padNumber(_local_time.getSeconds());
+        date_text += ' ' + _local_time.getDate()+'/'+(_local_time.getMonth()+1)+'/'+_local_time.getFullYear();
+        $('#local_time_text').html(date_text);
+    }, 1000);
+
+    /**
+    * @param number An integer
+    * @return Integer padded with a 0 if necessary
+    */
+    function padNumber(number) {
+        return (number >= 0 && number < 10) ? '0' + number : number;
+    }
+});
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    var _allsecs = new Array();
+    var _allsecs2 = new Array();
+    var _i18n = {
+        weeks: ['星期', '星期'],
+        days: ['天', '天'],
+        hours: ['小时', '小时'],
+        minutes: ['分', '分'],
+        seconds: ['秒', '秒']
+    };
+    $('.maintain_remain_time').each(function(){
+        var _rid = $(this).attr('id');
+        var _seconds = parseInt($(this).attr('rel'));
+        if(_seconds > 0){
+            $(this).html(
+                remaining.getString(_seconds, _i18n, false)
+            );
+        }
+        else{
+            $(this).html('剩余0天');
+        }
+        _allsecs[_rid] = _seconds;
+        _allsecs2[_rid] = _seconds;
+    });
+    timer = setInterval(function(){
+        var now = new Date();
+        true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);        $('.maintain_remain_time').each(function(){
+            var _rid = $(this).attr('id');
+            if(typeof _allsecs[_rid] == 'undefined'){
+                _allsecs[_rid] = parseInt($(this).attr('rel'));
+            }
+            _seconds = _allsecs[_rid];
+            if(typeof _allsecs2[_rid] == 'undefined'){
+                _allsecs2[_rid] = parseInt($(this).attr('rel'));
+            }
+            //synchronize
+            _diff_sec = _allsecs2[_rid] - _seconds;
+            if(_diff_sec < true_elapsed){
+                _seconds = _allsecs2[_rid] - true_elapsed;
+            }
+            if(_seconds > 0){
+                $(this).html(
+                    remaining.getString(_seconds, _i18n, false)
+                );
+                _allsecs[_rid] = --_seconds;
+            }
+            else{
+                $("#too_many_user").hide();
+                $("#login_btn").removeAttr("disabled");
+                $(this).html('剩余0天');
+            }
+        });
+    }, 1000);
+});
+</script>
+
+<script type="text/javascript">
+
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    var pin_message = "此次执行需要{quantity}PIN。";
+        $('#maintain_back_btn, #pd_back_btn, #gd_back_btn').click(function(){
+        $('input[name=__req]').val('start'); //back to starting step
+    });
+
+    if("0"){
+        $("#pd_pin").text(pin_message.replace("{quantity}", parseInt(0 / 1000)));
+    }else{
+        $("#pd_pin").text(pin_message.replace("{quantity}", 1));
+    }
+
+    $("input[name=from_wallet]").change(function(){
+        if($(this).val() == 'cwallet'){
+            $("#minimum_amount").text("RMB500.00");
+        }else{
+            $("#minimum_amount").text("RMB1,000.00");
+        }
+    });
+
+    $("#show_pd_amount").html(format_monetary_value(0));
+    $("#show_gd_amount").html(format_monetary_value(0));
+
+    $("#pd_amount").keyup(function(){
+        $("#show_pd_amount").html(format_monetary_value($(this).val()));
+        if($(this).val() > 1000 && $(this).val() % 1000 == 0){
+            $("#pd_pin").text(pin_message.replace("{quantity}", $(this).val() / 1000));
+        }else{
+            $("#pd_pin").text(pin_message.replace("{quantity}", 1));
+        }
+    });
+    $("#gd_amount").keyup(function(){
+        $("#show_gd_amount").html(format_monetary_value($(this).val()));
+    });
+
+    if(false){
+        $("#recalc-ep-message").text("您的额外回酬已计算。请稍候片刻再尝试。");
+        $("#recalc-ep-button").attr("disabled", "disabled");
+        setTimeout(function(){
+            $("#recalc-ep-button").removeAttr("disabled");
+            $("#recalc-ep-message").text("");
+        }, 0);
+    }
+
+    $("#recalc-ep-button").on("click", function(e){
+        e.preventDefault();
+        $("#recalc-ep-message").text("您的额外回酬已计算成功。如果想再计算，请稍候片刻再尝试。");
+        $(this).attr("disabled", "disabled");
+        $.ajax({
+            url: '?aj=1&type=recalc_user_ep',
+            data: {'uid': 61822233},
+            type: 'post',
+            dataType: 'json',
+            error:function(data){
+                console.log(data);
+            },
+            success: function(data){
+                if(data.percent > 0){
+                    $("#current_ep").html(data.percent);
+                }
+            }
+        });
+        setTimeout(function(){
+            $("#recalc-ep-button").removeAttr("disabled");
+            $("#recalc-ep-message").text("");
+        }, 1800000);
+    });
+});
+</script>
+<link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="./css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="./css/main.css" type="text/css">
+<link rel="stylesheet" href="./css/zh-CN.css" type="text/css">
+
+
+<title>撰写信息 | NMM 98</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="http://www.nmm68.com/images/favicons/favicon.ico" type="image/x-icon">
+<link href="./css/css" rel="stylesheet" type="text/css">
+
+<link href="./css/css(1)" rel="stylesheet" type="text/css">
+</head>
+<body class="zh-CN " id="" youdao="bind">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65533920-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<header class="navbar navbar-static-top" id="top" role="header">
+    <div class="container">
+                        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://www.nmm68.com/zh-CN/platform/" class="navbar-brand"><img src="./img/logo_white.png" alt=""></a>
+        </div>
+                        <ul class="nav navbar-nav navbar-right" role="sub-navigation">
+                        <li class="dropdown" id="lang_nav">
+                <a href="http://www.nmm68.com/zh-CN/platform/message-compose#" data-toggle="dropdown">
+                    <span class="language-sel-zh-CN fa-lang"></span>
+                    <span class="language-text">简体中文</span>
+                </a>
+                <ul class="dropdown-menu" role="languageMenu">
+                                                                                <li><a href="http://www.nmm68.com/platform/message-compose"><span class="language-sel-en"></span>English</a></li>
+                                                                                                                            <li><a href="./1_files/1.html"><span class="language-sel-zh-CN"></span>简体中文</a></li>
+                                                                            </ul>
+            </li>
+
+
+            <li class="hidden-lg hidden-sm hidden-md">
+                <a href="" id="btn-wallet"><span class="glyphicon glyphicon-usd"></span></a>
+            </li>
+                        <li class="dropdown">
+                <a href="" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-xs">我的档案</span></a>
+                <ul class="dropdown-menu pull-right" id="user-details">
+                    <li class="clearfix">
+                        <span class="details">编号</span>
+                        <span class="count">61822233</span>
+                    </li>
+                    <li class="clearfix">
+                        <span class="details">姓名</span>
+                        <span class="count">李向波</span>
+                    </li>
+                    <li class="clearfix">
+                        <span class="details">用户名</span>
+                        <span class="count">qh7030</span>
+                    </li>
+                    <li class="clearfix">
+                        <span class="details">电邮地址</span>
+                        <span class="count">67340975@qq.com</span>
+                    </li>
+                </ul>
+            </li>
+
+                            <li>
+                    <a href="http://www.nmm68.com/zh-CN/platform/message-inbox"><span class="glyphicon glyphicon-envelope"></span> <span class="hidden-xs">信息</span>
+                                            </a>
+                </li>
+
+                        <li><a href="http://www.nmm68.com/zh-CN/platform/logout"><span class="hidden-xs">退出</span> <span class="glyphicon glyphicon-share-alt"></span></a></li>
+                                </ul>
+                <nav class="collapse navbar-collapse" role="main-navigation">
+            <ul class="nav navbar-nav">
+                <li class="">
+                    <a href="http://www.nmm68.com/zh-CN/platform/" class="glyphicons home"><i></i>首页</a>
+                </li>
+
+
+                                                        <li class="">
+                        <a href="http://www.nmm68.com/zh-CN/platform/pd-list" class="glyphicons home"><i></i>舍名单<span class="badge"></span></a>
+                    </li>
+
+                    <li class="">
+                        <a href="http://www.nmm68.com/zh-CN/platform/gd-list" class="glyphicons home"><i></i>得名单<span class="badge"></span></a>
+                    </li>
+
+                    <li class=""><a href="http://www.nmm68.com/zh-CN/platform/register" class="glyphicons book"><i></i>注册</a></li>
+                    <li class=""><a href="http://www.nmm68.com/zh-CN/platform/profile" class="glyphicons user"><i></i>管理档案</a></li>
+
+                                        <li class=""><a href="http://www.nmm68.com/zh-CN/platform/sponsor-genealogy" class="glyphicons down_arrow"><i></i>家族体系</a></li>
+
+                    <li class="dropdown">
+                        <a href="http://www.nmm68.com/zh-CN/platform/message-compose#" class="dropdown-toggle" data-toggle="dropdown">帐户管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/wallet">PIN 转账</a></li>
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/downline-pdgd">家族舍与得</a></li>
+                                                    </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="http://www.nmm68.com/zh-CN/platform/message-compose#" class="dropdown-toggle" data-toggle="dropdown">交易记录 <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/gd-history">GD： 得交易记录</a></li>
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/pd-history">PD： 舍交易记录</a></li>
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/rw-history">R钱包交易记录</a></li>
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/cw-history">C钱包交易记录</a></li>
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/nw-history">N钱包交易记录</a></li>
+
+                            <li><a href="http://www.nmm68.com/zh-CN/platform/pin-history">PIN交易记录</a></li>
+                        </ul>
+                    </li>
+
+                    <li class=""><a href="http://www.nmm68.com/zh-CN/platform/commission" class="glyphicons down_arrow"><i></i>佣金</a></li>
+
+                            </ul>
+        </nav>
+                    </div>
+</header>
+<div id="wrapper">
+    <div class="page-title">
+    <div class="container">
+        <h3 class="title">撰写信息</h3>
+                        <ul class="walletNav clearfix">
+            <li class="clearfix">
+                <img src="./img/e-wallet.png" alt="" class="img">
+                <span class="wallet">
+                    <span class="tilte-w">C钱包</span>
+                    <strong class="wallet-color">RMB100.00</strong>
+                </span>
+            </li>
+            <li class="clearfix">
+                <img src="./img/r-wallet.png" alt="" class="img">
+                <span class="wallet">
+                    R钱包<br>
+                    <strong class="wallet-color">RMB40.00</strong>
+                </span>
+            </li>
+            <li class="clearfix">
+                <span class="wallet">
+                    N钱包<br>
+                    <strong class="wallet-color">RMB0.00</strong>
+                </span>
+            </li>
+            <li class="clearfix">
+                <img src="./img/i-wallet.png" alt="" class="img">
+                <span class="wallet">
+                    PIN<br>
+                    <strong class="wallet-color">0</strong>
+                </span>
+            </li>
+        </ul>
+                    </div>
+</div>
+<div class="clockWrap">
+    <div class="container clearfix">
+                <div class="pull-left" id="userRank"><span class="glyphicon glyphicon-user"></span> 级别 : 普通会员</div>
+                <div class="clock-location">
+            <strong class="mr5">服务器时间</strong>
+            <span id="server_time_text">18:33:53 17/11/2015</span>
+        </div>
+        <div class="clock-location">
+            <strong class="mr5">当地时间</strong>
+            <span id="local_time_text">18:33:53 17/11/2015</span>
+        </div>
+    </div>
+</div>
+
+    <div class="container">
+
+
+
+
+
+        <div class="innerContent">
+            <div id="donationWrap">
+    <div class="row">
+        <div class="col-sm-6">
+            <a class="btn btn-block " id="pdBtn">
+                <i class="fa fa-fw fa-usd"></i>
+                舍: 提供帮助         </a>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-block " id="gdBtn">
+                <i class="fa fa-fw fa-download"></i>
+                得： 获得收益         </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="pdWrap" style="">
+                                    <div class="widget widget-body-white">
+                <form class="form-horizontal margin-none" name="buy_share_form" action="" method="post">
+                    <input type="hidden" name="__req" value="9">
+                    <input type="hidden" name="__nonce" value="afb773401ddaa770c1d2720446be1d87e7b322b37b5b67eda3f64314149bcdd7">
+                                                            <div class="widget-head widget-head-blue">
+                        <h4 class="heading">舍: 提供帮助</h4>
+                    </div>
+                    <div class="widget-body">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">数额</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="pd_amount" name="amount" value="0" type="text" autocomplete="off">
+                                <p class="help-block">您输入的数额 ： <span id="show_pd_amount">RMB0.00</span></p>
+                                <p class="help-block">最低PD数额：<span class="red">RMB1,000.00</span></p>
+                                <p class="help-block" style="color:red" id="pd_pin">此次执行需要0PIN。</p>
+                                                            </div>
+                        </div>
+                                                <div class="form-group">
+                            <label class="col-md-3 control-label">额外回酬</label>
+                            <div class="col-md-9">
+                                <input id="pd_ep" name="ep" value="1" type="checkbox">
+                                <span class="help-block" style="display:inline">您现有<span id="current_ep">14.50<span>%的额外回酬。</span>
+                                <button id="recalc-ep-button">计算</button>
+                                <span class="help-block" style="color:red" id="recalc-ep-message"></span>
+                            </span></span></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">安全密码</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="epassword2" name="epassword2" value="" type="password" placeholder="">
+                                                            </div>
+                        </div>
+                    </div>
+
+                    <footer class="data-footer innerAll half text-right clearfix">
+                        <button type="submit" class="btn btn-primary btn-sm">执行舍</button>
+                    </footer>
+                </form>
+            </div>
+                    </div>
+        <div class="col-md-12" id="gdWrap" style="">
+                                                                        <div class="widget widget-body-white">
+                                <form class="form-horizontal margin-none" name="wallet_transfer_form" method="post" action="">
+                    <input type="hidden" name="__req" value="10">
+                    <input type="hidden" name="__nonce" value="896e8213c6819feff08906c5672dfdcbc7e550f828f1fec27038396de4e7946c">
+                    <input type="hidden" name="type" value="gd">
+
+                    <fieldset>
+                        <div class="widget-head widget-head-blue">
+                            <h4 class="heading">得： 获得收益</h4>
+                        </div>
+                        <div class="widget-body">
+                            <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    可得总额:<span class="ast">*</span>
+                                </label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control " name="amount" id="gd_amount" value="" placeholder="" autofocus="">
+                                    <p class="help-block">您输入的数额 ： <span id="show_gd_amount">RMB0.00</span></p>
+                                    <p class="help-block">您现有的C钱包 余额： RMB100.00.</p>
+                                    <p class="help-block">您现有的R钱包 余额： RMB40.00.</p>
+                                    <p class="help-block">最低GD数额：<span id="minimum_amount" class="red">RMB1,000.00</span></p>
+                                                                    </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">
+                                    由钱包:<span class="ast">*</span>
+                                </label>
+                                <div class="col-md-9">
+                                                                        <label class="radio ">
+                                        <input type="radio" name="from_wallet" value="cwallet" class="mt8">
+                                        C钱包                                 </label>
+                                                                        <label class="radio ">
+                                        <input type="radio" name="from_wallet" value="rwallet" class="mt8">
+                                        R钱包                                 </label>
+                                                                                                        </div>
+                            </div>
+                                                                                    <div class="form-group">
+                                <label class="col-md-3 control-label">支付宝账号（淘宝账号/手机号码/邮箱）:</label>
+                                <div class="col-md-9">
+                                    <span>15720370307</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">开户银行:</label>
+                                <div class="col-md-9">
+                                    <span>农业银行</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">分行或支行的名称:</label>
+                                <div class="col-md-9">
+                                    <span>河北任丘支行</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">省:</label>
+                                <div class="col-md-9">
+                                    <span>河北省</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">市 / 县:</label>
+                                <div class="col-md-9">
+                                    <span>任丘市</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">账号:</label>
+                                <div class="col-md-9">
+                                    <span>6228481738007425675</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">开户名:</label>
+                                <div class="col-md-9">
+                                    <span>李向波</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">银行卡绑定的手机号码:</label>
+                                <div class="col-md-9">
+                                    <span>15720370307</span>
+                                </div>
+                            </div>
+                                                        <div class="form-group">
+                                <label class="col-md-3 control-label">国际银行帐户号码 (IBAN Code):</label>
+                                <div class="col-md-9">
+                                    <span></span>
+                                </div>
+                            </div>
+                                                                                    <div class="form-group">
+                                <label class="col-md-3 control-label">安全密码:<span class="ast">*</span></label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control " name="epassword2" placeholder="安全密码">
+                                                                    </div>
+                            </div>
+                        </div>
+                        <div class="data-footer innerAll half text-right clearfix">
+                            <button class="btn btn-primary btn-sm" type="submit" id="withdraw_btn" value="继续">继续</button>
+                        </div>
+                    </fieldset>
+                </form>
+                            </div>
+                    </div>
+    </div>
+</div>
+
+                                <div class="row">
+                    <div class="col-md-3">
+                        <div class="sidebar">
+    <div class="sidebar-head">
+        <h4 class="heading"><span class="glyphicon glyphicon-list"></span> 信息</h4>
+    </div>
+    <div class="sidebar-body">
+        <ul class="list-group" id="sidebarMenu">
+            <li class="list-group-item ">
+                <a href="http://www.nmm68.com/zh-CN/platform/message-inbox"><i class="fa fa-inbox"></i> 收件箱</a>
+                            </li>
+            <li class="list-group-item active">
+                <a href="./1_files/1.html"><i class="fa fa-edit"></i> 撰写信息</a>
+            </li>
+            <li class="list-group-item ">
+                <a href="http://www.nmm68.com/zh-CN/platform/message-outbox"><i class="fa fa-envelope"></i> 发件箱</a>
+            </li>
+        </ul>
+    </div>
+</div>
+                    </div>
+                    <div class="col-md-9">
+
+                        <div class="widget">
+                            <div class="widget-head">
+                                <h4 class="heading">新信息</h4>
+                            </div>
+                            <form class="form-horizontal margin-none" method="post">
+                                <input type="hidden" name="__req" value="1">
+                                <input type="hidden" name="__nonce" value="639ab25027675cb3082ec7694e339ef85b52b90c619712ea1ce1e60667d98261">
+                                <div class="widget-body">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"><strong>发给</strong></label>
+                                        <div class="col-md-9">
+                                            <select class="form-control" name="rtype" id="rtype">
+                                                                                                <option value="900">管理员</option>
+                                                                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"><strong>主题</strong></label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" name="subject" id="subject" value="" placeholder="主题">
+                                                                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label"><strong>信息</strong></label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control form-control-text-area" placeholder="信息" name="message" id="message" rows="5"></textarea>
+                                                                                    </div>
+                                    </div>
+                                </div>
+                                <footer class="data-footer innerAll half text-right clearfix">
+                                    <a href="http://www.nmm68.com/zh-CN/platform/message-inbox" class="btn btn-default btn-sm">取消</a>
+                                    <button class="btn btn-primary btn-sm">发送信息</button>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<script id="hiddenlpsubmitdiv" style="display: none;"></script><script>try{(function() { for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; if (typeof(lastpass_f.lpsubmitorig2)=='object'){ continue;}lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); if (d) {for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ if (typeof(d.innerText) != 'undefined') { d.innerText=i.toString(); } else { d.textContent=i.toString(); } } } d.dispatchEvent(customEvent); }form.lpsubmitorig2(); } } }})()}catch(e){}</script></body></html>
