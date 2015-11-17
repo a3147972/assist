@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://www.nmm68.com/zh-CN -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients"><!-- <![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/remaining.js"></script>
+<script type="text/javascript">
+	var _gNow = new Date();
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+	var _allsecs = new Array();
+	var _allsecs2 = new Array();
+	var _i18n = {
+		weeks: ['星期', '星期'],
+		days: ['天', '天'],
+		hours: ['小时', '小时'],
+		minutes: ['分', '分'],
+		seconds: ['秒', '秒']
+	};
+	$('.login_remain_time').each(function(){
+		var _rid = $(this).attr('id');
+		var _seconds = parseInt($(this).attr('rel'));
+		if(_seconds > 0){
+			$(this).html(
+				remaining.getString(_seconds, _i18n, false)
+			);
+		}
+		else{
+			$(this).html('剩余0天');
+		}
+		_allsecs[_rid] = _seconds;
+		_allsecs2[_rid] = _seconds;
+	});
+	timer = setInterval(function(){
+		var now = new Date();
+		true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000); 		$('.login_remain_time').each(function(){
+			var _rid = $(this).attr('id');
+			if(typeof _allsecs[_rid] == 'undefined'){
+				_allsecs[_rid] = parseInt($(this).attr('rel'));
+			}
+			_seconds = _allsecs[_rid];
+			if(typeof _allsecs2[_rid] == 'undefined'){
+				_allsecs2[_rid] = parseInt($(this).attr('rel'));
+			}
+			//synchronize
+			_diff_sec = _allsecs2[_rid] - _seconds;
+			if(_diff_sec < true_elapsed){
+				_seconds = _allsecs2[_rid] - true_elapsed;
+			}
+			if(_seconds > 0){
+				$(this).html(
+					remaining.getString(_seconds, _i18n, false)
+				);
+				_allsecs[_rid] = --_seconds;
+			}
+			else{
+				$("#too_many_user").hide();
+				$("#login_btn").removeAttr("disabled");
+				$(this).html('剩余0天');
+			}
+		});
+	}, 1000);
+});
+</script>
+<link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
+
+
+<title>会员登录 | NMM 98</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+
+<!-- Favicons -->
+<link rel="shortcut icon" href="http://www.nmm68.com/images/favicons/favicon.ico" type="image/x-icon">
+<link href="./css/css" rel="stylesheet" type="text/css">
+
+<style>
+/* LOGIN PAGE ================================================== */
+.login{
+	background: #5e819f;
+}
+.login .navbar {
+	min-height: initial;
+	background: #c0392b;
+	background: rgba(192,57,43,0.85)
+}
+.login ul[role="sub-navigation"] {margin:0}
+.login .wrapper{
+	max-width: 354px;
+	min-width: 300px;
+	margin: 140px auto 0;
+	position: relative;
+}
+	.login .wrapper .brand{
+		margin-bottom: 20px;
+		text-align: center;
+	}
+		.login .wrapper .brand h2{
+			font-size: 22px;
+			color: #FFF;
+			line-height: 32px;
+			margin: 0;
+			font-style: italic;
+			text-shadow: 0px 1px 1px rgba(0,0,0,0.8);
+		}
+	.login .wrapper .widget{
+		background: transparent;
+		margin: 0 auto 15px;
+	}
+	.login .wrapper .widget .widget-body{
+		background: #fafafa;
+		background: rgba(250,250,250,0.85);
+		position: relative;
+		padding: 15px;
+	}
+	.login .wrapper .widget .widget-body h1{
+		font-size: 20pt;
+		/*text-align: center;*/
+		margin: 10px 0 20px 0;
+		display: block;
+		text-shadow: 0 1px 0 #fff;
+	}
+	.login .wrapper .widget .widget-body label{
+		font-size: 13px;
+		color: #7c7c7c;
+		font-weight: 500;
+	}
+
+	.login .wrapper input[type="text"], .login .wrapper input[type="password"] {
+		font-size: 13px;
+		height: auto;
+		margin-bottom: 10px;
+		padding: 5px 9px;
+		box-shadow: inset 1px 1px 1px rgba(255,255,255,0),inset -1px -1px 1px rgba(0,0,0,0);
+		background: #fff;
+	}
+	body.login .wrapper .password {
+		float: right;
+		font-size: 12px;
+		font-weight: 400;
+	}
+	body.login .wrapper .separator{padding: 0 0 15px;}
+
+
+	/* Navbar ============== */
+	.navbar-nav > li > a {
+		color: #ececec;
+		font-size: 12px;
+		padding: 10px;
+	}
+	.navbar-nav > li.active > a,
+	.navbar-nav > li > a:focus,
+	.navbar-nav > li > a:hover{
+		outline: 0;
+		background: #7d2118;
+		box-shadow: inset 0px -1px 0px rgba(0,0,0,0.2);
+	}
+	.nav .open>a, .nav .open>a:hover, .nav .open>a:focus{
+		background: #424242;
+	}
+
+	.navbar-nav>li>.dropdown-menu{
+		background: #c0392b;
+		border: 1px solid #a33024;
+	}
+		.navbar-nav>li>.dropdown-menu li a{
+			color: #FFF;
+			font-size: 12px;
+			padding: 10px 15px;
+		}
+		.navbar-nav>li>.dropdown-menu li a:focus,
+		.navbar-nav>li>.dropdown-menu li a:hover{
+			background: #7d2118;
+		}
+		.dropdown-menu>.active>a,
+		.dropdown-menu>.active>a:hover,
+		.dropdown-menu>.active>a:focus{background: #424242;}
+
+	/* Navbar Right - Language Dropdown ============== */
+	[class*="language-sel-"] {
+		width:16px;
+		height:11px;
+		top: 1px;
+		margin-right:5px;
+		position: relative;
+		display: inline-block;
+	}
+	.language-sel-en{background: url(./img/gb.png) no-repeat 0 0 !important}
+	.language-sel-zh-CN{background: url(./img/cn.png) no-repeat 0 0 !important}
+
+	/* Button ============== */
+	.btn-inverse{
+		background: #45484d;
+		color: #fff;
+	}
+	.btn-inverse:focus,
+	.btn-inverse:hover{
+		color: #fff;
+		background: #222;
+	}
+
+
+	/* Copyright ============== */
+	.copyright{
+		color: #FFF;
+		text-align: center;
+		text-shadow: 0px 1px 2px #000;
+	}
+
+
+	@media (max-width: 767px){
+		.navbar-toggle .icon-bar{background: #FFF;}
+
+		nav[role="main-navigation"]{
+			float: none;
+			margin: 0 !important;
+		}
+
+		ul[role="sub-navigation"]{text-align: right; margin: 0;}
+		ul[role="sub-navigation"] > li{display: inline-block;}
+		ul[role="sub-navigation"] .open .dropdown-menu{
+			position: absolute;
+			float: left;
+			left: auto;
+			right: 0;
+			background-color: #000
+		}
+		ul[role="sub-navigation"] .open .dropdown-menu li a{
+			text-align: left;
+			padding: 5px 15px;
+		}
+	}
+</style>
+
+</head>
+<body class="login" youdao="bind">
+
+<!--script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65533920-1', 'auto');
+  ga('send', 'pageview');
+</script-->
+
+<header class="navbar navbar-static-top" id="top" role="header">
+	<div class="container">
+		<ul class="nav navbar-nav navbar-right" role="sub-navigation">
+						<li class="dropdown" id="lang_nav">
+				<a href="http://www.nmm68.com/zh-CN#" data-toggle="dropdown">
+					<span class="language-sel-zh-CN fa-lang"></span>
+					<span class="language-text">简体中文</span>
+				</a>
+				<ul class="dropdown-menu" role="languageMenu">
+																				<li><a href="http://www.nmm68.com/"><span class="language-sel-en"></span>English</a></li>
+																															<li><a href="./会员登录 _ NMM 98_files/会员登录 _ NMM 98.html"><span class="language-sel-zh-CN"></span>简体中文</a></li>
+																			</ul>
+			</li>
+		</ul>
+	</div>
+</header>
+
+
+<div class="wrapper">
+	<div class="brand">
+				<a href="http://nmm68.com/" class="appbrand"><img src="./img/nmm_logo_login.png" alt="nmm98.com"></a>
+		<h2>Move Up</h2>
+	</div>
+
+	<div class="widget">
+		<div class="widget-body">
+			<h1>系统登录</h1>
+
+
+
+
+
+						<form name="login_form" action="" method="post">
+				<input type="hidden" name="__log" value="1">
+
+				<label>用户名</label>
+				<input type="text" class="form-control" name="username" autofocus="" id="username" value="" placeholder="用户名" autocomplete="off" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=); background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+
+				<label>登录密码</label>
+				<input type="password" class="form-control" name="password" id="password" placeholder="登录密码" autocomplete="off" style="background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=); background-attachment: scroll; background-position: 100% 50%; background-repeat: no-repeat;">
+
+
+
+				<div class="separator bottom clearfix"></div>
+				<div class="row">
+					<div class="col-md-6">
+										</div>
+					<div class="col-md-12">
+						<input class="btn btn-block btn-primary" type="submit" name="submit" value="登录" id="login_btn">
+
+						<a href="http://www.nmm68.com/zh-CN/forgot-password?source=login" class="btn btn-block btn-inverse">找回密码</a>
+					</div>
+				</div>
+			</form>
+					</div>
+	</div>
+	<div class="copyright">
+	© 2015 nmm68.com. All rights reserved.	</div>
+</div>
+
+
+<script type="text/javascript" src="./js/modernizr.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/jquery.cookie.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function($){
+	$('form[name=login_form]').submit(function(){
+		$('input#login_btn').attr('disabled','disabled');
+	});
+
+		$('#username').focus();
+
+	$.removeCookie("alert", { path: '/' });
+});
+</script>
+
+
+<script id="hiddenlpsubmitdiv" style="display: none;"></script><script>try{(function() { for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; if (typeof(lastpass_f.lpsubmitorig2)=='object'){ continue;}lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); if (d) {for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ if (typeof(d.innerText) != 'undefined') { d.innerText=i.toString(); } else { d.textContent=i.toString(); } } } d.dispatchEvent(customEvent); }form.lpsubmitorig2(); } } }})()}catch(e){}</script></body></html>
