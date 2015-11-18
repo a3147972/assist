@@ -18,8 +18,6 @@ class UserLevelModel extends BaseModel
         array('modify_time', 'time', 3, 'function'),
     );
 
-
-
     /**
      * 获取上级级别id
      */

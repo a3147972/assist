@@ -57,10 +57,10 @@ class EarnController extends BaseController
             //更新session中的余额
             switch ($money_type) {
                 case 1:
-                    $this->UpdateSessionInfo('c_money', session('user_info.c_money') - $money);
+                    D('User')->UpdateSessionInfo('c_money', session('user_info.c_money') - $money);
                     break;
                 case 2:
-                    $this->UpdateSessionInfo('r_money', session('user_info.r_money') - $money);
+                    D('User')->UpdateSessionInfo('r_money', session('user_info.r_money') - $money);
                     break;
             }
 

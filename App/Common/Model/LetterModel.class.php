@@ -2,6 +2,7 @@
 namespace Common\Model;
 
 use Common\Model\BaseModel;
+use Common\Tools\ArrayHelper;
 
 class LetterModel extends BaseModel
 {
@@ -52,10 +53,10 @@ class LetterModel extends BaseModel
      * @param  int $letter_id 站内信id
      * @return bool           成功返回true,失败返回false
      */
-    public function read($letter_id)
+    public function read($letter_id, $user_id)
     {
         $map['id'] = $letter_id;
-
+        $map['user_id'] = array('neq', $user_id);
         $result = $this->where($map)->setField('is_read', 1);
 
         if ($result) {
@@ -93,8 +94,10 @@ class LetterModel extends BaseModel
         //合并数据
         foreach ($list as $_k => $_v) {
             if ($_v['user_id'] == 0) {
+                $_v['username'] = '管理员';
                 $list[$_k] = array_merge($_v, $to_user_list[$_v['to_user_id']]);
             } else if ($_v['to_user_id'] == 0) {
+                $_v['to_username'] = '管理员';
                 $list[$_k] = array_merge($_v, $user_list[$_v['user_id']]);
             } else {
                 $list[$_k] = array_merge($_v, $user_list[$_v['user_id']], $to_user_list[$_v['to_user_id']]);

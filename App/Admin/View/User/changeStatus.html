@@ -78,15 +78,12 @@
                       更改原因:
                     </label>
                     <div class="col-md-10">
-                      <textarea rows="3" cols="5" name="desc" class="auto form-control">
-                      </textarea>
+                      <textarea rows="3" cols="5" name="desc" class="auto form-control"></textarea>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-md-10">
-                      <eq name="action" value="edit">
-                        <input type="hidden" name="user_id" value="{:I('id')}">
-                      </eq>
+                      <input type="hidden" name="user_id" value="{:I('id')}">
                       <button class="btn btn-success" type="submit">
                         提交
                       </button>

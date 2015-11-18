@@ -87,6 +87,7 @@
                         <td>
                           {$vo.title}
                         </td>
+                        <td>{:date('Y-m-d H:i:s', $vo['create_time'])}</td>
                         <td>
                           <a href="{:U('edit',array('id'=>$vo['id']))}">编辑</a>
                           <a href="" data-href="{:U('del',array('id'=>$vo['id']))}" onclick="return ajaxBtn(this)">删除</a>

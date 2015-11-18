@@ -1,9 +1,9 @@
 <?php
-namespace Admin\Contorller;
+namespace Admin\Controller;
 
-use Admin\Controller\BaseModel;
+use Admin\Controller\BaseController;
 
-class ReportController extends BaseModel
+class ReportController extends BaseController
 {
     /**
      * 举报审核通过操作

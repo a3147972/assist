@@ -37,11 +37,11 @@ class PinLogModel extends BaseModel
         $data['amount'] = $amount;
         $data['desc'] = $desc;
 
-        if ($this->create($data)) {
+        if (!$this->create($data)) {
             return false;
         }
 
-        $result = $this->add($data);
+        $result = $this->add();
 
         if ($result) {
             return true;
@@ -72,13 +72,13 @@ class PinLogModel extends BaseModel
 
         $user_map['id'] = array('in', $user_id);
         $user_fields = 'id as user_id,username as user_username,name as user_name';
-        $user_list = D('User')->_list($user_map);
+        $user_list = D('User')->_list($user_map, $user_fields);
         $user_list = array_column($user_list, null, 'user_id');
 
         foreach ($list as $_k => $_v) {
             $list[$_k] = array_merge($user_list[$_v['user_id']], $_v);
         }
 
-        return $user_list;
+        return $list;
     }
 }

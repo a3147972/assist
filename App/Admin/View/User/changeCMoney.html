@@ -59,7 +59,7 @@
                   </div>
                 </div>
                 <div class="widget-content">
-                  <form class="form-horizontal row-border" action="{:U('changeStatus')}" onSubmit="return ajaxForm(this)" method="post">
+                  <form class="form-horizontal row-border" action="{:U('changeCMoney')}" onSubmit="return ajaxForm(this)" method="post">
                   <div class="form-group">
                       <label class="col-md-2 control-label">
                         金额:
@@ -73,7 +73,7 @@
                       操作类型:
                     </label>
                     <div class="col-md-10">
-                      <select name="status" id="input17" class="select2-select-00 col-md-12 full-width-fix">
+                      <select name="type" id="input17" class="select2-select-00 col-md-12 full-width-fix">
                           <option value="1">增加</option>
                           <option value="2">减少</option>
                       </select>
@@ -90,9 +90,7 @@
 
                   <div class="form-group">
                     <div class="col-md-10">
-                      <eq name="action" value="edit">
                         <input type="hidden" name="user_id" value="{:I('id')}">
-                      </eq>
                       <button class="btn btn-success" type="submit">
                         提交
                       </button>

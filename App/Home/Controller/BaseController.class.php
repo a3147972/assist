@@ -12,8 +12,8 @@ class BaseController extends Controller
         //     exit();
         // }
         //测试代码
-        $user_info['id'] = 2;
-        session('user_info',$user_info);
+        session('user_info', D('User')->_get(array('id' => 2)));
+        session('level_info', D('UserLevel')->_get(array('id' => 1)));
         //判断排队次数
         $this->checkQueueCount();
     }
@@ -26,11 +26,11 @@ class BaseController extends Controller
         //已排队次数
         $count = D('Assist')->getMonthCount(session('user_info.id'));
         //当月最后两天少于排队次数则给出提示
-        if ((date('t') - date('d')) <= 2 && session('level_info.queue_min_time_month')>$count) {
-            $this->assign('您当前排队次数:'.$count. ',少于'.session('level_info.queue_min_time_month').'请完成排队任务已保证不被冻结');
+        if ((date('t') - date('d')) <= 2 && session('level_info.queue_min_time_month') > $count) {
+            $this->assign('您当前排队次数:' . $count . ',少于' . session('level_info.queue_min_time_month') . '请完成排队任务已保证不被冻结');
         }
         //判断上个月的排队次数并且未被冻结过则冻结账号
-        $prevMonth = date('m',strtotime('-1 month', time()));
+        $prevMonth = date('m', strtotime('-1 month', time()));
         $prevMonthCount = D('Assist')->getMonthCount(session('user_info.id'), $prevMonth);
         //上个月是否因为排队次数被冻结
         $status_map['from_unixtime(`create_time`,"%m")'] = $prevMonth;
@@ -44,7 +44,7 @@ class BaseController extends Controller
 
             $this->startTrans();
             $freeze_result = $model->changeStatus(session('user_info.id'), -2);
-            $status_log_result = D('UserStatusLog')->insert(session('user_info.id'),-2,'未满足最大排队次数被冻结');
+            $status_log_result = D('UserStatusLog')->insert(session('user_info.id'), -2, '未满足最大排队次数被冻结');
 
             if ($freeze_result && $status_log_result) {
                 $model->commit();
@@ -61,11 +61,11 @@ class BaseController extends Controller
     {
         //获取当前级别的下级
         $lower_map['id'] = array('lt', session('level_info.id'));
-        $lowerLevel = D('UserLevel')->_get($lower_map,'','id desc');
+        $lowerLevel = D('UserLevel')->_get($lower_map, '', 'id desc');
         //获取当前会员的直线下线数量
         $lower_user_map['pid'] = session('user_info.user_id');
         $lower_user_map['level_id'] = empty($lowerLevel) ? session('level_info.id') : $lowerLevel['id'];
-        $lower_user_list = D('User')->_list(array('pid'=>session('user_info.user_id')));
+        $lower_user_list = D('User')->_list(array('pid' => session('user_info.user_id')));
         if (count($lower_user_list) >= session('level_info.upgrade_count')) {
             $lower_user_id = array_column($lower_user_list, 'id');
             $lower_order_count = D('Order')->where(array('in', $lower_user_id))->count();

@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 
-use Admin\Controller\BaseController
+use Admin\Controller\BaseController;
 
 class UserStatusLogController extends BaseController
 {

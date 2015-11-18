@@ -41,7 +41,7 @@ class UserController extends BaseController
 
             if ($result !== false && $add_log !== false) {
                 $model->commit();
-                $this->success('更新数据成功');
+                $this->success('更新数据成功', U('User/index'));
             } else {
                 $model->rollback();
                 $this->error('更新数据失败');
@@ -68,7 +68,7 @@ class UserController extends BaseController
             $desc = I('post.desc', '管理员操作');
 
             $model = D('User');
-            $CLogModel = D('RLog');
+            $RLogModel = D('RLog');
             $model->startTrans();
 
             $result = $model->changeRMoney($user_id, $money, $type);
@@ -76,7 +76,7 @@ class UserController extends BaseController
 
             if ($result !== false && $add_log !== false) {
                 $model->commit();
-                $this->success('更新数据成功');
+                $this->success('更新数据成功',U('User/index'));
             } else {
                 $model->rollback();
                 $this->error('更新数据失败');
@@ -111,7 +111,7 @@ class UserController extends BaseController
 
             if ($result !== false && $add_log !== false) {
                 $model->commit();
-                $this->success('更新数据成功');
+                $this->success('更新数据成功',U('User/index'));
             } else {
                 $model->rollback();
                 $this->error('更新数据失败');
@@ -140,15 +140,15 @@ class UserController extends BaseController
                 $this->error('请输入操作描述');
             }
             $model->startTrans();
-            $result = $model->changeStatus($user_id, $status,);
+            $result = $model->changeStatus($user_id, $status);
             $add_log = D('UserStatusLog')->insert($user_id, $status, $desc);
 
             if ($result && $add_log) {
                 $model->commit();
-                $this->success('更新会员状态成功');
+                $this->success('更新会员状态成功', U('User/index'));
             } else {
                 $model->rollback();
-                $this->error($model->getError());
+                $this->error('更新状态失败');
             }
         } else {
             $this->display();

@@ -44,7 +44,7 @@ class LetterController extends BaseController
         $model = D('Letter');
 
         $map['id'] = I('id');
-
+        $model->read(I('id'), 0);
         $info = $model->get($map);
 
         $this->assign('vo', $info);

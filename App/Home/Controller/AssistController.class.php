@@ -10,7 +10,7 @@ class AssistController extends Basecontroller
      */
     public function insert()
     {
-        if(!IS_POST){
+        if (!IS_POST) {
             $this->error('非法访问');
         }
 
@@ -18,7 +18,7 @@ class AssistController extends Basecontroller
         $money = I('post.money');
 
         //账号判断
-        if (in_array(session('user_info.status'), array(2,3))) {
+        if (in_array(session('user_info.status'), array(2, 3))) {
             $this->error('账号已被冻结');
         }
         $queue_result = $this->checkQuequeCount();
@@ -49,13 +49,13 @@ class AssistController extends Basecontroller
         $model->startTrans();
 
         $changePin_result = D('User')->changePin($user_id, $needPinCount, 2);
-        $pin_log_result = D('PinLog')->insert($user_id,2,2,'排队扣除');
+        $pin_log_result = D('PinLog')->insert($user_id, 2, 2, $needPinCount, '排队扣除');
         $assist_result = $model->insert($user_id, $money);
 
-        if ($chanePin_result && $pin_log_result && $assist_result) {
+        if ($changePin_result && $pin_log_result && $assist_result) {
             $model->commit();
             //更新session中的门票数量
-            $this->UpdateSessionInfo($user_id, session('user_info.pin') - $needPinCount);
+            D('User')->UpdateSessionInfo($user_id, session('user_info.pin') - $needPinCount);
             $this->success('操作成功');
         } else {
             $model->rollback();
@@ -69,13 +69,16 @@ class AssistController extends Basecontroller
     private function checkQuequeCount()
     {
         $dayCount = D('Assist')->getDayCount(session('user_info.id'));
+
         $monthCount = D('Assist')->getMonthCount(session('user_info.id'));
 
-        if ($dayCount >= session('level_info.queue_max_time_day')) {        //每天最大排队次数
+        if ($dayCount >= session('level_info.queue_max_time_day')) {
+            //每天最大排队次数
             return -1;
         }
 
-        if ($monthCount >= session('level_info.queue_max_time_month')) {        //每月最大排队次数
+        if ($monthCount >= session('level_info.queue_max_time_month')) {
+            //每月最大排队次数
             return -2;
         }
     }

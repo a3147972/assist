@@ -3,8 +3,27 @@ namespace Home\Controller;
 
 use Home\Controller\BaseController;
 
-class CLogController extends BaseController
+class LetterController extends BaseController
 {
+    public function send()
+    {
+        if (IS_POST) {
+            $user_id = session('user_info.id');
+            $to_user_id = 0;
+            $title = I('post.title');
+            $content = I('post.content');
+
+            $result = D('Letter')->send($user_id, $to_user_id, $title, $content);
+
+            if ($result) {
+                $this->success('发送成功');
+            } else {
+                $this->error('发送失败');
+            }
+        } else {
+            $this->display();
+        }
+    }
     /**
      * 回复站内信
      */
