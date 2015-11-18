@@ -17,4 +17,22 @@ class UserLevelModel extends BaseModel
         array('create_time', 'time', 1, 'function'),
         array('modify_time', 'time', 3, 'function'),
     );
+
+
+
+    /**
+     * 获取上级级别id
+     */
+    public function getSuperior($level_id)
+    {
+        //获取上级级别id
+        $map['id'] = array('gt', $level_id);
+        $superior = $this->_get($map, '', 'id asc');
+
+        if ($superior) {
+            return $superior;
+        } else {
+            return false;
+        }
+    }
 }

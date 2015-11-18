@@ -25,7 +25,7 @@ class CLogModel extends BaseModel
      * @param  int  $user_id 会员id
      * @param  integer $type    操作类型 1-增加 2-减少
      * @param  integer $money   操作金额
-     * @param  integer $source  操作来源 1-推荐奖励 2-管理奖励 3-后台更改 4-账号惩罚扣除
+     * @param  integer $source  操作来源 1-推荐奖励 2-管理奖励 3-后台更改 4-账号惩罚扣除 5-获取收益扣除
      * @param  string  $desc    操作描述
      * @return bool           成功返回true,失败返回false
      */

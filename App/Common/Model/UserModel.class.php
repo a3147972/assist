@@ -262,4 +262,26 @@ class UserModel extends BaseModel
 
         return true;
     }
+
+    /**
+     * 会员级别升级
+     * @param int $user_id  会员id
+     * @param int $level_id 当前会员级别
+     */
+    public function Upgrade($user_id)
+    {
+        $map['id'] = $user_id;
+        $level_id = $this->where($map)->getField('level_id');
+        $superior = D('UserLevel')->getSuperior($level_id);
+
+        if ($superior) {
+            $result = $this->where($map)->setField('level_id', $superior['id']);
+            if ($result) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
 }

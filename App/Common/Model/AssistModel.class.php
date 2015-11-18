@@ -54,4 +54,33 @@ class AssistModel extends BaseModel
         }
         return false;
     }
+
+    /**
+     * 获取当月排队次数
+     */
+    public function getMonthCount($user_id, $month = '')
+    {
+        $month = empty($month) ? date('m') : $month;
+        $map['user_id'] = $user_id;
+        $map['from_unixtime(`create_time`,"%m")'] = $month;
+
+        $count = $this->where($map)->count();
+        return $count;
+    }
+
+    /**
+     * 获取当天排队次数
+     * @param  int $user_id 会员id
+     * @param  string $day     天
+     * @return int          次数
+     */
+    public function getDayCount($user_id, $day = '')
+    {
+        $month = empty($month) ? date('d') : $month;
+        $map['user_id'] = $user_id;
+        $map['from_unixtime(`create_time`,"%d")'] = $day;
+
+        $count = $this->where($map)->count();
+        return $count;
+    }
 }

@@ -12,7 +12,7 @@ class EarnModel extends BaseModel
      * 写入收益表
      * @param  int  $user_id    会员id
      * @param  int  $money      金额
-     * @param  integer $money_type 钱包类型
+     * @param  integer $money_type 钱包类型 1-奖金钱包 2-收益钱包
      * @return bool              成功返回true,失败返回false
      */
     public function insert($user_id, $money,$money_type = 1)
