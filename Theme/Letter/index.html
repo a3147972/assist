@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)http://www.nmm68.com/zh-CN/platform/message-inbox -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients">
+ <!-- <![endif]-->
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ </head>
+ <body class="zh-CN " id="" youdao="bind">
+  <include file="Public/script" />
+  <title>收件箱 | NMM 98</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+  <include file="Public/style" />
+  <include file="Public/header" />
+  <div id="wrapper">
+   <include file="Public/user_info" />
+  </div>
+  <div class="container">
+   <div class="innerContent">
+    <include file="Public/assist" />
+    <div class="row">
+     <div class="col-md-3">
+      <div class="sidebar">
+       <div class="sidebar-head">
+        <h4 class="heading"><span class="glyphicon glyphicon-list"></span> 信息</h4>
+       </div>
+       <div class="sidebar-body">
+        <include file="Letter/menu" />
+       </div>
+      </div>
+     </div>
+     <div class="col-md-9">
+      <div class="widget">
+       <div class="widget-head">
+        <h4 class="heading">收件箱</h4>
+       </div>
+       <div class="widget-body overthrow">
+        <table class="table table-bordered table-primary nm">
+         <thead class="tal">
+          <tr>
+           <th>发件人</th>
+           <th>标题</th>
+           <th width="180">日期</th>
+          </tr>
+         </thead>
+         <tbody>
+          <volist name="list" id="vo">
+            <td>{$vo.username}</td>
+            <td>{$vo.title}</td>
+            <td>{:date('Y-m-d', $vo['create_time'])}</td>
+          </volist>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

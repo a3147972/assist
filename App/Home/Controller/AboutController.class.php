@@ -16,7 +16,7 @@ class AboutController extends BaseController
      */
     public function index()
     {
-        $page_index = I('p', 1);
+        $page_index = I('page', 1);
         $page_size = 10;
 
         $model = D('About');

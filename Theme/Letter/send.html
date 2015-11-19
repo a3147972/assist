@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://www.nmm68.com/zh-CN/platform/message-compose -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients">
+ <!-- <![endif]-->
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>撰写信息 | NMM 98</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+ </head>
+ <body class="zh-CN " id="" youdao="bind">
+  <include file="Public/script" />
+  <include file="Public/style" />
+  <include file="Public/header" />
+  <div id="wrapper">
+   <include file="Public/user_info" />
+  </div>
+  <div class="container">
+   <div class="innerContent">
+    <include file="Public/assist" />
+    <div class="row">
+     <div class="col-md-3">
+      <div class="sidebar">
+       <div class="sidebar-head">
+        <h4 class="heading"><span class="glyphicon glyphicon-list"></span> 信息</h4>
+       </div>
+       <div class="sidebar-body">
+        <include file="Letter/menu" />
+       </div>
+      </div>
+     </div>
+     <div class="col-md-9">
+      <div class="widget">
+       <div class="widget-head">
+        <h4 class="heading">新信息</h4>
+       </div>
+       <form class="form-horizontal margin-none" method="post" action="{:U('Letter/send')}" onSubmit="return ajaxForm(this)">
+        <div class="widget-body">
+         <div class="form-group">
+          <label class="col-md-3 control-label"><strong>发给</strong></label>
+          <div class="col-md-9">
+           <select class="form-control" name="to_user_id" id="rtype">
+            <option value="0">管理员</option>
+           </select>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label"><strong>主题</strong></label>
+          <div class="col-md-9">
+           <input type="text" class="form-control" name="title" id="subject" value="" placeholder="主题" />
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label"><strong>信息</strong></label>
+          <div class="col-md-9">
+           <textarea class="form-control form-control-text-area" placeholder="信息" name="content" id="message" rows="5"></textarea>
+          </div>
+         </div>
+        </div>
+        <footer class="data-footer innerAll half text-right clearfix">
+         <a href="{:U('Letter/index')}" class="btn btn-default btn-sm">取消</a>
+         <button class="btn btn-primary btn-sm">发送信息</button>
+        </footer>
+       </form>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

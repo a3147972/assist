@@ -18,12 +18,33 @@ class UserController extends BaseController
      */
     public function insert()
     {
+        if (!IS_POST) {
+            $this->error('非法访问');
+        }
         $model = D('User');
-
+        $self_password = I('post.self_password');
+        if (md5($self_password) != session('user_info.pay_password')) {
+            $this->error('您的安全密码不正确');
+        }
         if (!$model->create()) {
             $this->error($model->getError());
         }
-
+        $rep_password = I('post.rep_password');
+        $password = I('post.password');
+        $pay_password = I('post.pay_password');
+        $rep_pay_password = I('post.rep_pay_password');
+        if (empty($rep_password)) {
+            $this->error('请再次输入登录密码');
+        }
+        if (empty($rep_pay_password)) {
+            $this->error('请再次输入安全密码');
+        }
+        if ($password != $rep_password) {
+            $this->error('您输入的两次登录密码不一致');
+        }
+        if ($pay_password != $rep_pay_password) {
+            $this->error('您输入的两次安全密码不一致');
+        }
         //推荐收益
         $recommend_reward = D('UserLevel')->where(array('id' => session('user_info.level_id')))->getField('recommend_reward');
         $recommend_reward = intval(1000 * $recommend_reward / 100);

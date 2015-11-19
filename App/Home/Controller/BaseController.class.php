@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 
+use Common\Tools\Page;
 use Think\Controller;
 
 class BaseController extends Controller
@@ -14,6 +15,32 @@ class BaseController extends Controller
 
         //判断排队次数
         $this->checkQueueCount();
+    }
+
+    public function index()
+    {
+        $page_index = I('page', 1);
+        $page_size = 10;
+
+        $model = D(CONTROLLER_NAME);
+        $map = method_exists($this, '_filter') ? $this->_filter() : array();
+        if (method_exists($model, 'lists')) {
+            $list = $model->lists($map, '', 'id desc', $page_index, $page_size);
+        } else {
+            $list = $model->_list($map, '', 'id desc', $page_index, $page_size);
+        }
+
+        $count = $model->count();
+
+        //分页数组
+        $page = new Page($count, $page_index, $page_size);
+        $page_list = $page->show();
+
+        $this->assign('list', $list);
+        $this->assign('count', $count);
+        $this->assign('page_list', $page_list);
+
+        $this->display();
     }
 
     /**
