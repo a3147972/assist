@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://www.nmm68.com/zh-CN/platform/announcements?id=47 -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients"><!-- <![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<include file="Public/script" />
+<include file="Public/style" />
+<title>公告 | NMM 98</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+</head>
+<body class="zh-CN " id="" youdao="bind">
+<include file="Public/header" />
+<div id="wrapper">
+    <include file="Public/user_info" />
+</div>
+
+    <div class="container">
+        <div class="innerContent">
+
+            <div id="donationWrap">
+    <include file="Public/assist" />
+</div>
+            <div class="row">
+                <div class="innerContent">
+                    <div class="row">
+                        <div class="col-md-12 tablet-column-reset">
+                            <div class="widget">
+                                <div class="widget-head">
+                                    <h4 class="heading">公告</h4>
+                                </div>
+                                <div class="widget-body margin-none">
+                                        <h5><strong>[ 公告 ]</strong> - {$vo.title}</h5>
+                                        <p class="text-muted">{:date('Y年m月d日', $vo['create_time'])}</p>
+                                        {$vo.content}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

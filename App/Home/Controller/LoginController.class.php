@@ -7,7 +7,7 @@ class LoginController extends Controller
 {
     public function index()
     {
-        if (!session('user_info.id')) {
+        if (session('user_info.id')) {
             redirect(U('Index/index'));
         } else {
             $this->display();
@@ -34,7 +34,7 @@ class LoginController extends Controller
             $this->error($model->getError());
         }
 
-        $level_info = D('UserLevel')->_get(array('id'=>$info['level_id']));
+        $level_info = D('UserLevel')->_get(array('id' => $info['level_id']));
 
         session('user_info', $info);
         session('level_info', $level_info);

@@ -1,0 +1,20 @@
+<div class="page-title">
+    <div class="container">
+     <h3 class="title">{$title}</h3>
+     <ul class="walletNav clearfix">
+      <li class="clearfix"> <img src="__STYLE__/img/e-wallet.png" alt="" class="img" /> <span class="wallet"> <span class="tilte-w">奖金钱包</span> <strong class="wallet-color">RMB{:session('user_info.c_money')}</strong> </span> </li>
+      <li class="clearfix"> <img src="__STYLE__/img/r-wallet.png" alt="" class="img" /> <span class="wallet"> 收益钱包<br /> <strong class="wallet-color">RMB{:session('user_info.r_money')}</strong> </span> </li>
+      <li class="clearfix"> <img src="__STYLE__/img/i-wallet.png" alt="" class="img" /> <span class="wallet"> 门票<br /> <strong class="wallet-color">{:session('user_info.pin')}</strong> </span> </li>
+     </ul>
+    </div>
+   </div>
+   <div class="clockWrap">
+    <div class="container clearfix">
+     <div class="pull-left" id="userRank">
+      <span class="glyphicon glyphicon-user"></span> 级别 : {:session('level_info.name')}
+     </div>
+     <div class="clock-location">
+      <strong class="mr5">服务器时间</strong>
+      <span id="server_time_text">{:date('Y-m-d H:i:s')}</span>
+     </div>
+    </div>

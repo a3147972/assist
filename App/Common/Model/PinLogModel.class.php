@@ -24,7 +24,7 @@ class PinLogModel extends BaseModel
      * 门票操作记录
      * @param  int  $user_id 用户id
      * @param  integer $type    操作类型 1-增加 2-减少
-     * @param  integer $source  来源 1-赠送 2-使用 3-后台操作
+     * @param  integer $source  来源 1-转账 2-排队扣除 3-后台充值
      * @param  integer $amount  数量
      * @param  string  $desc    描述
      * @return bool           成功返回true,失败返回false

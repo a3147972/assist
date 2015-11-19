@@ -7,13 +7,11 @@ class BaseController extends Controller
 {
     public function _initialize()
     {
-        // if (!session('user_info.id')) {
-        //     redirect(U('Login/index'));
-        //     exit();
-        // }
-        //测试代码
-        session('user_info', D('User')->_get(array('id' => 2)));
-        session('level_info', D('UserLevel')->_get(array('id' => 1)));
+        if (!session('user_info.id')) {
+            redirect(U('Login/index'));
+            exit();
+        }
+
         //判断排队次数
         $this->checkQueueCount();
     }

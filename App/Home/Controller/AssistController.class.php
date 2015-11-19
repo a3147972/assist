@@ -16,13 +16,15 @@ class AssistController extends Basecontroller
 
         $user_id = session('user_info.id');
         $money = I('post.money');
-
+        $pay_password = I('post.pay_password');
         //账号判断
         if (in_array(session('user_info.status'), array(2, 3))) {
             $this->error('账号已被冻结');
         }
+        if (md5($pay_password) != session('user_info.pay_password')) {
+            $this->error('安全密码不正确');
+        }
         $queue_result = $this->checkQuequeCount();
-
         if ($queue_result == -1) {
             $this->error('您已达到每日最大排队次数');
         }

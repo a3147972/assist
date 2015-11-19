@@ -1,0 +1,46 @@
+  <header class="navbar navbar-static-top" id="top" role="header">
+   <div class="container">
+    <div class="navbar-header">
+     <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+     <a href="{:U('Index/index')}" class="navbar-brand"><img src="__STYLE__/img/logo_white.png" alt="" /></a>
+    </div>
+    <ul class="nav navbar-nav navbar-right" role="sub-navigation">
+     <li class="dropdown" id="lang_nav"> <a href="#" data-toggle="dropdown"> <span class="language-sel-zh-CN fa-lang"></span> <span class="language-text">简体中文</span> </a> </li>
+     <li class="hidden-lg hidden-sm hidden-md"> <a href="" id="btn-wallet"><span class="glyphicon glyphicon-usd"></span></a> </li>
+     <li class="dropdown"> <a href="" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-xs">我的档案</span></a>
+      <ul class="dropdown-menu pull-right" id="user-details">
+       <li class="clearfix"> <span class="details">编号</span> <span class="count">{:session('user_info.id')}</span> </li>
+       <li class="clearfix"> <span class="details">姓名</span> <span class="count">{:session('user_info.name')}</span> </li>
+       <li class="clearfix"> <span class="details">用户名</span> <span class="count">{:session('user_info.username')}</span> </li>
+       <li class="clearfix"> <span class="details">电邮地址</span> <span class="count">{:session('user_info.email')}</span> </li>
+      </ul> </li>
+     <li> <a href="{:U('Letter/index')}"><span class="glyphicon glyphicon-envelope"></span> <span class="hidden-xs">信息</span> </a> </li>
+     <li><a href="{:U('Login/logout')}"><span class="hidden-xs">退出</span> <span class="glyphicon glyphicon-share-alt"></span></a></li>
+    </ul>
+    <nav class="collapse navbar-collapse" role="main-navigation">
+     <ul class="nav navbar-nav">
+      <li class="active"> <a href="{:U('Index/index')}" class="glyphicons home"><i></i>首页</a> </li>
+      <li class=""> <a href="{:U('Assist/index')}" class="glyphicons home"><i></i>舍名单<span class="badge"></span></a> </li>
+      <li class=""> <a href="{:U('Assist/index')}" class="glyphicons home"><i></i>得名单<span class="badge"></span></a> </li>
+      <li class=""><a href="{:U('User/reg')}" class="glyphicons book"><i></i>注册</a></li>
+      <li class=""><a href="{:U('Letter/index')}" class="glyphicons book"><i></i>信息管理</a></li>
+      <li class=""><a href="" class="glyphicons user"><i></i>管理档案</a></li>
+      <li class=""><a href="" class="glyphicons down_arrow"><i></i>家族体系</a></li>
+      <li class="dropdown"> <a href="" class="dropdown-toggle" data-toggle="dropdown">帐户管理 <span class="caret"></span></a>
+       <ul class="dropdown-menu" role="menu">
+        <li><a href="">门票转账</a></li>
+        <li><a href="">家族交易记录</a></li>
+       </ul> </li>
+      <li class="dropdown"> <a href="http://www.nmm68.com/zh-CN/platform/#" class="dropdown-toggle" data-toggle="dropdown">交易记录 <span class="caret"></span></a>
+       <ul class="dropdown-menu" role="menu">
+        <li><a href="">援助记录</a></li>
+        <li><a href="">收益记录</a></li>
+        <li><a href="">奖金钱包交易记录</a></li>
+        <li><a href="">收益钱包交易记录</a></li>
+        <li><a href="">门票交易记录</a></li>
+       </ul> </li>
+      <li class=""><a href="" class="glyphicons down_arrow"><i></i>奖金</a></li>
+     </ul>
+    </nav>
+   </div>
+  </header>

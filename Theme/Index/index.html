@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://www.nmm68.com/zh-CN/platform/ -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients">
+ <!-- <![endif]-->
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ </head>
+ <body class="zh-CN " id="" youdao="bind">
+  <include file="Public/script" />
+  <include file="Public/style" />
+  <title>家族系统首页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    <include file="Public/header" />
+  <div id="wrapper">
+   <include file="Public/user_info" />
+   </div>
+   <div class="container">
+    <div class="innerContent">
+    <include file="Public/assist" />
+     <div class="row">
+      <div class="col-md-12">
+       <div class="widget">
+        <div class="widget-head">
+         <h4 class="heading">欢迎进入超级舍得系统</h4>
+        </div>
+        <div class="widget-body">
+         <p>尊敬的{:session('user_info.name')}，恭喜您成为舍得家族系统成员</p>
+        </div>
+       </div>
+       <div class="widget">
+        <div class="widget-head">
+         <h4 class="heading">新成员</h4>
+        </div>
+        <section class="widget-body overthrow data-scroll">
+         <table class="table table-bordered nm">
+          <tbody>
+            <volist name="child_user_list" id="child_user_vo">
+              <tr>
+            <td class="new-members-13911891">
+             <div>
+              <strong>{$child_user_vo.username}</strong>
+             </div> </td>
+            <td align="right"> <span class="uDate"><span>{:date('Y年m月d日',$child_user_vo['create_time'])}</span></span> </td>
+           </tr>
+            </volist>
+          </tbody>
+         </table>
+        </section>
+        <footer class="data-footer innerAll half text-right clearfix">
+          家族人数:
+         <a href="http://www.nmm68.com/zh-CN/platform/sponsor-genealogy">{:count($child_user_list)}</a>
+        </footer>
+       </div>
+       <div class="widget">
+        <div class="widget-head">
+         <h4 class="heading">公告</h4>
+        </div>
+        <div class="widget-body">
+         <volist name="about_list" id="about_vo">
+           <div class="media-body innerAnnounce">
+          <div class="readMore" data-url="{:U('About/content',array('id'=>$about_vo['id']))}">
+           <h5><a href="{:U('About/content',array('id'=>$about_vo['id']))}"><strong>[ Announcement ]</strong> - {$about_vo.title}</a></h5>
+           <p class="text-muted">{:date('Y-m-d',$about_vo['create_time'])}</p>
+           <p class="margin-none">{$about_vo.info}
+          </div>
+         </div>
+         </volist>
+
+        </div>
+        <div class="data-footer innerAll half text-right clearfix">
+         <button class="btn btn-primary btn-sm" onclick="window.location=&quot;{:U('About/index')}&quot;;">更多详情</button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

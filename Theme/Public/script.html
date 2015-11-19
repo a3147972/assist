@@ -1,0 +1,61 @@
+<script async="" src="__STYLE__/js/analytics.js"></script>
+<script type="text/javascript" src="__STYLE__/js/jquery.js"></script>
+<script type="text/javascript" src="__STYLE__/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__STYLE__/js/modernizr.js"></script>
+<script type="text/javascript" src="__STYLE__/js/selectivizr.js"></script>
+<script type="text/javascript" src="__STYLE__/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="__STYLE__/js/scripts.js"></script>
+<script type="text/javascript" src="__STYLE__/js/remaining.js"></script>
+<script type="text/javascript" src="__STYLE__/js/fn_number_format.js"></script>
+<script type="text/javascript" src="__STYLE__/js/9c2ff1651945cd8b31ec400ad49a89ca.js"></script>
+<script type="text/javascript" src="__STYLE__/js/dialog-plus-min.js"></script>
+<script type="text/javascript" src="__STYLE__/js/common.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+    var gdBtn = $('#gdBtn');
+    var pdBtn = $('#pdBtn');
+
+    pdBtn.click(function(){
+        $(this).toggleClass('active');
+        gdBtn.removeClass('active');
+        $('#pdWrap').stop(true, false).slideToggle('fast');
+        $('#gdWrap').stop(true, false).slideUp('fast').removeClass('open');
+        return false;
+    });
+    // if user status is freeze or just unblock and not yet do the maintain
+    gdBtn.click(function(){
+        $(this).toggleClass('active');
+        pdBtn.removeClass('active');
+        $('#gdWrap').stop(true, false).slideToggle('fast');
+        $('#pdWrap').stop(true, false).slideUp('fast').removeClass('open');
+        return false;
+    });
+
+    // Tooltips
+    $('.tip').tooltip({placement: 'top'});
+    $('.tipr').tooltip({placement: 'right'});
+    $('.tipb').tooltip({placement: 'bottom'});
+    $('.tipl').tooltip({placement: 'left'});
+
+    $("a[href='#top']").click(function() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+    });
+    /**
+    * @param number An integer
+    * @return Integer padded with a 0 if necessary
+    */
+    function padNumber(number) {
+        return (number >= 0 && number < 10) ? '0' + number : number;
+    }
+    $('#gd_amount').blur(function(){
+        var val = $(this).val();
+        $('#show_gd_amount').html('RMB' + val);
+    })
+    $('#pd_amount').blur(function(){
+        var val = $(this).val();
+        $('#show_pd_amount').html('RMB' + val);
+        $('#pd_pin').html('此次执行需要'+Math.ceil(parseInt(val) / 1000) +'PIN。')
+    })
+});
+</script>

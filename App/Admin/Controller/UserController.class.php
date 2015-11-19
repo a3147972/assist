@@ -37,7 +37,7 @@ class UserController extends BaseController
             $model->startTrans();
 
             $result = $model->changeCMoney($user_id, $money, $type);
-            $add_log = $CLogModel->insert($user_id, $type, $money, 3, $desc);
+            $add_log = $CLogModel->insert($user_id, $type, $money, 6, $desc);
 
             if ($result !== false && $add_log !== false) {
                 $model->commit();
@@ -76,7 +76,7 @@ class UserController extends BaseController
 
             if ($result !== false && $add_log !== false) {
                 $model->commit();
-                $this->success('更新数据成功',U('User/index'));
+                $this->success('更新数据成功', U('User/index'));
             } else {
                 $model->rollback();
                 $this->error('更新数据失败');
@@ -111,7 +111,7 @@ class UserController extends BaseController
 
             if ($result !== false && $add_log !== false) {
                 $model->commit();
-                $this->success('更新数据成功',U('User/index'));
+                $this->success('更新数据成功', U('User/index'));
             } else {
                 $model->rollback();
                 $this->error('更新数据失败');

@@ -2,6 +2,7 @@
 namespace Common\Model;
 
 use Common\Model\BaseModel;
+use Common\Tools\ArrayHelper;
 
 class UserModel extends BaseModel
 {

@@ -90,7 +90,16 @@
                             <case value="2">-{$vo.money}</case>
                           </switch>
                         </td>
-                        <td></td>
+                        <td>
+                          <switch name="vo.source">
+                            <case value="1">推荐奖励</case>
+                            <case value="2">管理奖励</case>
+                            <case value="3">获取收益</case>
+                            <case value="4">拉黑扣除</case>
+                            <case value="5">冻结扣除</case>
+                            <case value="6">后台充值</case>
+                          </switch>
+                        </td>
                         <td>{$vo.desc}</td>
                         <td>
                           {:date('Y-m-d H:i:s', $vo['create_time'])}

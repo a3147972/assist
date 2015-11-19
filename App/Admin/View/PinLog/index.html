@@ -90,7 +90,13 @@
                             <case value="2">-{$vo.amount}</case>
                           </switch>
                         </td>
-                        <td></td>
+                        <td>
+                          <switch name="vo.source">
+                            <case value="1">转账</case>
+                            <case value="2">排队扣除</case>
+                            <case value="3">后台充值</case>
+                          </switch>
+                        </td>
                         <td>{$vo.desc}</td>
                         <td>
                           {:date('Y-m-d H:i:s', $vo['create_time'])}

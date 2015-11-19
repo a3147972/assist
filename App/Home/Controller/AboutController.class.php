@@ -2,10 +2,15 @@
 namespace Home\Controller;
 
 use Common\Tools\Page;
-use Home\Controller\Basecontroller;
+use Home\Controller\BaseController;
 
 class AboutController extends BaseController
 {
+    public function _initialize()
+    {
+        parent::_initialize();
+        $this->assign('title', '公告');
+    }
     /**
      * 公告列表页
      */
@@ -14,7 +19,7 @@ class AboutController extends BaseController
         $page_index = I('p', 1);
         $page_size = 10;
 
-        $model = D('Abount');
+        $model = D('About');
         $list = $model->_list(array(), '', 'id desc', $page_index, $page_size);
         $count = $model->count();
 

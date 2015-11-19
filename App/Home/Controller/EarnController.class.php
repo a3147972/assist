@@ -14,7 +14,11 @@ class EarnController extends BaseController
         $user_id = session('user_info.id');
         $money = I('post.money');
         $money_type = I('post.money_type');
+        $pay_password = I('post.pay_password');
 
+        if (md5($pay_password) != session('user_info.pay_password')) {
+            $this->error('安全密码不正确');
+        }
         if (empty($money)) {
             $this->error('请输入金额');
         }
