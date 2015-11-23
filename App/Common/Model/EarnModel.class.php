@@ -7,7 +7,7 @@ use Common\Tools\ArrayHelper;
 class EarnModel extends BaseModel
 {
     protected $tableName = 'earn';
-    protected $selectFields = 'id,money,match_money,money_type,status,create_time';
+    protected $selectFields = 'id,money,surplus_money,money_type,status,create_time';
 
     /**
      * 写入收益表

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)http://www.nmm68.com/zh-CN/platform/sponsor-genealogy -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients">
+ <!-- <![endif]-->
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ </head>
+ <body class="zh-CN " id="" youdao="bind">
+  <include file="Public/script" />
+  <include file="Public/style" />
+  <style type="text/css">
+.clear{
+    clear:both;
+}
+.tree-genealogy{
+
+
+    overflow:auto;
+}
+.controller-node-con{
+    min-width:28px;
+}
+.tree-controller, .tree-controller-in{
+    width:28px;
+    height:36px;
+}
+.tree-controller-dash, .tree-controller-dashplus, .tree-controller-dashminus {
+    margin-left:16px;
+    width:12px;
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf_h.png) repeat-x 0 18px;
+    float:left;
+}
+.tree-controller-wrap, .tree-controller-l-wrap{
+    margin-left:28px;
+}
+.tree-controller-wrap{
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf.png) repeat-y 16px 0;
+}
+.tree-controller-tplus-line, .tree-controller-lplus-line, .tree-controller-tminus-line, .tree-controller-lminus-line, .tree-controller-t-line, .tree-controller-l-line{
+    margin-left:16px;
+    width:12px;
+    float:left;
+}
+.tree-controller-lplus-line, .tree-controller-lminus-line, .tree-controller-l-line{
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf.png) repeat-y 0 0;
+    float:left;
+    height:18px;
+}
+.tree-controller-lplus-right, .tree-controller-tplus-right, .tree-controller-tminus-right, .tree-controller-lminus-right, .tree-controller-l-right, .tree-controller-t-right{
+    width:12px;
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf_h.png) repeat-x 0 18px;
+    float:left;
+}
+.tree-controller-dash img, .tree-controller-dashplus img, .tree-controller-dashminus img,
+.tree-controller-tminus-right img, .tree-controller-lminus-right img, .tree-controller-tplus-right img, .tree-controller-lplus-right img{
+    margin-left:-4px;
+}
+img.tree-minus-button, img.tree-plus-button{
+    margin-top:14px;
+}
+img.tree-minus-button:hover, img.tree-plus-button:hover{
+    cursor:pointer;
+}
+.node-info-raw{
+    height:36px;
+    /*width:px;*/
+    overflow:hidden;
+}
+
+.tree-controller-dash-rtl, .tree-controller-dashplus-rtl, .tree-controller-dashminus-rtl {
+    margin-right:16px;
+    width:12px;
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf_h.png) repeat-x 0 18px;
+    float:right;
+}
+.tree-controller-wrap-rtl, .tree-controller-l-wrap-rtl{
+    margin-right:28px;
+}
+.tree-controller-wrap-rtl{
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf.png) repeat-y;
+    background-position:right 16px top;
+}
+.tree-controller-tplus-line-rtl, .tree-controller-lplus-line-rtl, .tree-controller-tminus-line-rtl, .tree-controller-lminus-line-rtl, .tree-controller-t-line-rtl, .tree-controller-l-line-rtl{
+    margin-right:16px;
+    width:12px;
+    float:right;
+}
+.tree-controller-lplus-line-rtl, .tree-controller-lminus-line-rtl, .tree-controller-l-line-rtl{
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf.png) repeat-y;
+    background-position: right 0px;
+    float:right;
+    height:18px;
+}
+.tree-controller-lplus-left, .tree-controller-tplus-left, .tree-controller-tminus-left, .tree-controller-lminus-left, .tree-controller-l-left, .tree-controller-t-left,
+.tree-controller-dashplus-left, .tree-controller-dashminus-left{
+    width:12px;
+    background:url(http://www.nmm68.com/images/hierarchy/tree/images/leaf_h.png) repeat-x;
+    background-position: top 18px right 0px;
+    float:right;
+}
+.tree-controller-dash-rtl img, .tree-controller-dashplus-rtl img, .tree-controller-dashminus-rtl img,
+.tree-controller-tminus-left img, .tree-controller-lminus-left img, .tree-controller-tplus-left img, .tree-controller-lplus-left img{
+    margin-right:-4px;
+    float:right;
+}
+.tree-controller-root-wrap-rtl .node-info-raw, .tree-controller-wrap-rtl .node-info-raw{
+    float:right;
+}
+.tree-genealogy-rtl img.node-loading{
+    float:right;
+}
+</style>
+  <title>家族体系 | NMM 98</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+  <include file="Public/header" />
+  <div id="wrapper">
+   <include file="Public/user_info" />
+  </div>
+  <div class="container">
+   <div class="innerContent">
+    <include file="Public/assist" />
+    <div class="row">
+     <div class="col-md-12">
+      <div class="widget" id="member-legend" style="display: none;">
+       <div class="widget-head">
+        <h4 class="heading">家族成长体系</h4>
+       </div>
+      </div>
+      <div class="coloum-part">
+       <div class="widget widget-body-white">
+        <form class="form-horizontal nm" name="member_quick_search_form" method="get" action="">
+         <div class="widget-body">
+          <div class="form-group">
+           <label class="col-md-1 control-label"><strong>搜索</strong></label>
+           <div class="col-md-10">
+            <div class="input-append">
+             <input type="text" class="form-control" name="keyword" id="quick_search_members" value="" />
+            </div>
+           </div>
+           <div class="col-md-1">
+            <button class="btn btn-primary" type="sumit" id="quick_search_btn">搜索</button>
+           </div>
+          </div>
+         </div>
+        </form>
+        <div id="possible_members" style="display:none;">
+        </div>
+       </div>
+      </div>
+      <div class="widget">
+       <div class="widget-head clearfix">
+        <div class="pull-right">
+         <a href="http://www.nmm68.com/zh-CN/platform/sponsor-genealogy#" id="mLegend" class="btn btn-inverse btn-xs">家族成长体系</a>
+        </div>
+        <h4 class="heading">家族体系</h4>
+       </div>
+       <div class="widget-body np clearfix" id="widget-genealogy">
+        <div class="leftPanel">
+         <div class="tree-genealogy ">
+          <div class="tree-controller-root-wrap">
+           <div class="controller-node-con">
+            <div class="tree-controller tree-controller-dashminus">
+             <div class="tree-controller-in">
+              <img class="tree-minus-button" src="__STYLE__/img/minus.png" />
+             </div>
+            </div>
+            <div class="node-info-raw" id="node-id-61822233">
+             <div class="node-info ">
+              <span class="user-rank"> <img src="__STYLE__/img/0.png" /> </span>
+              <span class="user-id" id="g_user_id" rel="?uid=61822233" style="">{:session('user_info.username')}</span>
+              <span class="user-name" title="李向波" style="">{:session('user_info.name')}</span>
+             </div>
+            </div>
+           </div>
+           <div id="node-wrapper-61822233" class="">
+            <volist name="child_user_list" id="child_user_vo">
+                <div class="tree-controller-wrap">
+
+                 <div class="controller-node-con">
+                  <div class="tree-controller tree-controller-t-line">
+                   <div class="tree-controller-in tree-controller-t-right">
+                    &nbsp;
+                   </div>
+                  </div>
+                  <div class="node-info-raw" id="node-id-{$child_user_vo['id']}">
+                   <div class="node-info ">
+                    <span class="user-rank"> <img src="__STYLE__/img/0.png" /> </span>
+                    <span class="user-id" id="g_user_id" rel="?uid={$child_user_vo['id']}" style="">{$child_user_vo['username']}</span>
+                    <span class="user-name" title="李向波" style="">{$child_user_vo['name']}</span>
+                   </div>
+                  </div>
+                 </div>
+                 <div id="node-wrapper-{$child_user_vo['id']}" class=""></div>
+                </div>
+            </volist>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="rightPanel">
+         <div class="overthrow" id="network_table">
+          <table class="table table-bordered table-primary">
+           <thead>
+            <tr class="tac">
+             <th>执行</th>
+             <th>会员等级</th>
+             <th>姓名</th>
+             <th>用户名</th>
+             <th>直销推荐人</th>
+             <th>电邮地址</th>
+             <th>手机号码</th>
+             <th>国家</th>
+             <th>开户银行</th>
+             <th>分行或支行的名称</th>
+             <th>省</th>
+             <th>市 / 县</th>
+             <th>账号</th>
+             <th>开户名</th>
+            </tr>
+           </thead>
+           <tbody>
+           <volist name="child_user_list" id="child1_user_vo">
+               <tr>
+             <td><a href="{:U('User/index', array('user_id'=>$child1_user_vo['id']))}">注册</a></td>
+             <td>{$child1_user_vo.level_name}</td>
+             <td>{$child1_user_vo.name}</td>
+             <td>{$child1_user_vo.username}</td>
+             <td>{$child1_user_vo.pid}</td>
+             <td>{$child1_user_vo.email}</td>
+             <td>{$child1_user_vo.phone}</td>
+             <td>China</td>
+             <td>{$child1_user_vo.bank_name}</td>
+             <td>{$child1_user_vo.bank_address}</td>
+             <td>{$child1_user_vo.province}</td>
+             <td>{$child1_user_vo.city}</td>
+             <td>{$child1_user_vo.bank_code}</td>
+             <td>{$child1_user_vo.bank_account}</td>
+            </tr>
+           </volist>
+           </tbody>
+          </table>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

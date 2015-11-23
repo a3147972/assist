@@ -634,7 +634,7 @@ ul.walletNav li .wallet{
 /* Table Donations ============== */
 .table-donate{margin-bottom:0;}
 .table-donate + .table-donate{margin-top: -1px;}
-.table-donate > tbody > tr:nth-child(even) > td{background: #fafafa;}
+.table-donate > tbody > tr:nth-child(even) > td{background: #ff441e;}
 .table-donate > tbody > tr > td{padding: 10px;}
 
 .donate-header{

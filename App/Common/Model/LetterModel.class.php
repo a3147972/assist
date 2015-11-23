@@ -83,19 +83,24 @@ class LetterModel extends BaseModel
         }
         //查询会员列表数据
         $user_id = array_column($list, 'user_id');
+        $user_id = array_merge($user_id, array_column($list, 'to_user_id'));
 
         $user_map['id'] = array('in', $user_id);
 
         $user_list = D('User')->_list($user_map, 'id, username, name');
+
         $user_list = ArrayHelper::array_key_replace($user_list, 'id', 'user_id');
         $user_list = array_column($user_list, null, 'user_id');
 
         $to_user_list = ArrayHelper::array_key_replace($user_list, array('user_id', 'username', 'name'), array('to_user_id', 'to_username', 'to_name'));
         //合并数据
+
         foreach ($list as $_k => $_v) {
+
             if ($_v['user_id'] == 0) {
                 $_v['username'] = '管理员';
                 $list[$_k] = array_merge($_v, $to_user_list[$_v['to_user_id']]);
+
             } else if ($_v['to_user_id'] == 0) {
                 $_v['to_username'] = '管理员';
                 $list[$_k] = array_merge($_v, $user_list[$_v['user_id']]);

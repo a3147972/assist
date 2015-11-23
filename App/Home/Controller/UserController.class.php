@@ -13,6 +13,11 @@ class UserController extends BaseController
         $this->display();
     }
 
+    public function info()
+    {
+        $this->display();
+    }
+
     /**
      * 新增用户
      */
@@ -75,7 +80,11 @@ class UserController extends BaseController
         $name = I('post.name');
         $email = I('post.email');
         $mobile = I('post.mobile');
+        $pay_password = I('post.pay_password');
 
+        if (md5($pay_password) != session('user_info.pay_password')) {
+            $this->error('安全密码不正确');
+        }
         if (empty($name)) {
             $this->error('请输入姓名');
         }
@@ -114,6 +123,9 @@ class UserController extends BaseController
         $rep_pay_password = I('post.rep_pay_password');
         $pay_password = I('post.pay_password');
 
+        if (md5($pay_password) != session('user_info.pay_password')) {
+            $this->error('原安全密码不正确');
+        }
         if (empty($new_pay_password)) {
             $this->error('请输入新安全密码');
         }
@@ -125,9 +137,6 @@ class UserController extends BaseController
         }
         if ($new_password != $pay_password) {
             $this->error('两次输入安全密码不一致');
-        }
-        if (md5($pay_password) != session('user_info.pay_password')) {
-            $this->error('原安全密码不正确');
         }
 
         $map['id'] = session('user_info.user_id');
@@ -270,4 +279,5 @@ class UserController extends BaseController
             $this->error('操作失败,请联系管理员');
         }
     }
+
 }

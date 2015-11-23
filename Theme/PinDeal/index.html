@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://www.nmm68.com/zh-CN/platform/wallet -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients">
+ <!-- <![endif]-->
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>PIN 转账 | NMM 98</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+ </head>
+ <body class="zh-CN " id="" youdao="bind">
+  <include file="Public/script" />
+  <include file="Public/style" />
+  <include file="Public/header" />
+  <div id="wrapper">
+   <include file="Public/user_info" />
+  </div>
+  <div class="container">
+   <div class="innerContent">
+    <include file="Public/assist" />
+    <div class="row">
+     <div class="col-md-12">
+      <div class="widget">
+       <form class="form-horizontal margin-none" name="wallet_transfer_form" method="post" action="{U('PinDeal/insert')}" onSubmit="return ajaxForm(this)">
+        <fieldset>
+         <div class="widget-head">
+          <h4 class="heading">PIN 转账</h4>
+         </div>
+         <div class="widget-body">
+          <div class="form-group">
+           <label class="col-md-2 control-label" for="firstname"> 转账至:<span class="ast">*</span> </label>
+           <div class="col-md-8">
+            <div class="input-group">
+             <input type="text" class="targetinput form-control form-control-group auto-ajax " name="uid" id="uid" value="" placeholder="收款人用户名" autocomplete="off" />
+             <input type="hidden" name="username" value="">
+             <span class="input-group-btn"> <button type="button" class="btn btn-default" id="check_user">查看</button> </span>
+            </div>
+            <p class="help-block" id="user_text"></p>
+           </div>
+          </div>
+          <div class="form-group">
+           <label class="col-md-2 control-label" for="firstname"> 转账款额:<span class="ast">*</span> </label>
+           <div class="col-md-10">
+            <input type="text" class="form-control " name="amount" id="amount" value="" placeholder="" />
+            <p class="help-block">您的PIN余额为：<strong class="green">{:session('user_info.pin')}</strong></p>
+           </div>
+          </div>
+          <div class="form-group">
+           <label class="col-md-2 control-label" for="firstname"> 安全密码:<span class="ast">*</span> </label>
+           <div class="col-md-10">
+            <input type="password" class="form-control " name="pay_password" placeholder="您的现有安全密码" />
+           </div>
+          </div>
+         </div>
+         <div class="data-footer innerAll half text-right clearfix">
+          <button class="btn btn-success btn-sm" type="submit" id="transfer_btn" value="继续">继续</button>
+         </div>
+        </fieldset>
+       </form>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+
+  <script>
+  $(function(){
+    $('#check_user').click(function(){
+    var username = $('#uid').val();
+    $.ajax({
+        url:'{:U("PinDeal/getName")}',
+        data:{
+            username : username,
+        },
+        type : 'post',
+        dataType : 'json',
+        success : function(i) {
+            if (i.status == 1) {
+                $('#uid').val(i.info);
+            } else {
+                alert('未查询到该用户');
+            }
+        }
+    })
+    return false;
+  })
+
+    $('#uid').keyup(function(){
+        var val = $(this).val();
+        $('[name=username]').val(val);
+    })
+  })
+
+  </script>
+ </body>
+</html>

@@ -67,31 +67,35 @@
                     <thead>
                       <tr>
                         <th>
-                          ID
+                          订单号
                         </th>
-                        <th>
-                          标题
-                        </th>
-                        <th>发布时间</th>
-                        <th>
-                          操作
-                        </th>
+                        <th>援助人</th>
+                        <th>收益人</th>
+                        <th>金额</th>
+                        <th>转账截图</th>
+                        <th>状态</th>
+                        <th>发起时间</th>
                       </tr>
                     </thead>
                     <tbody>
                       <volist name="list" id="vo">
                         <tr>
                         <td>
-                          {$vo.id}
+                          {$vo.order_id}
                         </td>
+                        <td>{$vo.assist_username}</td>
+                        <td>{$vo.earn_username}</td>
+                        <td>{$vo.money}</td>
+                        <td><img src="{$vo.transfer_pic}" alt=""></td>
                         <td>
-                          {$vo.title}
+                          <switch name="vo.status">
+                            <case value="0">等待确认</case>
+                            <case value="1">已完成</case>
+                            <case value="2">援助人确认</case>
+                            <case value="3">援助人拒绝</case>
+                          </switch>
                         </td>
                         <td>{:date('Y-m-d H:i:s', $vo['create_time'])}</td>
-                        <td>
-                          <a href="{:U('edit',array('id'=>$vo['id']))}">编辑</a>
-                          <a href="" data-href="{:U('del',array('id'=>$vo['id']))}" onclick="return ajaxBtn(this)">删除</a>
-                        </td>
                       </tr>
                       </volist>
                     </tbody>

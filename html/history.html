@@ -1,169 +1,253 @@
 <!DOCTYPE html>
-<!-- saved from url=(0047)http://www.nmm68.com/zh-CN/platform/pin-history -->
+<!-- saved from url=(0046)http://www.nmm68.com/zh-CN/platform/gd-history -->
 <html class=" js rgba borderradius boxshadow textshadow opacity cssgradients"><!-- <![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
 <script async="" src="./js/analytics.js"></script><script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/fn_number_format.js"></script>
+<script type="text/javascript" src="./js/9c2ff1651945cd8b31ec400ad49a89ca.js"></script>
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/modernizr.js"></script>
 <script type="text/javascript" src="./js/selectivizr.js"></script>
-<script type="text/javascript" src="./js/jquery.cookie.js"></script>
+<script type="text/javascript" src="./1_fjsiles/jquery.cookie.js"></script>
 <script type="text/javascript" src="./js/scripts.js"></script>
 <script type="text/javascript" src="./js/remaining.js"></script>
-<script type="text/javascript" src="./js/fn_number_format.js"></script>
-<script type="text/javascript" src="./js/9c2ff1651945cd8b31ec400ad49a89ca.js"></script>
-        <script type="text/javascript">
-            var _gNow = new Date();
+<script type="text/javascript" src="./js/bootstrap-fileupload.js"></script>
+		<script type="text/javascript">
+			var _gNow = new Date();
 
-            setInterval(function(){
-                $.ajax({
-                    url: '?aj=1&type=check_login',
-                    data: {'uid': 61822233},
-                    dataType: 'json',
-                    error: function(){},
-                    success: function(data){
-                        if(data.loggedout == '1'){
-                            window.location.href = "http://www.nmm68.com/zh-CN/";
-                        }
-                    }
-                })
-            }, 300000); //5min
-        </script>
-
+			setInterval(function(){
+				$.ajax({
+					url: '?aj=1&type=check_login',
+					data: {'uid': 61822233},
+					dataType: 'json',
+					error: function(){},
+					success: function(data){
+						if(data.loggedout == '1'){
+							window.location.href = "http://www.nmm68.com/zh-CN/";
+						}
+					}
+				})
+			}, 300000); //5min
+		</script>
 
 <script type="text/javascript">
 jQuery(document).ready(function($){
-    var gdBtn = $('#gdBtn');
-    var pdBtn = $('#pdBtn');
+	var mdid, pdid, gdid, amount, status;
+	var img_field = $("#upload_clone").clone();
 
-    pdBtn.click(function(){
-        $(this).toggleClass('active');
-        gdBtn.removeClass('active');
-        $('#pdWrap').stop(true, false).slideToggle('fast');
-        $('#gdWrap').stop(true, false).slideUp('fast').removeClass('open');
-        return false;
-    });
-    // if user status is freeze or just unblock and not yet do the maintain
-    gdBtn.click(function(){
-        $(this).toggleClass('active');
-        pdBtn.removeClass('active');
-        $('#gdWrap').stop(true, false).slideToggle('fast');
-        $('#pdWrap').stop(true, false).slideUp('fast').removeClass('open');
-        return false;
-    });
+	$("button[name^=load_pdgd_matching_]").click(function(){
+		var gdid = $(this).val();
+		var json = $(this).attr('rel');
+		var bank = JSON && JSON.parse(json) || $.parseJSON(json);
+		$("#gd_matching_list_" + gdid).html('<img src="http://www.nmm68.com/templates/default/images/loader2.gif"/>')
+		$("#gd_matching_list_" + gdid).load("?gdid=" + gdid, function(){
+			$('.transactionWrap').hide();
+			$("span[name=matching_alipay_" + gdid + "]").html(bank.alipay);
+			$("span[name=matching_bank_acc_" + gdid + "]").html(bank.bank_acc_no);
+			$("span[name=matching_bank_payee_" + gdid + "]").html(bank.bank_payee_name);
+			$("span[name=matching_bank_name_" + gdid + "]").html(bank.bank_name);
+			$("span[name=matching_bank_branch_" + gdid + "]").html(bank.bank_branch_name);
+			$("span[name=matching_bank_state_" + gdid + "]").html(bank.bank_state);
+			$("span[name=matching_bank_city_" + gdid + "]").html(bank.bank_city);
+		});
+	});
 
-    // Tooltips
-    $('.tip').tooltip({placement: 'top'});
-    $('.tipr').tooltip({placement: 'right'});
-    $('.tipb').tooltip({placement: 'bottom'});
-    $('.tipl').tooltip({placement: 'left'});
+	$('[data-toggle="tooltip"]').tooltip({
+		container : 'body',
+	});
 
-    $("a[href='#top']").click(function() {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        return false;
-    });
+	$('.hireTable').live("click", function(){
+		$('.'+$(this).attr('value')+'.donate-body-'+$(this).attr('rel')).slideToggle('normal');
+	});
 
-    var _server_time = new Date(2015, 11-1, 17,
-        18, 29, 36),
-        _server_time2 = new Date(2015, 11-1, 17,
-        18, 29, 36),
-        _local_time = new Date(2015, 11-1, 17,
-        18, 29, 36),
-        _local_time2 = new Date(2015, 11-1, 17,
-        18, 29, 36);
+	$('.transactionWrap').hide();
+	$('.btn-details').live("click", function () {
+		$(this).parents('table').siblings('.transactionWrap').stop(true, false).slideUp('normal');
+		$(this).parents('table').next().stop(true, false).slideToggle('normal');
+		return false;
+	});
 
-    _timer = setInterval(function(){
-        var now = new Date();
-        true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);        //synchronize & increment 1 second
-        second = _local_time.getTime() + 1000;
-        elapsed = Math.round((second - _local_time2.getTime()) / 1000);
-        if(elapsed < true_elapsed){
-            diff = true_elapsed - elapsed;
-            second += (diff * 1000);
-        }
-        _local_time.setTime(second);
-        second = _server_time.getTime() + 1000;
-        elapsed = Math.round((second - _server_time2.getTime()) / 1000);
-        if(elapsed < true_elapsed){
-            diff = true_elapsed - elapsed;
-            second += (diff * 1000);
-        }
-        _server_time.setTime(second);
+	$('#show_message_box').live("click", function(e){
+		e.preventDefault();
+		json = $(this).attr('data');
+		data = JSON && JSON.parse(json) || $.parseJSON(json);
 
-        //update server time
-        date_text = padNumber(_server_time.getHours())+':'+padNumber(_server_time.getMinutes())+':'+padNumber(_server_time.getSeconds());
-        date_text += ' ' + _server_time.getDate()+'/'+(_server_time.getMonth()+1)+'/'+_server_time.getFullYear();
-        $('#server_time_text').html(date_text);
-        //update local time
-        date_text = padNumber(_local_time.getHours())+':'+padNumber(_local_time.getMinutes())+':'+padNumber(_local_time.getSeconds());
-        date_text += ' ' + _local_time.getDate()+'/'+(_local_time.getMonth()+1)+'/'+_local_time.getFullYear();
-        $('#local_time_text').html(date_text);
-    }, 1000);
+		mdid = data.mdid;
 
-    /**
-    * @param number An integer
-    * @return Integer padded with a 0 if necessary
-    */
-    function padNumber(number) {
-        return (number >= 0 && number < 10) ? '0' + number : number;
-    }
+		var spUrl = $(this).attr('src');
+		$("#message_div").load(spUrl);
+		$("input[name=mdid]").val(mdid);
+	});
+
+	$("a[id^=show_image]").live("click", function(){
+		$("#image_div").html("<img alt='' class='img-responsive' src='"+$(this).attr('data')+"'>");
+	});
+
+	$("#pdgd_message_form").on('submit', function(events){
+		events.preventDefault();
+		if($("input[name=uid]").val() != 61822233){
+			alert('error');
+		}else if($("textarea[name=message]").val() == ''){
+			alert('please write the message');
+		}else{
+			$.ajax({
+				url: '?aj=1&type=add_pdgd_message',
+				type: "POST",
+				data:  new FormData(this),
+				contentType: false,
+				cache: false,
+				processData:false,
+				success: function(data){
+					json = data.split('<', 1)[0];
+					details = JSON && JSON.parse(json) || $.parseJSON(json);
+
+					var html = '<div class="innerMessage message-toggle"><div class="fullMessage clearfix"><div class="pull-left"><strong class="blue">'+details.username+'</strong></div><div class="pull-right calendar ml5"><i class="fa fa-calendar mr5"></i><span class="title-date">2015年11月23日 4:22:24PM</span></div><div class="clearfix"></div><div class="mt5"><p class="nm">'+details.message+'</p></div></div></div>';
+					$('#message_div').append(html);
+					$("#upload").html(img_field);
+					img_field = $("#upload_clone").clone();
+					$("textarea[name=message]").val('');
+				}
+			});
+		}
+	});
+
 });
 </script>
 
 <script type="text/javascript">
 jQuery(document).ready(function($){
-    var _allsecs = new Array();
-    var _allsecs2 = new Array();
-    var _i18n = {
-        weeks: ['星期', '星期'],
-        days: ['天', '天'],
-        hours: ['小时', '小时'],
-        minutes: ['分', '分'],
-        seconds: ['秒', '秒']
-    };
-    $('.maintain_remain_time').each(function(){
-        var _rid = $(this).attr('id');
-        var _seconds = parseInt($(this).attr('rel'));
-        if(_seconds > 0){
-            $(this).html(
-                remaining.getString(_seconds, _i18n, false)
-            );
-        }
-        else{
-            $(this).html('剩余0天');
-        }
-        _allsecs[_rid] = _seconds;
-        _allsecs2[_rid] = _seconds;
-    });
-    timer = setInterval(function(){
-        var now = new Date();
-        true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000);        $('.maintain_remain_time').each(function(){
-            var _rid = $(this).attr('id');
-            if(typeof _allsecs[_rid] == 'undefined'){
-                _allsecs[_rid] = parseInt($(this).attr('rel'));
-            }
-            _seconds = _allsecs[_rid];
-            if(typeof _allsecs2[_rid] == 'undefined'){
-                _allsecs2[_rid] = parseInt($(this).attr('rel'));
-            }
-            //synchronize
-            _diff_sec = _allsecs2[_rid] - _seconds;
-            if(_diff_sec < true_elapsed){
-                _seconds = _allsecs2[_rid] - true_elapsed;
-            }
-            if(_seconds > 0){
-                $(this).html(
-                    remaining.getString(_seconds, _i18n, false)
-                );
-                _allsecs[_rid] = --_seconds;
-            }
-            else{
-                $("#too_many_user").hide();
-                $("#login_btn").removeAttr("disabled");
-                $(this).html('剩余0天');
-            }
-        });
-    }, 1000);
+	var gdBtn = $('#gdBtn');
+	var pdBtn = $('#pdBtn');
+
+	pdBtn.click(function(){
+		$(this).toggleClass('active');
+		gdBtn.removeClass('active');
+		$('#pdWrap').stop(true, false).slideToggle('fast');
+		$('#gdWrap').stop(true, false).slideUp('fast').removeClass('open');
+		return false;
+	});
+	// if user status is freeze or just unblock and not yet do the maintain
+	gdBtn.click(function(){
+		$(this).toggleClass('active');
+		pdBtn.removeClass('active');
+		$('#gdWrap').stop(true, false).slideToggle('fast');
+		$('#pdWrap').stop(true, false).slideUp('fast').removeClass('open');
+		return false;
+	});
+
+	// Tooltips
+	$('.tip').tooltip({placement: 'top'});
+	$('.tipr').tooltip({placement: 'right'});
+	$('.tipb').tooltip({placement: 'bottom'});
+	$('.tipl').tooltip({placement: 'left'});
+
+	$("a[href='#top']").click(function() {
+		$("html, body").animate({ scrollTop: 0 }, "slow");
+		return false;
+	});
+
+	var _server_time = new Date(2015, 11-1, 23,
+		16, 22, 24),
+		_server_time2 = new Date(2015, 11-1, 23,
+		16, 22, 24),
+		_local_time = new Date(2015, 11-1, 23,
+		16, 22, 24),
+		_local_time2 = new Date(2015, 11-1, 23,
+		16, 22, 24);
+
+	_timer = setInterval(function(){
+		var now = new Date();
+		true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000); 		//synchronize & increment 1 second
+		second = _local_time.getTime() + 1000;
+		elapsed = Math.round((second - _local_time2.getTime()) / 1000);
+		if(elapsed < true_elapsed){
+			diff = true_elapsed - elapsed;
+			second += (diff * 1000);
+		}
+		_local_time.setTime(second);
+		second = _server_time.getTime() + 1000;
+		elapsed = Math.round((second - _server_time2.getTime()) / 1000);
+		if(elapsed < true_elapsed){
+			diff = true_elapsed - elapsed;
+			second += (diff * 1000);
+		}
+		_server_time.setTime(second);
+
+		//update server time
+		date_text = padNumber(_server_time.getHours())+':'+padNumber(_server_time.getMinutes())+':'+padNumber(_server_time.getSeconds());
+		date_text += ' ' + _server_time.getDate()+'/'+(_server_time.getMonth()+1)+'/'+_server_time.getFullYear();
+		$('#server_time_text').html(date_text);
+		//update local time
+		date_text = padNumber(_local_time.getHours())+':'+padNumber(_local_time.getMinutes())+':'+padNumber(_local_time.getSeconds());
+		date_text += ' ' + _local_time.getDate()+'/'+(_local_time.getMonth()+1)+'/'+_local_time.getFullYear();
+		$('#local_time_text').html(date_text);
+	}, 1000);
+
+	/**
+	* @param number An integer
+	* @return Integer padded with a 0 if necessary
+	*/
+	function padNumber(number) {
+		return (number >= 0 && number < 10) ? '0' + number : number;
+	}
+});
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function($){
+	var _allsecs = new Array();
+	var _allsecs2 = new Array();
+	var _i18n = {
+		weeks: ['星期', '星期'],
+		days: ['天', '天'],
+		hours: ['小时', '小时'],
+		minutes: ['分', '分'],
+		seconds: ['秒', '秒']
+	};
+	$('.maintain_remain_time').each(function(){
+		var _rid = $(this).attr('id');
+		var _seconds = parseInt($(this).attr('rel'));
+		if(_seconds > 0){
+			$(this).html(
+				remaining.getString(_seconds, _i18n, false)
+			);
+		}
+		else{
+			$(this).html('剩余0天');
+		}
+		_allsecs[_rid] = _seconds;
+		_allsecs2[_rid] = _seconds;
+	});
+	timer = setInterval(function(){
+		var now = new Date();
+		true_elapsed = Math.round((now.getTime() - _gNow.getTime()) / 1000); 		$('.maintain_remain_time').each(function(){
+			var _rid = $(this).attr('id');
+			if(typeof _allsecs[_rid] == 'undefined'){
+				_allsecs[_rid] = parseInt($(this).attr('rel'));
+			}
+			_seconds = _allsecs[_rid];
+			if(typeof _allsecs2[_rid] == 'undefined'){
+				_allsecs2[_rid] = parseInt($(this).attr('rel'));
+			}
+			//synchronize
+			_diff_sec = _allsecs2[_rid] - _seconds;
+			if(_diff_sec < true_elapsed){
+				_seconds = _allsecs2[_rid] - true_elapsed;
+			}
+			if(_seconds > 0){
+				$(this).html(
+					remaining.getString(_seconds, _i18n, false)
+				);
+				_allsecs[_rid] = --_seconds;
+			}
+			else{
+				$("#too_many_user").hide();
+				$("#login_btn").removeAttr("disabled");
+				$(this).html('剩余0天');
+			}
+		});
+	}, 1000);
 });
 </script>
 
@@ -173,81 +257,84 @@ jQuery(document).ready(function($){
 
 <script type="text/javascript">
 jQuery(document).ready(function($){
-    var pin_message = "此次执行需要{quantity}PIN。";
-        $('#maintain_back_btn, #pd_back_btn, #gd_back_btn').click(function(){
-        $('input[name=__req]').val('start'); //back to starting step
-    });
+	var pin_message = "此次执行需要{quantity}PIN。";
+		$('#maintain_back_btn, #pd_back_btn, #gd_back_btn').click(function(){
+		$('input[name=__req]').val('start'); //back to starting step
+	});
 
-    if("0"){
-        $("#pd_pin").text(pin_message.replace("{quantity}", parseInt(0 / 1000)));
-    }else{
-        $("#pd_pin").text(pin_message.replace("{quantity}", 1));
-    }
+	if("0"){
+		$("#pd_pin").text(pin_message.replace("{quantity}", parseInt(0 / 1000)));
+	}else{
+		$("#pd_pin").text(pin_message.replace("{quantity}", 1));
+	}
 
-    $("input[name=from_wallet]").change(function(){
-        if($(this).val() == 'cwallet'){
-            $("#minimum_amount").text("RMB500.00");
-        }else{
-            $("#minimum_amount").text("RMB1,000.00");
-        }
-    });
+	$("input[name=from_wallet]").change(function(){
+		if($(this).val() == 'cwallet'){
+			$("#minimum_amount").text("RMB500.00");
+		}else{
+			$("#minimum_amount").text("RMB1,000.00");
+		}
+	});
 
-    $("#show_pd_amount").html(format_monetary_value(0));
-    $("#show_gd_amount").html(format_monetary_value(0));
+	$("#show_pd_amount").html(format_monetary_value(0));
+	$("#show_gd_amount").html(format_monetary_value(0));
 
-    $("#pd_amount").keyup(function(){
-        $("#show_pd_amount").html(format_monetary_value($(this).val()));
-        if($(this).val() > 1000 && $(this).val() % 1000 == 0){
-            $("#pd_pin").text(pin_message.replace("{quantity}", $(this).val() / 1000));
-        }else{
-            $("#pd_pin").text(pin_message.replace("{quantity}", 1));
-        }
-    });
-    $("#gd_amount").keyup(function(){
-        $("#show_gd_amount").html(format_monetary_value($(this).val()));
-    });
+	$("#pd_amount").keyup(function(){
+		$("#show_pd_amount").html(format_monetary_value($(this).val()));
+		if($(this).val() > 1000 && $(this).val() % 1000 == 0){
+			$("#pd_pin").text(pin_message.replace("{quantity}", $(this).val() / 1000));
+		}else{
+			$("#pd_pin").text(pin_message.replace("{quantity}", 1));
+		}
+	});
+	$("#gd_amount").keyup(function(){
+		$("#show_gd_amount").html(format_monetary_value($(this).val()));
+	});
 
-    if(false){
-        $("#recalc-ep-message").text("您的额外回酬已计算。请稍候片刻再尝试。");
-        $("#recalc-ep-button").attr("disabled", "disabled");
-        setTimeout(function(){
-            $("#recalc-ep-button").removeAttr("disabled");
-            $("#recalc-ep-message").text("");
-        }, 0);
-    }
+	if(false){
+		$("#recalc-ep-message").text("您的额外回酬已计算。请稍候片刻再尝试。");
+		$("#recalc-ep-button").attr("disabled", "disabled");
+		setTimeout(function(){
+			$("#recalc-ep-button").removeAttr("disabled");
+			$("#recalc-ep-message").text("");
+		}, 0);
+	}
 
-    $("#recalc-ep-button").on("click", function(e){
-        e.preventDefault();
-        $("#recalc-ep-message").text("您的额外回酬已计算成功。如果想再计算，请稍候片刻再尝试。");
-        $(this).attr("disabled", "disabled");
-        $.ajax({
-            url: '?aj=1&type=recalc_user_ep',
-            data: {'uid': 61822233},
-            type: 'post',
-            dataType: 'json',
-            error:function(data){
-                console.log(data);
-            },
-            success: function(data){
-                if(data.percent > 0){
-                    $("#current_ep").html(data.percent);
-                }
-            }
-        });
-        setTimeout(function(){
-            $("#recalc-ep-button").removeAttr("disabled");
-            $("#recalc-ep-message").text("");
-        }, 1800000);
-    });
+	$("#recalc-ep-button").on("click", function(e){
+		e.preventDefault();
+		$("#recalc-ep-message").text("您的额外回酬已计算成功。如果想再计算，请稍候片刻再尝试。");
+		$(this).attr("disabled", "disabled");
+		$.ajax({
+			url: '?aj=1&type=recalc_user_ep',
+			data: {'uid': 61822233},
+			type: 'post',
+			dataType: 'json',
+			error:function(data){
+				console.log(data);
+			},
+			success: function(data){
+				if(data.percent > 0){
+					$("#current_ep").html(data.percent);
+				}
+			}
+		});
+		setTimeout(function(){
+			$("#recalc-ep-button").removeAttr("disabled");
+			$("#recalc-ep-message").text("");
+		}, 1800000);
+	});
 });
 </script>
+
+
 <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="./css/font-awesome.min.css" type="text/css">
 <link rel="stylesheet" href="./css/main.css" type="text/css">
 <link rel="stylesheet" href="./css/zh-CN.css" type="text/css">
+<link rel="stylesheet" href="./css/fileupload.css" type="text/css">
 
 
-<title>PIN记录 | NMM 98</title>
+<title>GD记录 | NMM 98</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -271,358 +358,756 @@ jQuery(document).ready(function($){
   ga('send', 'pageview');
 </script>
 <header class="navbar navbar-static-top" id="top" role="header">
-    <div class="container">
-                        <div class="navbar-header">
-            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a href="http://www.nmm68.com/zh-CN/platform/" class="navbar-brand"><img src="./img/logo_white.png" alt=""></a>
-        </div>
-                        <ul class="nav navbar-nav navbar-right" role="sub-navigation">
-                        <li class="dropdown" id="lang_nav">
-                <a href="http://www.nmm68.com/zh-CN/platform/pin-history#" data-toggle="dropdown">
-                    <span class="language-sel-zh-CN fa-lang"></span>
-                    <span class="language-text">简体中文</span>
-                </a>
-                <ul class="dropdown-menu" role="languageMenu">
-                                                                                <li><a href="http://www.nmm68.com/platform/pin-history"><span class="language-sel-en"></span>English</a></li>
-                                                                                                                            <li><a href="./1_files/1.html"><span class="language-sel-zh-CN"></span>简体中文</a></li>
-                                                                            </ul>
-            </li>
+	<div class="container">
+						<div class="navbar-header">
+			<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="http://www.nmm68.com/zh-CN/platform/" class="navbar-brand"><img src="./img/logo_white.png" alt=""></a>
+		</div>
+						<ul class="nav navbar-nav navbar-right" role="sub-navigation">
+						<li class="dropdown" id="lang_nav">
+				<a href="http://www.nmm68.com/zh-CN/platform/gd-history#" data-toggle="dropdown">
+					<span class="language-sel-zh-CN fa-lang"></span>
+					<span class="language-text">简体中文</span>
+				</a>
+				<ul class="dropdown-menu" role="languageMenu">
+																				<li><a href="http://www.nmm68.com/platform/gd-history"><span class="language-sel-en"></span>English</a></li>
+																															<li><a href="./img/1.html"><span class="language-sel-zh-CN"></span>简体中文</a></li>
+																			</ul>
+			</li>
 
 
-            <li class="hidden-lg hidden-sm hidden-md">
-                <a href="" id="btn-wallet"><span class="glyphicon glyphicon-usd"></span></a>
-            </li>
-                        <li class="dropdown">
-                <a href="" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-xs">我的档案</span></a>
-                <ul class="dropdown-menu pull-right" id="user-details">
-                    <li class="clearfix">
-                        <span class="details">编号</span>
-                        <span class="count">61822233</span>
-                    </li>
-                    <li class="clearfix">
-                        <span class="details">姓名</span>
-                        <span class="count">李向波</span>
-                    </li>
-                    <li class="clearfix">
-                        <span class="details">用户名</span>
-                        <span class="count">qh7030</span>
-                    </li>
-                    <li class="clearfix">
-                        <span class="details">电邮地址</span>
-                        <span class="count">67340975@qq.com</span>
-                    </li>
-                </ul>
-            </li>
+			<li class="hidden-lg hidden-sm hidden-md">
+				<a href="" id="btn-wallet"><span class="glyphicon glyphicon-usd"></span></a>
+			</li>
+						<li class="dropdown">
+				<a href="" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> <span class="hidden-xs">我的档案</span></a>
+				<ul class="dropdown-menu pull-right" id="user-details">
+					<li class="clearfix">
+						<span class="details">编号</span>
+						<span class="count">61822233</span>
+					</li>
+					<li class="clearfix">
+						<span class="details">姓名</span>
+						<span class="count">李向波</span>
+					</li>
+					<li class="clearfix">
+						<span class="details">用户名</span>
+						<span class="count">qh7030</span>
+					</li>
+					<li class="clearfix">
+						<span class="details">电邮地址</span>
+						<span class="count">67340975@qq.com</span>
+					</li>
+				</ul>
+			</li>
 
-                            <li>
-                    <a href="http://www.nmm68.com/zh-CN/platform/message-inbox"><span class="glyphicon glyphicon-envelope"></span> <span class="hidden-xs">信息</span>
-                                            </a>
-                </li>
+							<li>
+					<a href="http://www.nmm68.com/zh-CN/platform/message-inbox"><span class="glyphicon glyphicon-envelope"></span> <span class="hidden-xs">信息</span>
+											</a>
+				</li>
 
-                        <li><a href="http://www.nmm68.com/zh-CN/platform/logout"><span class="hidden-xs">退出</span> <span class="glyphicon glyphicon-share-alt"></span></a></li>
-                                </ul>
-                <nav class="collapse navbar-collapse" role="main-navigation">
-            <ul class="nav navbar-nav">
-                <li class="">
-                    <a href="http://www.nmm68.com/zh-CN/platform/" class="glyphicons home"><i></i>首页</a>
-                </li>
+						<li><a href="http://www.nmm68.com/zh-CN/platform/logout"><span class="hidden-xs">退出</span> <span class="glyphicon glyphicon-share-alt"></span></a></li>
+								</ul>
+				<nav class="collapse navbar-collapse" role="main-navigation">
+			<ul class="nav navbar-nav">
+				<li class="">
+					<a href="http://www.nmm68.com/zh-CN/platform/" class="glyphicons home"><i></i>首页</a>
+				</li>
 
 
-                                                        <li class="">
-                        <a href="http://www.nmm68.com/zh-CN/platform/pd-list" class="glyphicons home"><i></i>舍名单<span class="badge"></span></a>
-                    </li>
+														<li class="">
+						<a href="http://www.nmm68.com/zh-CN/platform/pd-list" class="glyphicons home"><i></i>舍名单<span class="badge"></span></a>
+					</li>
 
-                    <li class="">
-                        <a href="http://www.nmm68.com/zh-CN/platform/gd-list" class="glyphicons home"><i></i>得名单<span class="badge"></span></a>
-                    </li>
+					<li class="">
+						<a href="http://www.nmm68.com/zh-CN/platform/gd-list" class="glyphicons home"><i></i>得名单<span class="badge"></span></a>
+					</li>
 
-                    <li class=""><a href="http://www.nmm68.com/zh-CN/platform/register" class="glyphicons book"><i></i>注册</a></li>
-                    <li class=""><a href="http://www.nmm68.com/zh-CN/platform/profile" class="glyphicons user"><i></i>管理档案</a></li>
+					<li class=""><a href="http://www.nmm68.com/zh-CN/platform/register" class="glyphicons book"><i></i>注册</a></li>
+					<li class=""><a href="http://www.nmm68.com/zh-CN/platform/profile" class="glyphicons user"><i></i>管理档案</a></li>
 
-                                        <li class=""><a href="http://www.nmm68.com/zh-CN/platform/sponsor-genealogy" class="glyphicons down_arrow"><i></i>家族体系</a></li>
+										<li class=""><a href="http://www.nmm68.com/zh-CN/platform/sponsor-genealogy" class="glyphicons down_arrow"><i></i>家族体系</a></li>
 
-                    <li class="dropdown">
-                        <a href="http://www.nmm68.com/zh-CN/platform/pin-history#" class="dropdown-toggle" data-toggle="dropdown">帐户管理 <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="http://www.nmm68.com/zh-CN/platform/wallet">PIN 转账</a></li>
-                            <li><a href="http://www.nmm68.com/zh-CN/platform/downline-pdgd">家族舍与得</a></li>
-                                                    </ul>
-                    </li>
+					<li class="dropdown">
+						<a href="http://www.nmm68.com/zh-CN/platform/gd-history#" class="dropdown-toggle" data-toggle="dropdown">帐户管理 <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="http://www.nmm68.com/zh-CN/platform/rw-transfer">R钱包转账</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/cw-transfer">C钱包转账</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/nw-transfer">N钱包转账</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/pin-transfer">PIN转账</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/downline-pdgd">家族舍与得</a></li>
+													</ul>
+					</li>
 
-                    <li class="dropdown active">
-                        <a href="http://www.nmm68.com/zh-CN/platform/pin-history#" class="dropdown-toggle" data-toggle="dropdown">交易记录 <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="http://www.nmm68.com/zh-CN/platform/gd-history">GD： 得交易记录</a></li>
-                            <li><a href="http://www.nmm68.com/zh-CN/platform/pd-history">PD： 舍交易记录</a></li>
-                            <li><a href="http://www.nmm68.com/zh-CN/platform/rw-history">R钱包交易记录</a></li>
-                            <li><a href="http://www.nmm68.com/zh-CN/platform/cw-history">C钱包交易记录</a></li>
-                            <li><a href="http://www.nmm68.com/zh-CN/platform/nw-history">N钱包交易记录</a></li>
+					<li class="dropdown active">
+						<a href="http://www.nmm68.com/zh-CN/platform/gd-history#" class="dropdown-toggle" data-toggle="dropdown">交易记录 <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="active"><a href="./img/1.html">GD： 得交易记录</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/pd-history">PD： 舍交易记录</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/rw-history">R钱包交易记录</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/cw-history">C钱包交易记录</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/nw-history">N钱包交易记录</a></li>
+							<li><a href="http://www.nmm68.com/zh-CN/platform/pin-history">PIN交易记录</a></li>
+						</ul>
+					</li>
 
-                            <li class="active"><a href="./1_files/1.html">PIN交易记录</a></li>
-                        </ul>
-                    </li>
+					<li class=""><a href="http://www.nmm68.com/zh-CN/platform/commission" class="glyphicons down_arrow"><i></i>佣金</a></li>
 
-                    <li class=""><a href="http://www.nmm68.com/zh-CN/platform/commission" class="glyphicons down_arrow"><i></i>佣金</a></li>
-
-                            </ul>
-        </nav>
-                    </div>
+							</ul>
+		</nav>
+					</div>
 </header>
 <div id="wrapper">
-    <div class="page-title">
-    <div class="container">
-        <h3 class="title">PIN记录</h3>
-                        <ul class="walletNav clearfix">
-            <li class="clearfix">
-                <img src="./img/e-wallet.png" alt="" class="img">
-                <span class="wallet">
-                    <span class="tilte-w">C钱包</span>
-                    <strong class="wallet-color">RMB100.00</strong>
-                </span>
-            </li>
-            <li class="clearfix">
-                <img src="./img/r-wallet.png" alt="" class="img">
-                <span class="wallet">
-                    R钱包<br>
-                    <strong class="wallet-color">RMB40.00</strong>
-                </span>
-            </li>
-            <li class="clearfix">
-                <span class="wallet">
-                    N钱包<br>
-                    <strong class="wallet-color">RMB0.00</strong>
-                </span>
-            </li>
-            <li class="clearfix">
-                <img src="./img/i-wallet.png" alt="" class="img">
-                <span class="wallet">
-                    PIN<br>
-                    <strong class="wallet-color">0</strong>
-                </span>
-            </li>
-        </ul>
-                    </div>
+	<div class="page-title">
+	<div class="container">
+		<h3 class="title">GD记录</h3>
+						<ul class="walletNav clearfix">
+			<li class="clearfix">
+				<img src="./img/e-wallet.png" alt="" class="img">
+				<span class="wallet">
+					<span class="tilte-w">C钱包</span>
+					<strong class="wallet-color">RMB0.00</strong>
+				</span>
+			</li>
+			<li class="clearfix">
+				<img src="./img/r-wallet.png" alt="" class="img">
+				<span class="wallet">
+					R钱包<br>
+					<strong class="wallet-color">RMB0.00</strong>
+				</span>
+			</li>
+			<li class="clearfix">
+				<img src="./img/n-wallet.png" alt="" class="img">
+				<span class="wallet">
+					N钱包<br>
+					<strong class="wallet-color">RMB0.00</strong>
+				</span>
+			</li>
+			<li class="clearfix">
+				<img src="./img/i-wallet.png" alt="" class="img">
+				<span class="wallet">
+					PIN<br>
+					<strong class="wallet-color">0</strong>
+				</span>
+			</li>
+		</ul>
+					</div>
 </div>
 <div class="clockWrap">
-    <div class="container clearfix">
-                <div class="pull-left" id="userRank"><span class="glyphicon glyphicon-user"></span> 级别 : 普通会员</div>
-                <div class="clock-location">
-            <strong class="mr5">服务器时间</strong>
-            <span id="server_time_text">18:29:42 17/11/2015</span>
-        </div>
-        <div class="clock-location">
-            <strong class="mr5">当地时间</strong>
-            <span id="local_time_text">18:29:42 17/11/2015</span>
-        </div>
-    </div>
+	<div class="container clearfix">
+				<div class="pull-left" id="userRank"><span class="glyphicon glyphicon-user"></span> 级别 : 普通会员</div>
+				<div class="clock-location">
+			<strong class="mr5">服务器时间</strong>
+			<span id="server_time_text">16:23:01 23/11/2015</span>
+		</div>
+		<div class="clock-location">
+			<strong class="mr5">当地时间</strong>
+			<span id="local_time_text">16:23:01 23/11/2015</span>
+		</div>
+	</div>
 </div>
 
-    <div class="container">
+	<div class="container">
 
 
 
 
 
-        <div class="innerContent">
-            <div id="donationWrap">
-    <div class="row">
-        <div class="col-sm-6">
-            <a class="btn btn-block " id="pdBtn">
-                <i class="fa fa-fw fa-usd"></i>
-                舍: 提供帮助         </a>
-        </div>
-        <div class="col-sm-6">
-            <a class="btn btn-block " id="gdBtn">
-                <i class="fa fa-fw fa-download"></i>
-                得： 获得收益         </a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12" id="pdWrap" style="">
-                                    <div class="widget widget-body-white">
-                <form class="form-horizontal margin-none" name="buy_share_form" action="" method="post">
-                    <input type="hidden" name="__req" value="9">
-                    <input type="hidden" name="__nonce" value="9852155a39e19b7b0f96ed001ae57841ca9d26642cca96b2b7f7133c3b00bce3">
-                                                            <div class="widget-head widget-head-blue">
-                        <h4 class="heading">舍: 提供帮助</h4>
-                    </div>
-                    <div class="widget-body">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">数额</label>
-                            <div class="col-md-9">
-                                <input class="form-control" id="pd_amount" name="amount" value="0" type="text" autocomplete="off">
-                                <p class="help-block">您输入的数额 ： <span id="show_pd_amount">RMB0.00</span></p>
-                                <p class="help-block">最低PD数额：<span class="red">RMB1,000.00</span></p>
-                                <p class="help-block" style="color:red" id="pd_pin">此次执行需要0PIN。</p>
-                                                            </div>
-                        </div>
-                                                <div class="form-group">
-                            <label class="col-md-3 control-label">额外回酬</label>
-                            <div class="col-md-9">
-                                <input id="pd_ep" name="ep" value="1" type="checkbox">
-                                <span class="help-block" style="display:inline">您现有<span id="current_ep">14.50<span>%的额外回酬。</span>
-                                <button id="recalc-ep-button">计算</button>
-                                <span class="help-block" style="color:red" id="recalc-ep-message"></span>
-                            </span></span></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">安全密码</label>
-                            <div class="col-md-9">
-                                <input class="form-control" id="epassword2" name="epassword2" value="" type="password" placeholder="">
-                                                            </div>
-                        </div>
-                    </div>
+		<div class="innerContent">
+			<div id="donationWrap">
+	<div class="row">
+		<div class="col-sm-6">
+			<a class="btn btn-block " id="pdBtn">
+				<i class="fa fa-fw fa-usd"></i>
+				舍: 提供帮助			</a>
+		</div>
+		<div class="col-sm-6">
+			<a class="btn btn-block " id="gdBtn">
+				<i class="fa fa-fw fa-download"></i>
+				得： 获得收益			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12" id="pdWrap" style="">
+									<div class="widget widget-body-white">
+				<form class="form-horizontal margin-none" name="buy_share_form" action="" method="post">
+					<input type="hidden" name="__req" value="9">
+					<input type="hidden" name="__nonce" value="de38ca7939b0bb2702772a61c33cb0eeca98ce640509ac3b985ff91b328c55a4">
+															<div class="widget-head widget-head-blue">
+						<h4 class="heading">舍: 提供帮助</h4>
+					</div>
+					<div class="widget-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">数额</label>
+							<div class="col-md-9">
+								<input class="form-control" id="pd_amount" name="amount" value="0" type="text" autocomplete="off">
+								<p class="help-block">您输入的数额 ： <span id="show_pd_amount">RMB0.00</span></p>
+								<p class="help-block">最低PD数额：<span class="red">RMB1,000.00</span></p>
+								<p class="help-block" style="color:red" id="pd_pin">此次执行需要0PIN。</p>
+															</div>
+						</div>
+												<div class="form-group">
+							<label class="col-md-3 control-label">额外回酬</label>
+							<div class="col-md-9">
+								<input id="pd_ep" name="ep" value="1" type="checkbox">
+								<span class="help-block" style="display:inline">您现有<span id="current_ep">23.50<span>%的额外回酬。</span>
+								<button id="recalc-ep-button">计算</button>
+								<span class="help-block" style="color:red" id="recalc-ep-message"></span>
+							</span></span></div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">安全密码</label>
+							<div class="col-md-9">
+								<input class="form-control" id="epassword2" name="epassword2" value="" type="password" placeholder="">
+															</div>
+						</div>
+					</div>
 
-                    <footer class="data-footer innerAll half text-right clearfix">
-                        <button type="submit" class="btn btn-primary btn-sm">执行舍</button>
-                    </footer>
-                </form>
-            </div>
-                    </div>
-        <div class="col-md-12" id="gdWrap" style="">
-                                                                        <div class="widget widget-body-white">
-                                <form class="form-horizontal margin-none" name="wallet_transfer_form" method="post" action="">
-                    <input type="hidden" name="__req" value="10">
-                    <input type="hidden" name="__nonce" value="e3ce89a10b23dc4233ea024038ebcd479cee5d060cd3189b6d787a6ed031d01b">
-                    <input type="hidden" name="type" value="gd">
+					<footer class="data-footer innerAll half text-right clearfix">
+						<button type="submit" class="btn btn-primary btn-sm">执行舍</button>
+					</footer>
+				</form>
+			</div>
+					</div>
+		<div class="col-md-12" id="gdWrap" style="">
+																		<div class="widget widget-body-white">
+								<form class="form-horizontal margin-none" name="wallet_transfer_form" method="post" action="">
+					<input type="hidden" name="__req" value="10">
+					<input type="hidden" name="__nonce" value="a898ea7b8fb037a5dc3ef57831a0d96dd63600e779b3f3390d4cfeabf4a0ed41">
+					<input type="hidden" name="type" value="gd">
 
-                    <fieldset>
-                        <div class="widget-head widget-head-blue">
-                            <h4 class="heading">得： 获得收益</h4>
-                        </div>
-                        <div class="widget-body">
-                            <div class="form-group">
-                                <label class="col-md-3 control-label">
-                                    可得总额:<span class="ast">*</span>
-                                </label>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control " name="amount" id="gd_amount" value="" placeholder="" autofocus="">
-                                    <p class="help-block">您输入的数额 ： <span id="show_gd_amount">RMB0.00</span></p>
-                                    <p class="help-block">您现有的C钱包 余额： RMB100.00.</p>
-                                    <p class="help-block">您现有的R钱包 余额： RMB40.00.</p>
-                                    <p class="help-block">最低GD数额：<span id="minimum_amount" class="red">RMB1,000.00</span></p>
-                                                                    </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">
-                                    由钱包:<span class="ast">*</span>
-                                </label>
-                                <div class="col-md-9">
-                                                                        <label class="radio ">
-                                        <input type="radio" name="from_wallet" value="cwallet" class="mt8">
-                                        C钱包                                 </label>
-                                                                        <label class="radio ">
-                                        <input type="radio" name="from_wallet" value="rwallet" class="mt8">
-                                        R钱包                                 </label>
-                                                                                                        </div>
-                            </div>
-                                                                                    <div class="form-group">
-                                <label class="col-md-3 control-label">支付宝账号（淘宝账号/手机号码/邮箱）:</label>
-                                <div class="col-md-9">
-                                    <span>15720370307</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">开户银行:</label>
-                                <div class="col-md-9">
-                                    <span>农业银行</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">分行或支行的名称:</label>
-                                <div class="col-md-9">
-                                    <span>河北任丘支行</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">省:</label>
-                                <div class="col-md-9">
-                                    <span>河北省</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">市 / 县:</label>
-                                <div class="col-md-9">
-                                    <span>任丘市</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">账号:</label>
-                                <div class="col-md-9">
-                                    <span>6228481738007425675</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">开户名:</label>
-                                <div class="col-md-9">
-                                    <span>李向波</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">银行卡绑定的手机号码:</label>
-                                <div class="col-md-9">
-                                    <span>15720370307</span>
-                                </div>
-                            </div>
-                                                        <div class="form-group">
-                                <label class="col-md-3 control-label">国际银行帐户号码 (IBAN Code):</label>
-                                <div class="col-md-9">
-                                    <span></span>
-                                </div>
-                            </div>
-                                                                                    <div class="form-group">
-                                <label class="col-md-3 control-label">安全密码:<span class="ast">*</span></label>
-                                <div class="col-md-9">
-                                    <input type="password" class="form-control " name="epassword2" placeholder="安全密码">
-                                                                    </div>
-                            </div>
-                        </div>
-                        <div class="data-footer innerAll half text-right clearfix">
-                            <button class="btn btn-primary btn-sm" type="submit" id="withdraw_btn" value="继续">继续</button>
-                        </div>
-                    </fieldset>
-                </form>
-                            </div>
-                    </div>
-    </div>
+					<fieldset>
+						<div class="widget-head widget-head-blue">
+							<h4 class="heading">得： 获得收益</h4>
+						</div>
+						<div class="widget-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">
+									可得总额:<span class="ast">*</span>
+								</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control " name="amount" id="gd_amount" value="" placeholder="" autofocus="">
+									<p class="help-block">您输入的数额 ： <span id="show_gd_amount">RMB0.00</span></p>
+									<p class="help-block">您现有的C钱包 余额： RMB0.00.</p>
+									<p class="help-block">您现有的R钱包 余额： RMB0.00.</p>
+									<p class="help-block">最低GD数额：<span id="minimum_amount" class="red">RMB1,000.00</span></p>
+																	</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">
+									由钱包:<span class="ast">*</span>
+								</label>
+								<div class="col-md-9">
+																		<label class="radio ">
+										<input type="radio" name="from_wallet" value="cwallet" class="mt8">
+										C钱包									</label>
+																		<label class="radio ">
+										<input type="radio" name="from_wallet" value="rwallet" class="mt8">
+										R钱包									</label>
+																										</div>
+							</div>
+																					<div class="form-group">
+								<label class="col-md-3 control-label">支付宝账号（淘宝账号/手机号码/邮箱）:</label>
+								<div class="col-md-9">
+									<span>15720370307</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">开户银行:</label>
+								<div class="col-md-9">
+									<span>农业银行</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">分行或支行的名称:</label>
+								<div class="col-md-9">
+									<span>河北任丘支行</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">省:</label>
+								<div class="col-md-9">
+									<span>河北省</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">市 / 县:</label>
+								<div class="col-md-9">
+									<span>任丘市</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">账号:</label>
+								<div class="col-md-9">
+									<span>6228481738007425675</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">开户名:</label>
+								<div class="col-md-9">
+									<span>李向波</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">银行卡绑定的手机号码:</label>
+								<div class="col-md-9">
+									<span>15720370307</span>
+								</div>
+							</div>
+														<div class="form-group">
+								<label class="col-md-3 control-label">国际银行帐户号码 (IBAN Code):</label>
+								<div class="col-md-9">
+									<span></span>
+								</div>
+							</div>
+																					<div class="form-group">
+								<label class="col-md-3 control-label">安全密码:<span class="ast">*</span></label>
+								<div class="col-md-9">
+									<input type="password" class="form-control " name="epassword2" placeholder="安全密码">
+																	</div>
+							</div>
+						</div>
+						<div class="data-footer innerAll half text-right clearfix">
+							<button class="btn btn-primary btn-sm" type="submit" id="withdraw_btn" value="继续">继续</button>
+						</div>
+					</fieldset>
+				</form>
+							</div>
+					</div>
+	</div>
 </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget">
-                        <div class="widget-head clearfix">
-                            <h4 class="heading">转账记录一览表</h4>
-                        </div>
-                        <div class="widget-body innerAll overthrow">
-                            <table class="table table-bordered table-primary">
-                                <thead>
-                                    <tr class="tac">
-                                        <th>编号</th>
-                                        <th>金额(PIN)</th>
-                                        <th>余额 (PIN)</th>
-                                        <th>详情</th>
-                                        <th>日期</th>
-                                    </tr>
-                                </thead>
-                                                                <tbody><tr>
-                                    <td align="center">12573636</td>
-                                                                        <td align="center"><strong class="red">- 3</strong></td>
-                                    <td align="center"><strong class="amount">0</strong></td>
-                                                                        <td width="40%">3 PIN已转账给李丹，会员#66211897</td>
-                                    <td align="right"><span class="title-date">2015年11月3日 10:18:57AM</span></td>
-                                </tr>
-                                                            </tbody></table>
-                        </div>
-                                                                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="widget">
+						<div class="widget-head clearfix">
+							<h4 class="heading">GD记录</h4>
+						</div>
+						<div class="widget-body innerAll">
+														<div class="overthrow">
+							<table class="table table-bordered table-donate table-gd">
+								<tbody><tr bgcolor="#1bb5ce">
+									<td>
+										<div class="donate-header clearfix">
+											<i class="fa fa-ellipsis-h hireTable" rel="1583770" value="gd" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to hide"></i>
+											<h4>请求帮助: <span>GD01583770</span></h4>
+											<b>参加者</b>: qh7030<br>
+											<b>数额</b>: 1150.00<br>
+											<b>剩余数额</b>: RMB0.00<br>
+											<b>日期</b>: 2015年10月25日<br>
+											<b>状况</b>: <span class="confirm">已确定</span><br>
+											<b>诚信奖励基金</b>: 100% <br>
+											<a class="btn btn-print btn-sm" href="http://www.nmm68.com/zh-CN/platform/print-gd?gdid=1583770" target="_blank"><i class="fa fa-print"></i> 复印</a>
+										</div>
+										<div class="gd donate-body-1583770" id="gd_matching_list_1583770"><table class="table table-donations">
+	<tbody>
+				<tr>
+			<td class="donate-status confirm" width="100px">
+				编号:
+				<span class="number">MD05588371</span>
+			</td>
+			<td>
+				创建日期:<br>
+				<span class="date">2015-11-18</span>
+			</td>
+			<td>
+				<span class="user">xxklm888</span>
+				其他银行			</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="value money">RMB400.00</span>
+								确认 : <a href="http://www.nmm68.com/zh-CN/platform/gd-history#dialog-photo" id="show_image_5588371" data="http://www.nmm68.com/files/payment2/558/8371/image_20151119_1447924260.93034.jpg" data-toggle="modal" class=""><i class="fa fa-picture-o"></i></a>
+							</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="user">你</span>
+				其他银行			</td>
+		</tr>
+		<tr>
+			<td class="donate-status confirm">
+				<i class="fa fa-check"></i>
+			</td>
+			<td colspan="3" class="confirm-status">
+									<span class="green">
+						您已确定接收资金帮助 : MD05588371					</span>
+							</td>
+			<td colspan="3" class="nowrap action-btn" align="right">
+												<a href="http://www.nmm68.com/zh-CN/platform/gd-history#dialog-msg" src="?mdid=5588371" data-toggle="modal" class="btn btn-inverse btn-xs" id="show_message_box" data="{&quot;mdid&quot;:&quot;5588371&quot;}">信息</a>
+								<a class="btn btn-warning btn-xs btn-details">详情</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div class="transactionWrap" style="display: block; overflow: hidden;">
+	<div class="transaction-details">
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th colspan="2">
+					转账到 : <br>
+					支付宝账号（淘宝账号/手机号码/邮箱） : <span name="matching_alipay_1583770">15720370307</span><br>
+					账号 : <span name="matching_bank_acc_1583770">6228481738007425675</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody><tr>
+				<td><b>开户名</b></td>
+				<td><span name="matching_bank_payee_1583770">李向波</span></td>
+			</tr>
+			<tr>
+				<td><b>开户银行</b></td>
+				<td><span name="matching_bank_name_1583770">农业银行</span></td>
+			</tr>
+			<tr>
+				<td><b>分行或支行的名称</b></td>
+				<td><span name="matching_bank_branch_1583770">河北任丘支行</span></td>
+			</tr>
+			<tr>
+				<td><b>省</b></td>
+				<td><span name="matching_bank_state_1583770">河北省</span></td>
+			</tr>
+			<tr>
+				<td><b>市 / 县</b></td>
+				<td><span name="matching_bank_city_1583770">任丘市</span></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<ul class="contactList">
+						<li>联络接收人: 李向波 : 15720370307</li>
+												<li>联络接受者的管理员: 李丹 : 15233795779</li>
+												<li>联络转账人: 孔令梅 : 18656832760</li>
+												<li>联络转账人的管理员: 陈活华 : 18270106863</li>
+											</ul>
+				</td>
+			</tr>
+		</tbody></table>
+	</div>
+</div>
+<table class="table table-donations">
+	<tbody>
+				<tr>
+			<td class="donate-status confirm" width="100px">
+				编号:
+				<span class="number">MD05588373</span>
+			</td>
+			<td>
+				创建日期:<br>
+				<span class="date">2015-11-18</span>
+			</td>
+			<td>
+				<span class="user">yjq8888</span>
+				其他银行			</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="value money">RMB250.00</span>
+							</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="user">你</span>
+				其他银行			</td>
+		</tr>
+		<tr>
+			<td class="donate-status confirm">
+				<i class="fa fa-check"></i>
+			</td>
+			<td colspan="3" class="confirm-status">
+									<span class="green">
+						您已确定接收资金帮助 : MD05588373					</span>
+							</td>
+			<td colspan="3" class="nowrap action-btn" align="right">
+												<a href="http://www.nmm68.com/zh-CN/platform/gd-history#dialog-msg" src="?mdid=5588373" data-toggle="modal" class="btn btn-inverse btn-xs" id="show_message_box" data="{&quot;mdid&quot;:&quot;5588373&quot;}">信息</a>
+								<a class="btn btn-warning btn-xs btn-details">详情</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div class="transactionWrap" style="display: none; overflow: hidden;">
+	<div class="transaction-details">
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th colspan="2">
+					转账到 : <br>
+					支付宝账号（淘宝账号/手机号码/邮箱） : <span name="matching_alipay_1583770">15720370307</span><br>
+					账号 : <span name="matching_bank_acc_1583770">6228481738007425675</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody><tr>
+				<td><b>开户名</b></td>
+				<td><span name="matching_bank_payee_1583770">李向波</span></td>
+			</tr>
+			<tr>
+				<td><b>开户银行</b></td>
+				<td><span name="matching_bank_name_1583770">农业银行</span></td>
+			</tr>
+			<tr>
+				<td><b>分行或支行的名称</b></td>
+				<td><span name="matching_bank_branch_1583770">河北任丘支行</span></td>
+			</tr>
+			<tr>
+				<td><b>省</b></td>
+				<td><span name="matching_bank_state_1583770">河北省</span></td>
+			</tr>
+			<tr>
+				<td><b>市 / 县</b></td>
+				<td><span name="matching_bank_city_1583770">任丘市</span></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<ul class="contactList">
+						<li>联络接收人: 李向波 : 15720370307</li>
+												<li>联络接受者的管理员: 李丹 : 15233795779</li>
+												<li>联络转账人: 叶娇群 : 13857421613</li>
+												<li>联络转账人的管理员: 汪金芬 : 18758313568</li>
+											</ul>
+				</td>
+			</tr>
+		</tbody></table>
+	</div>
+</div>
+<table class="table table-donations">
+	<tbody>
+				<tr>
+			<td class="donate-status confirm" width="100px">
+				编号:
+				<span class="number">MD05588375</span>
+			</td>
+			<td>
+				创建日期:<br>
+				<span class="date">2015-11-18</span>
+			</td>
+			<td>
+				<span class="user">戴辉1</span>
+				其他银行			</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="value money">RMB350.00</span>
+							</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="user">你</span>
+				其他银行			</td>
+		</tr>
+		<tr>
+			<td class="donate-status confirm">
+				<i class="fa fa-check"></i>
+			</td>
+			<td colspan="3" class="confirm-status">
+									<span class="green">
+						您已确定接收资金帮助 : MD05588375					</span>
+							</td>
+			<td colspan="3" class="nowrap action-btn" align="right">
+												<a href="http://www.nmm68.com/zh-CN/platform/gd-history#dialog-msg" src="?mdid=5588375" data-toggle="modal" class="btn btn-inverse btn-xs" id="show_message_box" data="{&quot;mdid&quot;:&quot;5588375&quot;}">信息</a>
+								<a class="btn btn-warning btn-xs btn-details">详情</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div class="transactionWrap" style="display: none;">
+	<div class="transaction-details">
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th colspan="2">
+					转账到 : <br>
+					支付宝账号（淘宝账号/手机号码/邮箱） : <span name="matching_alipay_1583770">15720370307</span><br>
+					账号 : <span name="matching_bank_acc_1583770">6228481738007425675</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody><tr>
+				<td><b>开户名</b></td>
+				<td><span name="matching_bank_payee_1583770">李向波</span></td>
+			</tr>
+			<tr>
+				<td><b>开户银行</b></td>
+				<td><span name="matching_bank_name_1583770">农业银行</span></td>
+			</tr>
+			<tr>
+				<td><b>分行或支行的名称</b></td>
+				<td><span name="matching_bank_branch_1583770">河北任丘支行</span></td>
+			</tr>
+			<tr>
+				<td><b>省</b></td>
+				<td><span name="matching_bank_state_1583770">河北省</span></td>
+			</tr>
+			<tr>
+				<td><b>市 / 县</b></td>
+				<td><span name="matching_bank_city_1583770">任丘市</span></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<ul class="contactList">
+						<li>联络接收人: 李向波 : 15720370307</li>
+												<li>联络接受者的管理员: 李丹 : 15233795779</li>
+												<li>联络转账人: 戴辉 : 18956441998</li>
+												<li>联络转账人的管理员: 侯义龙 : 侯义龙</li>
+											</ul>
+				</td>
+			</tr>
+		</tbody></table>
+	</div>
+</div>
+<table class="table table-donations">
+	<tbody>
+				<tr>
+			<td class="donate-status confirm" width="100px">
+				编号:
+				<span class="number">MD05588378</span>
+			</td>
+			<td>
+				创建日期:<br>
+				<span class="date">2015-11-18</span>
+			</td>
+			<td>
+				<span class="user">sd5588</span>
+				其他银行			</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="value money">RMB150.00</span>
+							</td>
+			<td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+			<td width="120px">
+				<span class="user">你</span>
+				其他银行			</td>
+		</tr>
+		<tr>
+			<td class="donate-status confirm">
+				<i class="fa fa-check"></i>
+			</td>
+			<td colspan="3" class="confirm-status">
+									<span class="green">
+						您已确定接收资金帮助 : MD05588378					</span>
+							</td>
+			<td colspan="3" class="nowrap action-btn" align="right">
+												<a href="http://www.nmm68.com/zh-CN/platform/gd-history#dialog-msg" src="?mdid=5588378" data-toggle="modal" class="btn btn-inverse btn-xs" id="show_message_box" data="{&quot;mdid&quot;:&quot;5588378&quot;}">信息</a>
+								<a class="btn btn-warning btn-xs btn-details">详情</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div class="transactionWrap" style="display: none;">
+	<div class="transaction-details">
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th colspan="2">
+					转账到 : <br>
+					支付宝账号（淘宝账号/手机号码/邮箱） : <span name="matching_alipay_1583770">15720370307</span><br>
+					账号 : <span name="matching_bank_acc_1583770">6228481738007425675</span>
+					</th>
+				</tr>
+			</thead>
+			<tbody><tr>
+				<td><b>开户名</b></td>
+				<td><span name="matching_bank_payee_1583770">李向波</span></td>
+			</tr>
+			<tr>
+				<td><b>开户银行</b></td>
+				<td><span name="matching_bank_name_1583770">农业银行</span></td>
+			</tr>
+			<tr>
+				<td><b>分行或支行的名称</b></td>
+				<td><span name="matching_bank_branch_1583770">河北任丘支行</span></td>
+			</tr>
+			<tr>
+				<td><b>省</b></td>
+				<td><span name="matching_bank_state_1583770">河北省</span></td>
+			</tr>
+			<tr>
+				<td><b>市 / 县</b></td>
+				<td><span name="matching_bank_city_1583770">任丘市</span></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<ul class="contactList">
+						<li>联络接收人: 李向波 : 15720370307</li>
+												<li>联络接受者的管理员: 李丹 : 15233795779</li>
+												<li>联络转账人: 祁雨成 : 13305236600</li>
+												<li>联络转账人的管理员: 祁雨成 : 13305236600</li>
+											</ul>
+				</td>
+			</tr>
+		</tbody></table>
+	</div>
+</div>
+</div>
+									</td>
+								</tr>
+							</tbody></table>
+							</div>
+													</div>
+																	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="dialog-msg">
+	<div class="modal-dialog">
+		<fieldset>
+			<form id="pdgd_message_form" method="post">
+				<input type="hidden" name="uid" value="61822233">
+				<input type="hidden" name="mdid">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title" id="hierarchy_title">信息</h3>
+					</div>
+					<div class="modal-body np">
+						<div id="message_div" class="messageWrap"></div>
+						<div id="message_foot">
+							<div id="upload">
+								<div class="btn-group btn-group-sm" id="upload_clone">
+									<div class="fileupload fileupload-new" data-provides="fileupload">
+										<div class="input-group">
+											<div class="form-control col-md-3">
+												<i class="fa fa-file fileupload-exists"></i> <span class="fileupload-preview"></span>
+											</div>
+											<span class="input-group-btn">
+												<span class="btn btn-default btn-sm btn-file">
+													<span class="fileupload-new">选择文件</span>
+													<span class="fileupload-exists">替换文件</span>
+													<input type="file" class="btn btn-inverse" name="upload">
+												</span>
+												<a href="http://www.nmm68.com/zh-CN/platform/gd-history#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">清除</a>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<textarea class="form-control form-control-text-area" placeholder="回复" name="message" id="message" rows="4"></textarea>
+							<p class="error" id="message_text"></p>
+						</div>
+					</div>
+					<footer class="modal-footer clearfix">
+						<input type="button" class="btn btn-default btn-sm" data-dismiss="modal" value="取消">
+						<input type="submit" class="btn btn-inverse btn-sm" id="btn_add_message" value="回复信息">
+					</footer>
+				</div>
+			</form>
+		</fieldset>
+	</div>
+</div>
+
+
+<div class="modal fade" id="dialog-photo">
+	<div class="modal-dialog">
+		<form name="cancel_order_form" method="post" action="">
+			<input type="hidden" name="" value="">
+			<input type="hidden" name="" value="">
+			<input type="hidden" name="pboid" value="">
+			<div class="modal-content">
+				<div class="modal-body np" id="image_div">
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 
 

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.nmm68.com/zh-CN/platform/pin-history
+-->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients">
+    <!-- <![endif]-->
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>
+            PIN记录
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+        <include file="Public/script" />
+        <include file="Public/style" />
+    </head>
+
+    <body class="zh-CN " id="" youdao="bind">
+        <include file="Public/header" />
+        <div id="wrapper">
+            <include file="Public/user_info" />
+        </div>
+        <div class="container">
+            <div class="innerContent">
+                <include file="Public/assist" />
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget">
+                            <div class="widget-head clearfix">
+                                <h4 class="heading">
+                                    收益钱包记录
+                                </h4>
+                            </div>
+                            <div class="widget-body innerAll overthrow">
+                                <table class="table table-bordered table-primary">
+                                    <thead>
+                                        <tr class="tac">
+                                            <th>
+                                                编号
+                                            </th>
+                                            <th>
+                                                金额
+                                            </th>
+                                            <th>
+                                                来源
+                                            </th>
+                                            <th>
+                                                描述
+                                            </th>
+                                            <th>
+                                                日期
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <volist name="list" id="vo">
+                                            <tr>
+                                                <td align="center">
+                                                    {$vo.id}
+                                                </td>
+                                                <td align="center">
+                                                    <strong class="red">
+                                                        <switch name="vo.type">
+                                                            <case value="1">+{$vo.amount}</case>
+                                                            <case value="2">-{$vo.amount}</case>
+                                                        </switch>
+                                                    </strong>
+                                                </td>
+                                                <td align="center">
+                                                    <strong class="amount">
+                                                        <switch name="vo.source">
+                                                            <case value="1">转账</case>
+                                                            <case value="2">排队</case>
+                                                        </switch>
+                                                    </strong>
+                                                </td>
+                                                <td width="40%">
+                                                    {$vo.desc}
+                                                </td>
+                                                <td align="right">
+                                                    <span class="title-date">
+                                                        {:date('Y年m月d日 H:i:s')}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </volist>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>

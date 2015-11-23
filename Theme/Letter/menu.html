@@ -1,5 +1,18 @@
 <ul class="list-group" id="sidebarMenu">
-         <li class="list-group-item active"> <a href="{:U('Letter/index')}"><i class="fa fa-inbox"></i> 收件箱</a> </li>
-         <li class="list-group-item "> <a href="{:U('Letter/send')}"><i class="fa fa-edit"></i> 撰写信息</a> </li>
-         <li class="list-group-item "> <a href="{:U('Letter/out')}"><i class="fa fa-envelope"></i> 发件箱</a> </li>
+         <if condition="ACTION_NAME eq index">
+            <li class="list-group-item active"> <a href="{:U('Letter/index')}"><i class="fa fa-inbox"></i> 收件箱</a> </li>
+        <else />
+            <li class="list-group-item"> <a href="{:U('Letter/index')}"><i class="fa fa-inbox"></i> 收件箱</a> </li>
+         </if>
+        <if condition="ACTION_NAME eq send">
+            <li class="list-group-item active"> <a href="{:U('Letter/send')}"><i class="fa fa-edit"></i> 撰写信息</a> </li>
+        <else />
+            <li class="list-group-item "> <a href="{:U('Letter/send')}"><i class="fa fa-edit"></i> 撰写信息</a> </li>
+        </if>
+        <if condition="ACTION_NAME eq out">
+            <li class="list-group-item active"> <a href="{:U('Letter/out')}"><i class="fa fa-envelope"></i> 发件箱</a> </li>
+        <else />
+            <li class="list-group-item"> <a href="{:U('Letter/out')}"><i class="fa fa-envelope"></i> 发件箱</a> </li>
+        </if>
+
         </ul>

@@ -185,7 +185,7 @@ class UserModel extends BaseModel
      */
     public function lists($map = array(), $field = '', $order = '', $page = 0, $page_size = 10)
     {
-        $list = $this->_list($map = array(), $field = '', $order = '', $page = 0, $page_size = 10);
+        $list = $this->_list($map, $field, $order, $page, $page_size);
 
         if (empty($list)) {
             return array();

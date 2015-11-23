@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://www.nmm68.com/zh-CN/platform/profile -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients"><!-- <![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>我的档案 | NMM 98</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+<include file="Public/script" />
+<include file="Public/style" />
+</head>
+<body class="zh-CN " id="" youdao="bind">
+<include file="Public/header" />
+<div id="wrapper">
+    <include file="Public/user_info" />
+</div>
+    <div class="container">
+        <div class="innerContent">
+            <include file="Public/assist" />
+            <div class="row">
+                <div class="col-md-12">
+                <div class="col-md-6 tablet-column-reset">
+                    <div class="widget widget-body-white padding-none">
+                        <div class="widget-head">
+                            <h4 class="heading">帐户详情</h4>
+                        </div>
+                        <form class="form-horizontal margin-none" id="" method="post" action="{:U('User/changeInfo')}" onSubmit="return ajaxForm(this)">
+                            <input type="hidden" name="__req" value="1">
+                            <input type="hidden" name="__nonce" value="893fcf4e0ab344493859e6eef154e8c6ad4d90396ec0d8906afb7974ed073875">
+                            <div class="widget-body">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">用户名</label>
+                                    <div class="col-md-8">
+                                        <div class="form-control-static">{:session('user_info.username')}</div>
+                                    </div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label">姓名</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="name" value="{:session('user_info.name')}">
+                                    </div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label">电邮地址</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="email" value="{:session('user_info.email')}">
+                                    </div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label">手机号码</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="mobile" value="{:session('user_info.phone')}">
+                                    </div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label">支付宝账号（淘宝账号/手机号码/邮箱）</label>
+                                    <div class="col-md-8">
+                                    <div class="form-control-static">{:session('user_info.alipay_account')}</div>
+                                                                            </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">安全密码</label>
+                                    <div class="col-md-8"><input class="form-control" id="epassword2" name="pay_password" value="" type="password" ></div>
+                                </div>
+                            </div>
+                            <footer class="data-footer innerAll half text-right clearfix">
+                                <button type="submit" class="btn btn-primary btn-sm">更新</button>
+                            </footer>
+                        </form>
+                    </div>
+
+                    <div class="widget widget-body-white padding-none">
+                        <div class="widget-head">
+                            <h4 class="heading">安全密码</h4>
+                        </div>
+                        <form class="form-horizontal margin-none" id="" method="post" action="{:U('User/changePayPwd')}" onSubmit="return ajaxForm(this)">
+                            <div class="widget-body">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">新安全密码</label>
+                                    <div class="col-md-8">
+                                        <div class="controls">
+                                            <input type="pay_password" class="form-control error" name="password2" value="" >
+                                                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">确认安全密码</label>
+                                    <div class="col-md-8">
+                                        <div class="controls">
+                                            <input type="password" class="form-control error" name="rep_pay_password" value="" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">安全密码</label>
+                                    <div class="col-md-8"><input class="form-control" id="epassword2" name="old_pay_password" value="" type="password" ></div>
+                                </div>
+                            </div>
+                            <footer class="data-footer innerAll half text-right clearfix">
+                                    <button type="submit" class="btn btn-primary btn-sm">更新</button>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6 tablet-column-reset">
+                    <div class="widget widget-body-white padding-none" id="payment_info">
+                        <div class="widget-head">
+                            <h4 class="heading">银行资料</h4>
+                        </div>
+                        <form class="form-horizontal margin-none" id="" method="post">
+                            <div class="widget-body">
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">开户银行</label>
+                                    <div class="col-md-8"><div class="form-control-static">{:session('user_info.bank_name')}</div></div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">分行或支行的名称</label>
+                                    <div class="col-md-8"><div class="form-control-static">{:session('user_info.bank_address')}</div></div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">省</label>
+                                    <div class="col-md-8"><div class="form-control-static">{:session('user_info.province')}</div></div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">市 / 县</label>
+                                    <div class="col-md-8"><div class="form-control-static">{:session('user_info.city')}</div></div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">开户名</label>
+                                    <div class="col-md-8"><div class="form-control-static">{:session('user_info.bank_account')}</div></div>
+                                </div>
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">账号</label>
+                                    <div class="col-md-8"><div class="form-control-static">{:session('user_info.bank_code')}</div></div>
+                                </div>
+
+                                                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">国际银行帐户号码 (IBAN Code)</label>
+                                    <div class="col-md-8"><div class="form-control-static">{:session('user_info.iban_code')}</div></div>
+                                </div>
+                                                            </div>
+                        </form>
+                    </div>
+
+                    <div class="widget widget-body-white padding-none">
+                        <div class="widget-head">
+                            <h4 class="heading">帐户密码</h4>
+                        </div>
+                        <form class="form-horizontal margin-none" id="" method="post" action="{:U('User/changePwd')}" onSubmit="return ajaxForm(this)">
+                            <div class="widget-body">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">新登录密码</label>
+                                    <div class="col-md-8">
+                                        <div class="controls">
+                                            <input type="password" class="form-control error" name="password" value="" >
+                                                                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="firstname">确认登录密码</label>
+                                    <div class="col-md-8">
+                                        <div class="controls">
+                                            <input type="password" class="form-control error" name="rep_password" value="" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">安全密码</label>
+                                    <div class="col-md-8"><input class="form-control" id="epassword2" name="pay_password" value="" type="password" ></div>
+                                </div>
+                            </div>
+                            <footer class="data-footer innerAll half text-right clearfix">
+                                <button type="submit" class="btn btn-primary btn-sm">更新</button>
+                            </footer>
+                        </form>
+                    </div>
+
+                    <div class="widget widget-body-white padding-none">
+                        <div class="widget-head">
+                            <h4 class="heading">终止帐号</h4>
+                        </div>
+                        <div class="widget-body">
+                            如果您想终止帐号， 请按以下按钮.<br>
+                        </div>
+                        <footer class="data-footer innerAll half text-right clearfix">
+                            <a class="btn btn-sm btn-danger" id="terminate-account" onclick="ajaxBtn(this)" data-href="{:U('User/OverAccount')}">终止服务</a>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

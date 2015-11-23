@@ -7,7 +7,7 @@ use Common\Tools\ArrayHelper;
 class AssistModel extends BaseModel
 {
     protected $tableName = 'assist';
-    protected $selectFields = 'id,user_id,money,match_money,status,create_time';
+    protected $selectFields = 'id,user_id,money,surplus_money,status,create_time';
 
     /**
      * 写入援助记录

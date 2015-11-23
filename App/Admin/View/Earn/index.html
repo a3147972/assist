@@ -69,7 +69,7 @@
                         <th>用户ID</th>
                         <th>用户名</th>
                         <th>金额</th>
-                        <th>已匹配金额</th>
+                        <th>剩余金额</th>
                         <th>钱包类型</th>
                         <th>状态</th>
                         <th>发起时间</th>
@@ -84,7 +84,7 @@
                         <td>{$vo.user_id}</td>
                         <td>{$vo.username}</td>
                         <td>{$vo.money}</td>
-                        <td>{$vo.match_money}</td>
+                        <td>{$vo.surplus_money}</td>
                         <td>
                           <switch name="vo.money_type">
                             <case value="1">奖金钱包</case>
@@ -94,12 +94,10 @@
                         <td>
                           <switch name="vo.status">
                             <case value="0">等待匹配</case>
-                            <case value="1">部分匹配</case>
-                            <case value="2">匹配完成</case>
+                            <case value="1">匹配完成</case>
                           </switch>
                         </td>
                         <td>{:date('Y-m-d H:i:s', $vo['create_time'])}</td>
-
                       </tr>
                       </volist>
                     </tbody>

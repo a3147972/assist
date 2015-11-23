@@ -71,18 +71,32 @@ class OrderModel extends BaseModel
         $user_id = array_merge($assist_user_id, $earn_user_id);
 
         $user_map['id'] = array('in', $user_id);
-        $user_fields = 'id as user_id, username as user_username, name as user_name';
+        $user_fields = 'id as user_id, phone,username as user_username, name as user_name,alipay_account,bank_name,bank_address,bank_code,bank_account';
         $user_list = D('User')->_list($user_map, $user_fields);
         $user_list = array_column($user_list, null, 'user_id');
 
         //合并记录数据
         foreach ($assist_list as $_k => $_v) {
+            $assist_list[$_k]['assist_user_id'] = $_v['assist_user_id'];
             $assist_list[$_k]['assist_username'] = $user_list[$_v['assist_user_id']]['user_username'];
             $assist_list[$_k]['assist_name'] = $user_list[$_v['assist_user_id']]['user_name'];
+            $assist_list[$_k]['assist_phone'] = $user_list[$_v['assist_user_id']]['phone'];
+            $assist_list[$_k]['assist_alipay_account'] = $user_list[$_v['assist_user_id']]['alipay_account'];
+            $assist_list[$_k]['assist_bank_name'] = $user_list[$_v['assist_user_id']]['bank_name'];
+            $assist_list[$_k]['assist_bank_address'] = $user_list[$_v['assist_user_id']]['bank_address'];
+            $assist_list[$_k]['assist_bank_code'] = $user_list[$_v['assist_user_id']]['bank_code'];
+            $assist_list[$_k]['assist_bank_account'] = $user_list[$_v['assist_user_id']]['bank_account'];
         }
         foreach ($earn_list as $_k => $_v) {
+            $earn_list[$_k]['earn_user_id'] = $_v['earn_user_id'];
             $earn_list[$_k]['earn_username'] = $user_list[$_v['earn_user_id']]['user_username'];
             $earn_list[$_k]['earn_name'] = $user_list[$_v['earn_user_id']]['user_name'];
+            $earn_list[$_k]['earn_phone'] = $user_list[$_v['earn_user_id']]['phone'];
+            $earn_list[$_k]['earn_alipay_account'] = $user_list[$_v['earn_user_id']]['alipay_account'];
+            $earn_list[$_k]['earn_bank_name'] = $user_list[$_v['earn_user_id']]['bank_name'];
+            $earn_list[$_k]['earn_bank_address'] = $user_list[$_v['earn_user_id']]['bank_address'];
+            $earn_list[$_k]['earn_bank_code'] = $user_list[$_v['earn_user_id']]['user_bank_code'];
+            $earn_list[$_k]['earn_bank_bank_account'] = $user_list[$_v['earn_user_id']]['bank_account'];
         }
         //合并订单数据
         foreach ($list as $_k => $_v) {

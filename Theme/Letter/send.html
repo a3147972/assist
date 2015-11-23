@@ -36,6 +36,7 @@
        <div class="widget-head">
         <h4 class="heading">新信息</h4>
        </div>
+       <if></if>
        <form class="form-horizontal margin-none" method="post" action="{:U('Letter/send')}" onSubmit="return ajaxForm(this)">
         <div class="widget-body">
          <div class="form-group">
@@ -49,14 +50,30 @@
          <div class="form-group">
           <label class="col-md-3 control-label"><strong>主题</strong></label>
           <div class="col-md-9">
-           <input type="text" class="form-control" name="title" id="subject" value="" placeholder="主题" />
+            <input type="text" class="form-control" name="title" id="subject" value="{$vo.title}" placeholder="主题" />
           </div>
          </div>
-         <div class="form-group">
-          <label class="col-md-3 control-label"><strong>信息</strong></label>
+         <eq name="status" value="2">
+           <div class="form-group">
+          <label class="col-md-3 control-label"><strong>内容</strong></label>
           <div class="col-md-9">
+           {$vo.content}
+          </div>
+         </div>
+         </eq>
+         <div class="form-group">
+         <eq name="status" value="2">
+         <label class="col-md-3 control-label"><strong>回复</strong></label>
+         <div class="col-md-9">
            <textarea class="form-control form-control-text-area" placeholder="信息" name="content" id="message" rows="5"></textarea>
           </div>
+          <else />
+          <label class="col-md-3 control-label"><strong>信息</strong></label>
+          <div class="col-md-9">
+           <textarea class="form-control form-control-text-area" placeholder="信息" name="content" id="message" rows="5">{$vo.content}</textarea>
+          </div>
+         </eq>
+
          </div>
         </div>
         <footer class="data-footer innerAll half text-right clearfix">

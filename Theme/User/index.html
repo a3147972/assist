@@ -178,7 +178,11 @@
           </div>
          </div>
          <footer class="data-footer innerAll half text-right clearfix">
-          <input type="hidden" name="pid" value="{:session('pid')}">
+         <if condition="I('get.user_id')">
+         <input type="hidden" name="pid" value="{:I('get.user_id')}">
+         <else />
+         <input type="hidden" name="pid" value="{:session('pid')}">
+         </if>
           <button type="submit" class="btn btn-primary btn-sm">注册</button>
          </footer>
         </div>

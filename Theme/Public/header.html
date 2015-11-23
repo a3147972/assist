@@ -19,27 +19,80 @@
     </ul>
     <nav class="collapse navbar-collapse" role="main-navigation">
      <ul class="nav navbar-nav">
-      <li class="active"> <a href="{:U('Index/index')}" class="glyphicons home"><i></i>首页</a> </li>
-      <li class=""> <a href="{:U('Assist/index')}" class="glyphicons home"><i></i>舍名单<span class="badge"></span></a> </li>
-      <li class=""> <a href="{:U('Assist/index')}" class="glyphicons home"><i></i>得名单<span class="badge"></span></a> </li>
-      <li class=""><a href="{:U('User/index')}" class="glyphicons book"><i></i>注册</a></li>
-      <li class=""><a href="{:U('Letter/index')}" class="glyphicons book"><i></i>信息管理</a></li>
-      <li class=""><a href="" class="glyphicons user"><i></i>管理档案</a></li>
-      <li class=""><a href="" class="glyphicons down_arrow"><i></i>家族体系</a></li>
-      <li class="dropdown"> <a href="" class="dropdown-toggle" data-toggle="dropdown">帐户管理 <span class="caret"></span></a>
+      <if condition="(CONTROLLER_NAME eq Index) and (ACTION_NAME eq index)">
+        <li class="active"> <a href="{:U('Index/index')}" class="glyphicons home"><i></i>首页</a> </li>
+      <else />
+        <li> <a href="{:U('Index/index')}" class="glyphicons home"><i></i>首页</a> </li>
+      </if>
+      <if condition="(CONTROLLER_NAME eq Assist) and (ACTION_NAME eq order)">
+        <li class="active"> <a href="{:U('Assist/order')}" class="glyphicons home"><i></i>舍名单<span class="badge"></span></a> </li>
+      <else />
+        <li class=""> <a href="{:U('Assist/order')}" class="glyphicons home"><i></i>舍名单<span class="badge"></span></a> </li>
+      </if>
+      <if condition="(CONTROLLER_NAME eq Earn) and (ACTION_NAME eq order)">
+        <li class="active"> <a href="{:U('Earn/order')}" class="glyphicons home"><i></i>得名单<span class="badge"></span></a> </li>
+      <else />
+        <li> <a href="{:U('Earn/order')}" class="glyphicons home"><i></i>得名单<span class="badge"></span></a> </li>
+      </if>
+      <if condition="(CONTROLLER_NAME eq Earn) and (ACTION_NAME eq index)">
+        <li class="active"><a href="{:U('User/index')}" class="glyphicons book"><i></i>注册</a></li>
+      <else />
+        <li><a href="{:U('User/index')}" class="glyphicons book"><i></i>注册</a></li>
+      </if>
+      <if condition="(CONTROLLER_NAME eq Letter) and (ACTION_NAME eq index)">
+        <li class="active"><a href="{:U('Letter/index')}" class="glyphicons book"><i></i>信息管理</a></li>
+      <else />
+        <li class=""><a href="{:U('Letter/index')}" class="glyphicons book"><i></i>信息管理</a></li>
+      </if>
+      <if condition="(CONTROLLER_NAME eq User) and (ACTION_NAME eq info)">
+        <li class="active"><a href="{:U('User/info')}" class="glyphicons user"><i></i>管理档案</a></li>
+      <else />
+        <li class=""><a href="{:U('User/info')}" class="glyphicons user"><i></i>管理档案</a></li>
+      </if>
+      <if condition="(CONTROLLER_NAME eq User) and (ACTION_NAME eq info)">
+        <li class="active"><a href="{:U('Family/index')}" class="glyphicons down_arrow"><i></i>家族体系</a></li>
+      <else />
+      <li><a href="{:U('Family/index')}" class="glyphicons down_arrow"><i></i>家族体系</a></li>
+      </if>
+      <if condition="in_array(CONTROLLER_NAME.'/'.ACTION_NAME, array('PinDeal/index', 'Family/deal'))">
+        <li class="dropdown active">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">帐户管理 <span class="caret"></span></a>
+         <ul class="dropdown-menu" role="menu">
+          <li><a href="{:U('PinDeal/index')}">门票转账</a></li>
+          <li><a href="{:U('Family/deal')}">家族交易记录</a></li>
+         </ul>
+        </li>
+      <else />
+        <li class="dropdown">
+        <a href="" class="dropdown-toggle" data-toggle="dropdown">帐户管理 <span class="caret"></span></a>
+         <ul class="dropdown-menu" role="menu">
+          <li><a href="{:U('PinDeal/index')}">门票转账</a></li>
+          <li><a href="{:U('Family/deal')}">家族交易记录</a></li>
+         </ul>
+        </li>
+      </if>
+      <if condition="in_array(CONTROLLER_NAME.'/'.ACTION_NAME, array('CLog/index', 'RLog/index', 'PinLog/index', 'Assist/index', 'Earn/index'))">
+      <li class="dropdown active">
+      <a href="" class="dropdown-toggle" data-toggle="dropdown">交易记录 <span class="caret"></span></a>
        <ul class="dropdown-menu" role="menu">
-        <li><a href="">门票转账</a></li>
-        <li><a href="">家族交易记录</a></li>
-       </ul> </li>
-      <li class="dropdown"> <a href="http://www.nmm68.com/zh-CN/platform/#" class="dropdown-toggle" data-toggle="dropdown">交易记录 <span class="caret"></span></a>
+        <li><a href="{:U('Assist/index')}">援助记录</a></li>
+        <li><a href="{:U('Earn/index')}">收益记录</a></li>
+        <li><a href="{:U('CLog/index')}">奖金钱包交易记录</a></li>
+        <li><a href="{:U('RLog/index')}">收益钱包交易记录</a></li>
+        <li><a href="{:U('PinLog/index')}">门票交易记录</a></li>
+       </ul>
+      </li>
+      <else />
+        <li class="dropdown"> <a href="" class="dropdown-toggle" data-toggle="dropdown">交易记录 <span class="caret"></span></a>
        <ul class="dropdown-menu" role="menu">
-        <li><a href="">援助记录</a></li>
-        <li><a href="">收益记录</a></li>
-        <li><a href="">奖金钱包交易记录</a></li>
-        <li><a href="">收益钱包交易记录</a></li>
-        <li><a href="">门票交易记录</a></li>
-       </ul> </li>
-      <li class=""><a href="" class="glyphicons down_arrow"><i></i>奖金</a></li>
+        <li><a href="{:U('Assist/index')}">援助记录</a></li>
+        <li><a href="{:U('Earn/index')}">收益记录</a></li>
+        <li><a href="{:U('CLog/index')}">奖金钱包交易记录</a></li>
+        <li><a href="{:U('RLog/index')}">收益钱包交易记录</a></li>
+        <li><a href="{:U('PinLog/index')}">门票交易记录</a></li>
+       </ul>
+      </li>
+      </if>
      </ul>
     </nav>
    </div>

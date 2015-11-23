@@ -1,13 +1,14 @@
 <?php
 namespace Home\Controller;
 
+use Common\Tools\Page;
 use Home\Controller\BaseController;
 
 class LetterController extends BaseController
 {
     public function _filter()
     {
-        $map['user_id'] = session('user_info.id');
+        $map['to_user_id'] = session('user_info.id');
 
         return $map;
     }
@@ -20,8 +21,9 @@ class LetterController extends BaseController
         $page_size = 10;
 
         $model = D('Letter');
-        $map['to_user_id'] = session('user_info.id');
+        $map['user_id'] = session('user_info.id');
         $list = $model->lists($map, '', 'id desc', $page_index, $page_size);
+
         $count = $model->count();
 
         //分页数组
@@ -33,6 +35,9 @@ class LetterController extends BaseController
         $this->assign('page_list', $page_list);
         $this->display();
     }
+    /**
+     * 发送站内信
+     */
     public function send()
     {
         if (IS_POST) {
@@ -49,6 +54,18 @@ class LetterController extends BaseController
                 $this->error('发送失败');
             }
         } else {
+            $id = I('id');
+            if ($id) {
+                $map['id'] = $id;
+                $info = D('Letter')->_get($map);
+                if ($info['user_id'] == session('user_info.id')) {
+                    $this->assign('status', 1);
+                } else {
+                    $this->assign('status', 2);
+                }
+
+                $this->assign('vo', $info);
+            }
             $this->display();
         }
     }
