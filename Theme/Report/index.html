@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+  <title></title>
+  <include file="Public/script" />
+  <include file="Public/style" />
+  <style>
+    .modal-dialog{
+        margin:0;
+        padding:0;
+    }
+    .modal-content{
+        -webkit-box-shadow:none;
+        box-shadow:none;
+        border:none;
+    }
+  </style>
+ </head>
+ <body>
+  <div class="modal-dialog">
+   <fieldset>
+    <form id="pdgd_message_form" method="post" action="{:U('Report/insert')}">
+      <div class="modal-content">
+      <div class="modal-body np">
+       <div id="message_div" class="messageWrap">
+        <div class="innerMessage message-toggle">
+         <div class="fullMessage clearfix">
+          <div class="pull-left">
+           <strong class="blue"></strong>
+          </div>
+          <div class="clearfix"></div>
+         </div>
+        </div>
+       </div>
+       <div id="message_foot">
+        <select name="reson_type" id="" class="form-control"> <option value="0" selected="selected">其他</option> <option value="1">对方未打款</option> <option value="2">对方未确认</option> <option value="3">对方账号有误</option> <option value="4">联系方式有误</option> </select>
+        <br />
+        <div id="upload">
+         <div class="btn-group btn-group-sm" id="upload_clone">
+          <div class="fileupload fileupload-new" data-provides="fileupload">
+           <div class="input-group">
+            <div class="form-control col-md-3">
+             <i class="fa fa-file fileupload-exists"></i>
+             <span class="fileupload-preview"></span>
+             <input type="hidden" name="pic" class="pic_preview" />
+            </div>
+            <span class="input-group-btn"> <span class="btn btn-default btn-sm btn-file"> <span class="fileupload-new">选择文件</span> <span class="fileupload-exists">替换文件</span> <input type="file" class="btn btn-inverse" name="upload" id="fileupload" /> </span> <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">清除</a> </span>
+           </div>
+          </div>
+         </div>
+        </div>
+        <textarea class="form-control form-control-text-area" placeholder="举报理由" name="reson" id="message" rows="4"></textarea>
+        <br />
+        <p class="error" id="message_text"></p>
+       </div>
+      </div>
+      <footer class="modal-footer clearfix">
+       <input type="hidden" name="order_id" value="{:I('get.order_id')}" />
+       <input type="hidden" name="to_user_id" value="{:I('get.to')}" />
+       <input type="submit" class="btn btn-inverse btn-sm" id="btn_add_message" value="提交" />
+      </footer>
+     </div>
+    </form>
+   </fieldset>
+  </div>
+
+  <script>
+  $(function(){
+    $('#fileupload').change(function(){
+
+        var span_preview = $('.fileupload-preview');
+        var pic_preview = $('.pic_preview');
+        $.ajaxFileUpload({
+            url:"{:U('Public/AjaxUpload')}",
+            secureuri:false,
+            fileElementId:'fileupload',
+            dataType: 'json',
+            success: function (i) {
+                if (i.status == 1) {
+                    alert("上传图片成功！");
+                    span_preview.html(i.info);
+                    pic_preview.val(i.info);
+                } else {
+                    alert(i.info);
+                }
+            }
+        });
+    })
+
+    $('form').submit(function(){
+
+        var pic = $('input[name=pic]').val();
+        var reson = $('textareat[name=reson]').val();
+
+        if (pic == '') {
+            alert('请上传举报图片');
+            return false;
+        }
+        if (reson == '') {
+            alert('请输入举报理由');
+            return false;
+        }
+        var url = $(this).attr('action');
+        var data = $(this).serialize();
+
+        $.ajax({
+            url:url,
+            data:data,
+            type:'post',
+            dataType : 'json',
+            success: function(i) {
+                if (i.status == 1) {
+                    alert('提交成功');
+                    $('button.ui-dialog-close',window.parent.document).trigger('click');
+                } else {
+                    alert(i.info);
+                }
+            }
+        })
+        return false;
+    })
+  })
+  </script>
+ </body>
+</html>

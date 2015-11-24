@@ -7,7 +7,7 @@
  </head>
  <body class="zh-CN " id="" youdao="bind">
   <include file="Public/script" />
-  <title>GD记录 | NMM 98</title>
+  <title>提供帮助记录</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
@@ -24,7 +24,7 @@
      <div class="col-md-12">
       <div class="widget">
        <div class="widget-head clearfix">
-        <h4 class="heading">GD记录</h4>
+        <h4 class="heading">提供帮助记录</h4>
        </div>
        <div class="widget-body innerAll">
         <div class="overthrow">
@@ -34,8 +34,7 @@
            <tr bgcolor="#1bb5ce">
             <td>
               <div class="donate-header clearfix">
-              <i class="fa fa-ellipsis-h hireTable" rel="1583770" value="gd" data-toggle="tooltip" data-placement="top" title="" data-original-title="Click to hide"></i>
-              <h4>请求帮助: <span>{$vo.id}</span></h4>
+              <h4>提供帮助: <span>{$vo.id}</span></h4>
               <b>参加者</b>: {$vo.username}
               <br />
               <b>数额</b>: RMB{$vo.money}
@@ -51,9 +50,10 @@
                   <case value="1">全部匹配</case>
                 </switch>
               </span>
-              <br />
+              <br /><br />
+              <button class="btn btn-inverse btn-sm more">读取更多</button>
              </div>
-             <div class="gd donate-body-1583770" id="gd_matching_list_1583770">
+             <div class="gd donate-body-1583770" id="gd_matching_list_1583770" style="display:none;">
               <if condition="empty($vo['order_list'])">
                 <break />
               </if>
@@ -65,16 +65,36 @@
                  <td> 创建日期:<br /> <span class="date">{:date('Y年m月d日',$order_vo['create_time'])}</span> </td>
                  <td> <span class="user">{$order_vo.earn_username}</span>  </td>
                  <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
-                 <td width="120px"> <span class="value money">RMB{$order_vo.money}</span> 确认 : <a href="http://www.nmm68.com/zh-CN/platform/gd-history#dialog-photo" id="show_image_5588371" data="http://www.nmm68.com/files/payment2/558/8371/image_20151119_1447924260.93034.jpg" data-toggle="modal" class=""><i class="fa fa-picture-o"></i></a> </td>
+                 <td width="120px"> <span class="value money">RMB{$order_vo.money}</span></td>
                  <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
                  <td width="120px"> <span class="user">你</span>  </td>
                 </tr>
                 <tr>
                  <td class="donate-status confirm"> <i class="fa fa-check"></i> </td>
                  <td colspan="3" class="confirm-status">
-                  <span class="green"> 您已确定接收资金帮助 : MD05588371 </span>
+                  <switch name="order_vo.status">
+                    <case value="2">
+                      <span class="green"> 您已确定提供资金帮助 : {$order_vo.order_id} </span>
+                    </case>
+                    <case value="3">
+                      <span class="green"> 您已拒绝提供资金帮助 : {$order_vo.order_id} </span>
+                    </case>
+                  </switch>
                  </td>
-                 <td colspan="3" class="nowrap action-btn" align="right"> <a href="http://www.nmm68.com/zh-CN/platform/gd-history#dialog-msg" src="?mdid=5588371" data-toggle="modal" class="btn btn-inverse btn-xs" id="show_message_box" data="{&quot;mdid&quot;:&quot;5588371&quot;}">信息</a> <a class="btn btn-warning btn-xs btn-details">详情</a> </td>
+                 <td colspan="3" class="nowrap action-btn" align="right">
+                  <switch name="order_vo.status">
+                    <case value="2">
+                      <a href="{:U('Report/index',array('order_id'=>$order_vo['order_id'],'to'=>$order_vo['earn_user_id']))}" class="btn btn-print btn-xs" onclick="return report(this)">举报</a>
+                      <a href="{:U('Order/info', array('order_id'=>$order_vo['order_id']))}" class="btn btn-inverse btn-xs" onclick="return info(this)">信息</a>
+                    </case>
+                    <case value="0">
+                      <a href="#" class="btn btn-green btn-xs" data-href="{:U('Order/changeStatus', array('order_id'=>$order_vo['order_id'],'status'=>2))}" onclick="return ajaxBtn(this)">确定</a>
+                      <a href="#" class="btn btn-red btn-xs" data-href="{:U('Order/changeStatus', array('order_id'=>$order_vo['order_id'],'status'=>3))}" onclick="return ajaxBtn(this)">拒绝</a>
+                      <a href="{:U('Report/index',array('order_id'=>$order_vo['order_id'],'to'=>$order_vo['earn_user_id']))}" class="btn btn-print btn-xs" onclick="return report(this)">举报</a>
+                      <a href="{:U('Order/info', array('order_id'=>$order_vo['order_id']))}" class="btn btn-inverse btn-xs" onclick="return info(this)">信息</a>
+                    </case>
+                  </switch>
+                 </td>
                 </tr>
                </tbody>
               </table>
@@ -134,5 +154,34 @@
     </div>
    </div>
   </div>
+  <script>
+  $(function(){
+    $('.more').click(function(){
+      $(this).parents('.donate-header').siblings('.gd').slideToggle('slow');
+    })
+  })
+
+  function report(dom){
+    var url = $(dom).attr('href');
+    var d = dialog({
+        title: '举报信息',
+        url : url,
+        width : '500',
+    });
+    d.showModal();
+    return false;
+  }
+
+  function info(dom) {
+    var url = $(dom).attr('href');
+    var d = dialog({
+        title: '上传证据',
+        url : url,
+        width : '500',
+    });
+    d.showModal();
+    return false;
+  }
+  </script>
  </body>
 </html>
