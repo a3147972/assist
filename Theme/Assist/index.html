@@ -63,11 +63,11 @@
                 <tr>
                  <td class="donate-status confirm" width="100px"> 编号: <span class="number">{$order_vo.order_id}</span> </td>
                  <td> 创建日期:<br /> <span class="date">{:date('Y年m月d日',$order_vo['create_time'])}</span> </td>
-                 <td> <span class="user">{$order_vo.earn_username}</span>  </td>
+                 <td> <span class="user">你</span>  </td>
                  <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
                  <td width="120px"> <span class="value money">RMB{$order_vo.money}</span></td>
                  <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
-                 <td width="120px"> <span class="user">你</span>  </td>
+                 <td width="120px"> <span class="user">{$order_vo.earn_username}</span>  </td>
                 </tr>
                 <tr>
                  <td class="donate-status confirm"> <i class="fa fa-check"></i> </td>
