@@ -12,7 +12,6 @@ class BaseController extends Controller
             redirect(U('Login/index'));
             exit();
         }
-
         //判断排队次数
         $this->checkQueueCount();
     }
@@ -30,7 +29,7 @@ class BaseController extends Controller
             $list = $model->_list($map, '', 'id desc', $page_index, $page_size);
         }
 
-        $count = $model->count();
+        $count = $model->_count($map);
 
         //分页数组
         $page = new Page($count, $page_index, $page_size);

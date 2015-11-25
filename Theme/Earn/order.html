@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://www.nmm68.com/zh-CN/platform/gd-history -->
+<html class=" js rgba borderradius boxshadow textshadow opacity cssgradients">
+ <!-- <![endif]-->
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ </head>
+ <body class="zh-CN " id="" youdao="bind">
+  <include file="Public/script" />
+  <title>得名单</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+  <include file="Public/style" />
+  <include file="Public/header" />
+  <div id="wrapper">
+   <include file="Public/user_info" />
+  </div>
+  <div class="container">
+   <div class="innerContent">
+    <include file="Public/assist" />
+    <div class="row">
+     <div class="col-md-12">
+      <div class="widget">
+       <div class="widget-head clearfix">
+        <h4 class="heading">获得收益记录</h4>
+       </div>
+       <div class="widget-body innerAll">
+        <div class="overthrow">
+        <if condition="empty($list)">
+          <table class="table table-bordered table-donate">
+        <else />
+          <table class="table table-bordered table-donate table-gd">
+        </if>
+         <volist name="list" id="vo">
+          <tbody>
+           <tr bgcolor="#1bb5ce">
+            <td>
+              <div class="donate-header clearfix">
+              <h4>请求帮助: <span>{$vo.id}</span></h4>
+              <b>参加者</b>: {$vo.username}
+              <br />
+              <b>数额</b>: RMB{$vo.money}
+              <br />
+              <b>剩余数额</b>: RMB{$vo.surplus_money}
+              <br />
+              <b>日期</b>: {:date('Y年m月d日',$vo['create_time'])}
+              <br />
+              <b>状况</b>:
+              <span class="confirm">
+                <switch name="vo.status">
+                  <case value="0">部分匹配</case>
+                  <case value="1">全部匹配</case>
+                </switch>
+              </span>
+              <br /><br />
+              <button class="btn btn-inverse btn-sm more">读取更多</button>
+             </div>
+             <div class="gd donate-body-1583770" id="gd_matching_list_1583770" style="display:none;">
+              <if condition="empty($vo['order_list'])">
+                <break />
+              </if>
+              <volist name="vo.order_list" id="order_vo">
+                <table class="table table-donations">
+               <tbody>
+                <tr>
+                 <td class="donate-status confirm" width="100px"> 编号: <span class="number">{$order_vo.order_id}</span> </td>
+                 <td> 创建日期:<br /> <span class="date">{:date('Y年m月d日',$order_vo['create_time'])}</span> </td>
+                 <td> <span class="user">{$order_vo.assist_username}</span>  </td>
+                 <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+                 <td width="120px"> <span class="value money">RMB{$order_vo.money}</span>
+                 <notempty name="order_vo.transfer_pic">
+                   <a href="" data-href="{$order_vo.transfer_pic|imgPath}" onclick="return viewTransPic(this)"><img src="__STYLE__/img/thumbnail.ico" alt="" style="width: 19px;margin-left: 21px;"></a>
+                 </notempty>
+                 </td>
+                 <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
+                 <td width="120px"> <span class="user">你</span>  </td>
+                </tr>
+                <tr>
+                 <td class="donate-status confirm"> <i class="fa fa-check"></i></td>
+                 <td colspan="3" class="confirm-status">
+                  <switch name="order_vo.status">
+                    <case value="2">
+                      <span class="green"> 对方已确定提供资金帮助 : {$order_vo.order_id} </span>
+                    </case>
+                    <case value="3">
+                      <span class="green"> 对方已拒绝提供资金帮助 : {$order_vo.order_id} </span>
+                    </case>
+                  </switch>
+                 </td>
+                 <td colspan="3" class="nowrap action-btn" align="right">
+                  <switch name="order_vo.status">
+                    <case value="2">
+                      <a href="#" class="btn btn-green btn-xs" data-href="{:U('Order/ok', array('order_id'=>$order_vo['order_id']))}" onclick="return ajaxBtn(this)">确定</a>
+                      <a href="{:U('Report/index',array('order_id'=>$order_vo['order_id'],'to'=>$order_vo['assist_user_id']))}" class="btn btn-print btn-xs" onclick="return report(this)">举报</a>
+                      <a href="{:U('Order/info', array('order_id'=>$order_vo['order_id']))}" class="btn btn-inverse btn-xs" onclick="return info(this)">信息</a>
+                    </case>
+                    <case value="0">
+                      <a href="#" class="btn btn-green btn-xs" data-href="{:U('Order/changeStatus', array('order_id'=>$order_vo['order_id'],'status'=>2))}" onclick="return ajaxBtn(this)">确定</a>
+                      <a href="{:U('Report/index',array('order_id'=>$order_vo['order_id'],'to'=>$order_vo['assist_user_id']))}" class="btn btn-print btn-xs" onclick="return report(this)">举报</a>
+                      <a href="{:U('Order/info', array('order_id'=>$order_vo['order_id']))}" class="btn btn-inverse btn-xs" onclick="return info(this)">信息</a>
+                    </case>
+                  </switch>
+                 </td>
+                </tr>
+               </tbody>
+              </table>
+              <div class="transactionWrap" style="display: block; overflow: hidden;">
+               <div class="transaction-details">
+                <table class="table table-bordered table-condensed">
+                 <thead>
+                  <tr>
+                   <th colspan="2"> 转账到 : <br /> 支付宝账号（淘宝账号/手机号码/邮箱） : <span name="matching_alipay_1583770">{$order_vo.earn_alipay_account}</span><br /> 账号 : <span name="matching_bank_acc_1583770">{$order_vo.assist_bank_code}</span> </th>
+                  </tr>
+                 </thead>
+                 <tbody>
+                  <tr>
+                   <td><b>开户名</b></td>
+                   <td><span name="matching_bank_payee_1583770">{$order_vo.earn_bank_account}</span></td>
+                  </tr>
+                  <tr>
+                   <td><b>开户银行</b></td>
+                   <td><span name="matching_bank_name_1583770">{$order_vo.earn_bank_name}</span></td>
+                  </tr>
+                  <tr>
+                   <td><b>分行或支行的名称</b></td>
+                   <td><span name="matching_bank_branch_1583770">{$order_vo.earn_bank_address}</span></td>
+                  </tr>
+                  <tr>
+                   <td><b>省</b></td>
+                   <td><span name="matching_bank_state_1583770">{$order_vo.earn_province}</span></td>
+                  </tr>
+                  <tr>
+                   <td><b>市 / 县</b></td>
+                   <td><span name="matching_bank_city_1583770">{$order_vo.earn_city}</span></td>
+                  </tr>
+                  <tr>
+                   <td colspan="2">
+                    <ul class="contactList">
+                     <li>联络接收人: {$order_vo.earn_name} : {$order_vo.earn_phone}</li>
+                     <li>联络接受者的管理员: {$superior.name} : {$superior.phone}</li>
+                     <li>联络转账人: {$order_vo.assist_name} : {$order_vo.assist_phone}</li>
+                     <li>联络转账人的管理员:  {$order_vo.assist_superior_name}: {$order_vo.assist_superior_phone}</li>
+                    </ul> </td>
+                  </tr>
+                 </tbody>
+                </table>
+               </div>
+              </div>
+              </volist>
+             </div>
+             </td>
+           </tr>
+           </volist>
+          </tbody>
+         </table>
+         <div class="custom-pagi pull-right">
+            <volist name="page_list" id="page_vo">
+                <switch name="page_vo.name">
+                    <case value="list">
+                        <a href="{:U('Earn/index', array('page'=>$page_vo['page']))}">{$page_vo.page}</a>
+                    </case>
+                </switch>
+            </volist>
+          </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+  $(function(){
+    $('.more').click(function(){
+      $(this).parents('.donate-header').siblings('.gd').slideToggle('slow');
+    })
+  })
+
+  function report(dom){
+    var url = $(dom).attr('href');
+    var d = dialog({
+        title: '举报信息',
+        url : url,
+        width : '500',
+    });
+    d.showModal();
+    return false;
+  }
+
+  function info(dom) {
+    var url = $(dom).attr('href');
+    var d = dialog({
+        title: '上传证据',
+        url : url,
+        width : '500',
+    });
+    d.showModal();
+    return false;
+  }
+
+  function viewTransPic(dom) {
+    var url = $(dom).attr('data-href');
+    var d = dialog({
+      title: '图片预览',
+      content : '<img src="'+url+'" width="200px" style="margin:0 auto;display:block;"/>',
+      width : '300px',
+    });
+    d.showModal();
+    return false;
+  }
+  </script>
+ </body>
+</html>
