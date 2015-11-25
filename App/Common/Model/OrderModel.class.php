@@ -71,7 +71,7 @@ class OrderModel extends BaseModel
         $user_id = array_merge($assist_user_id, $earn_user_id);
 
         $user_map['id'] = array('in', $user_id);
-        $user_fields = 'id as user_id, phone,username as user_username, name as user_name,alipay_account,bank_name,bank_address,bank_code,bank_account';
+        $user_fields = 'id as user_id, phone,username as user_username, name as user_name,alipay_account,bank_name,bank_address,bank_code,bank_account,province,city';
         $user_list = D('User')->_list($user_map, $user_fields);
         $user_list = array_column($user_list, null, 'user_id');
 
@@ -86,6 +86,7 @@ class OrderModel extends BaseModel
             $assist_list[$_k]['assist_bank_address'] = $user_list[$_v['assist_user_id']]['bank_address'];
             $assist_list[$_k]['assist_bank_code'] = $user_list[$_v['assist_user_id']]['bank_code'];
             $assist_list[$_k]['assist_bank_account'] = $user_list[$_v['assist_user_id']]['bank_account'];
+            $assist_list[$_k]['assist_province'] = $user_list[$_v['assist_user_id']]['province'];
         }
         foreach ($earn_list as $_k => $_v) {
             $earn_list[$_k]['earn_user_id'] = $_v['earn_user_id'];
@@ -97,6 +98,8 @@ class OrderModel extends BaseModel
             $earn_list[$_k]['earn_bank_address'] = $user_list[$_v['earn_user_id']]['bank_address'];
             $earn_list[$_k]['earn_bank_code'] = $user_list[$_v['earn_user_id']]['user_bank_code'];
             $earn_list[$_k]['earn_bank_bank_account'] = $user_list[$_v['earn_user_id']]['bank_account'];
+            $earn_list[$_k]['earn_province'] = $user_list[$_v['earn_user_id']]['province'];
+            $earn_list[$_k]['earn_city'] = $user_list[$_v['earn_user_id']]['city'];
         }
         //合并订单数据
         foreach ($list as $_k => $_v) {
