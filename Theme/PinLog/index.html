@@ -88,6 +88,15 @@
                                         </volist>
                                     </tbody>
                                 </table>
+                                                                <div class="custom-pagi pull-right">
+            <volist name="page_list" id="page_vo">
+                <switch name="page_vo.name">
+                    <case value="list">
+                        <a href="{:U('PinLog/index', array('page'=>$page_vo['page']))}">{$page_vo.page}</a>
+                    </case>
+                </switch>
+            </volist>
+          </div>
                             </div>
                         </div>
                     </div>
