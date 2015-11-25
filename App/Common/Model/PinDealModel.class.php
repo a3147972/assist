@@ -29,6 +29,29 @@ class PinDealModel extends BaseModel
         array('create_time', 'time', 1, 'function'),
     );
 
+    public function lists($map = array(), $fields = '', $order = '', $page_index = 0, $page_size = 10)
+    {
+        $list = $this->_list($map, $fields, $order, $page_index, $page_size);
+
+        if (empty($list)) {
+            return array();
+        }
+        $user_id = array_column($list, 'user_id');
+        $user_id = array_merge($user_id, array_column($list, 'to_user_id'));
+        $user_id = array_unique($user_id);
+
+        $user_map['id'] = array('in', $user_id);
+        $user_fields = 'id as user_id,username,name';
+        $user_list = D('User')->_list($user_id, $user_fields);
+        $user_list = array_column($user_list, null, 'user_id');
+
+        foreach ($list as $_k => $_v) {
+            $list[$_k]['username'] = $user_list[$_v['user_id']]['username'];
+            $list[$_k]['name'] = $user_list[$_v['user_id']]['name'];
+            $list[$_k]['to_username'] = $user_list[$_v['to_user_id']]['username'];
+            $list[$_k]['to_name'] = $user_list[$_v['to_user_id']]['name'];
+        }
+    }
     /**
      * 门票交易记录
      * @param  int $user_id    交易人
@@ -54,10 +77,10 @@ class PinDealModel extends BaseModel
         $this->startTrans();
         //写入记录
         $result = $this->add($data);
-        $addPin = $UserModel->changePin($to_user_id, $amount);   //增加被赠与人门票
-        $delPin = $UserModel->changePin($user_id, $amount, 2);   //减少被赠与人门票
-        $addPinLog = $PinLogModel->insert($to_user_id, 1, 1, $amount, '用户'.$username .'赠送给您'. $amount.'张门票');
-        $delPinLog = $PinLogModel->insert($user_id, 2, 1, $amount, '您赠送给'.$to_username .'用户'. $amount.'张门票');
+        $addPin = $UserModel->changePin($to_user_id, $amount); //增加被赠与人门票
+        $delPin = $UserModel->changePin($user_id, $amount, 2); //减少被赠与人门票
+        $addPinLog = $PinLogModel->insert($to_user_id, 1, 1, $amount, '用户' . $username . '赠送给您' . $amount . '张门票');
+        $delPinLog = $PinLogModel->insert($user_id, 2, 1, $amount, '您赠送给' . $to_username . '用户' . $amount . '张门票');
 
         if ($result == false) {
             $this->error = '交易失败';
