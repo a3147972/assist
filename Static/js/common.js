@@ -12,6 +12,7 @@ function ajaxForm(dom){
                 var d = dialog({
                     title: '请求成功!',
                     content: i.info,
+                    width:'500px',
                     okValue : '确定',
                     ok : function(){
                         window.location.href = i.url;
@@ -42,6 +43,7 @@ function ajaxBtn(dom) {
     var d = dialog({
         title: '提示！',
         content: '您确定继续么?',
+        width : '500px',
         ok: function () {
             $.ajax({
                 url : url,
@@ -53,6 +55,7 @@ function ajaxBtn(dom) {
                         var d = dialog({
                             title: '发生错误了!',
                             content: i.info,
+                            width : '500px',
                         });
                         d.showModal();
                     }

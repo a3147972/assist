@@ -23,7 +23,7 @@ class OrderController extends BaseController
         }
         $assist_list = array();
         $earn_list = array();
-
+        //拆分舍和得列表为100
         foreach ($assist as $_k => $_v) {
             $_count = $_v['surplus_money'] / 100;
             for ($i = 0; $i < $_count; $i++) {
@@ -42,22 +42,24 @@ class OrderController extends BaseController
             }
         }
 
-        $assist_count = count($assist_list);
-        $earn_count = count($earn_list);
-
-        if ($assist_count > $earn_count) {
-            foreach ($earn_list as $_k => $_v) {
-                $earn_list[$_k]['assist_id'] = $assist_list[$_k]['id'];
-            }
-        } else {
-            foreach ($earn_list as $_k => $_v) {
-                if (empty($assist_list[$_k]['id'])) {
+        //舍和得开始匹配
+        foreach ($earn_list as $_k => $_v) {
+            //取出提供帮助列表中和获取收益不是同一个用户的数据
+            $assist_id = false;
+            foreach ($assist_list as $_i => $_j) {
+                if ($_j['user_id'] != $_v['user_id']) {
+                    $assist_id = $_j['id'];
+                    unset($assist_list[$_i]);
                     break;
                 }
-                $earn_list[$_k]['assist_id'] = $assist_list[$_k]['id'];
             }
+            if ($assist_id === false) {
+                break;
+            }
+            $earn_list[$_k]['assist_id'] = $assist_id;
         }
 
+        //匹配成订单
         $order_list = array();
 
         foreach ($earn_list as $_k => $_v) {
