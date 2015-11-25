@@ -20,6 +20,7 @@ class AssistController extends Basecontroller
 
         $model = D(CONTROLLER_NAME);
         $map = method_exists($this, '_filter') ? $this->_filter() : array();
+
         if (method_exists($model, 'lists')) {
             $list = $model->lists($map, '', 'id desc', $page_index, $page_size);
         } else {
@@ -31,6 +32,7 @@ class AssistController extends Basecontroller
             $assist_id = array_column($list, 'id');
             $assist_id = array_unique($assist_id);
             $order_map['assist_id'] = array('in', $assist_id);
+            $order_map['status'] = array('neq', 0);
             $order_list = $orderModel->lists($order_map);
 
             if (!empty($order_list)) {
@@ -71,7 +73,7 @@ class AssistController extends Basecontroller
             }
             $this->assign('superior', $superior);
         }
-        $count = $model->count();
+        $count = $model->_count($map);
 
         //分页数组
         $page = new Page($count, $page_index, $page_size);
@@ -82,6 +84,11 @@ class AssistController extends Basecontroller
         $this->assign('page_list', $page_list);
 
         $this->display();
+    }
+
+    public function order()
+    {
+
     }
     /**
      * 写入舍记录
@@ -97,7 +104,7 @@ class AssistController extends Basecontroller
         $pay_password = I('post.pay_password');
         //账号判断
         if (in_array(session('user_info.status'), array(2, 3))) {
-            $this->error('账号已被冻结');
+            $this->error('账号已被冻结', U('User/black'));
         }
         if (md5($pay_password) != session('user_info.pay_password')) {
             $this->error('安全密码不正确');

@@ -21,7 +21,7 @@ class EarnModel extends BaseModel
         $data['user_id'] = $user_id;
         $data['money'] = $money;
         $data['money_type'] = $money_type;
-        $data['match_money'] = 0;
+        $data['surplus_money'] = $money;
         $data['status'] = 0;
         $data['create_time'] = time();
         $data['modify_time'] = time();
@@ -55,29 +55,5 @@ class EarnModel extends BaseModel
         }
 
         return $list;
-    }
-
-    /**
-     * 匹配表
-     * @param  array $earn_list  匹配金额数据array('id'=>'', 'money'=>'', 'status'=>'')
-     * @return bool              成功返回true,失败返回false
-     */
-    public function matchMoney($earn_list)
-    {
-        $data = array();
-
-        foreach ($earn_list as $_k => $_v) {
-            $_data['id'] = $_v['id'];
-            $_data['match_money'] = array('exp', 'match_money + ' . $_v['money']);
-            $_data['status'] = $_v['status'];
-            array_push($data, $_data);
-        }
-
-        $result = $this->addAll($data, array(), true);
-
-        if ($result) {
-            return true;
-        }
-        return false;
     }
 }

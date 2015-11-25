@@ -19,7 +19,7 @@ class AssistModel extends BaseModel
     {
         $data['user_id'] = $user_id;
         $data['money'] = $money;
-        $data['match_money'] = 0;
+        $data['surplus_money'] = $money;
         $data['status'] = 0;
         $data['create_time'] = time();
         $data['modify_time'] = time();
@@ -54,29 +54,6 @@ class AssistModel extends BaseModel
         }
 
         return $list;
-    }
-
-    /**
-     * 匹配援助金额
-     * @param  array $assist_list 援助金额数组,array('assist_id'=>'','money'=>'','status'=>'')
-     * @return bool               更新成功返回true,失败返回false
-     */
-    public function matchMoney($assist_list)
-    {
-        $data = array();
-        foreach ($assist_id_list as $_k => $_v) {
-            $_data['id'] = $_v['assist_id'];
-            $_data['match_money'] = array('exp', 'match_money + ' . $_v['money']);
-            $_data['status'] = $_v['status'];
-            array_push($data, $_data);
-        }
-
-        $result = $this->addAll($data, array(), true);
-
-        if ($result) {
-            return ture;
-        }
-        return false;
     }
 
     /**

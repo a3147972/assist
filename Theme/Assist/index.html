@@ -28,7 +28,11 @@
        </div>
        <div class="widget-body innerAll">
         <div class="overthrow">
-         <table class="table table-bordered table-donate table-gd">
+         <if condition="empty($list)">
+          <table class="table table-bordered table-donate">
+        <else />
+          <table class="table table-bordered table-donate table-gd">
+        </if>
          <volist name="list" id="vo">
           <tbody>
            <tr bgcolor="#1bb5ce">
@@ -147,6 +151,15 @@
            </volist>
           </tbody>
          </table>
+         <div class="custom-pagi pull-right">
+            <volist name="page_list" id="page_vo">
+                <switch name="page_vo.name">
+                    <case value="list">
+                        <a href="{:U('Assist/index', array('page'=>$page_vo['page']))}">{$page_vo.page}</a>
+                    </case>
+                </switch>
+            </volist>
+          </div>
         </div>
        </div>
       </div>

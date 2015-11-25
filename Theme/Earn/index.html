@@ -28,7 +28,11 @@
        </div>
        <div class="widget-body innerAll">
         <div class="overthrow">
-         <table class="table table-bordered table-donate table-gd">
+        <if condition="empty($list)">
+          <table class="table table-bordered table-donate">
+        <else />
+          <table class="table table-bordered table-donate table-gd">
+        </if>
          <volist name="list" id="vo">
           <tbody>
            <tr bgcolor="#1bb5ce">
@@ -65,12 +69,16 @@
                  <td> 创建日期:<br /> <span class="date">{:date('Y年m月d日',$order_vo['create_time'])}</span> </td>
                  <td> <span class="user">{$order_vo.assist_username}</span>  </td>
                  <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
-                 <td width="120px"> <span class="value money">RMB{$order_vo.money}</span></td>
+                 <td width="120px"> <span class="value money">RMB{$order_vo.money}</span>
+                 <notempty name="order_vo.transfer_pic">
+                   <a href="" data-href="{$order_vo.transfer_pic|imgPath}" onclick="return viewTransPic(this)"><img src="__STYLE__/img/thumbnail.ico" alt="" style="width: 19px;margin-left: 21px;"></a>
+                 </notempty>
+                 </td>
                  <td width="20" align="center"><i class="fa fa-chevron-right"></i></td>
                  <td width="120px"> <span class="user">你</span>  </td>
                 </tr>
                 <tr>
-                 <td class="donate-status confirm"> <i class="fa fa-check"></i> </td>
+                 <td class="donate-status confirm"> <i class="fa fa-check"></i></td>
                  <td colspan="3" class="confirm-status">
                   <switch name="order_vo.status">
                     <case value="2">
@@ -84,12 +92,12 @@
                  <td colspan="3" class="nowrap action-btn" align="right">
                   <switch name="order_vo.status">
                     <case value="2">
+                      <a href="#" class="btn btn-green btn-xs" data-href="{:U('Order/ok', array('order_id'=>$order_vo['order_id']))}" onclick="return ajaxBtn(this)">确定</a>
                       <a href="{:U('Report/index',array('order_id'=>$order_vo['order_id'],'to'=>$order_vo['assist_user_id']))}" class="btn btn-print btn-xs" onclick="return report(this)">举报</a>
                       <a href="{:U('Order/info', array('order_id'=>$order_vo['order_id']))}" class="btn btn-inverse btn-xs" onclick="return info(this)">信息</a>
                     </case>
                     <case value="0">
                       <a href="#" class="btn btn-green btn-xs" data-href="{:U('Order/changeStatus', array('order_id'=>$order_vo['order_id'],'status'=>2))}" onclick="return ajaxBtn(this)">确定</a>
-                      <a href="#" class="btn btn-red btn-xs" data-href="{:U('Order/changeStatus', array('order_id'=>$order_vo['order_id'],'status'=>3))}" onclick="return ajaxBtn(this)">拒绝</a>
                       <a href="{:U('Report/index',array('order_id'=>$order_vo['order_id'],'to'=>$order_vo['assist_user_id']))}" class="btn btn-print btn-xs" onclick="return report(this)">举报</a>
                       <a href="{:U('Order/info', array('order_id'=>$order_vo['order_id']))}" class="btn btn-inverse btn-xs" onclick="return info(this)">信息</a>
                     </case>
@@ -147,6 +155,15 @@
            </volist>
           </tbody>
          </table>
+         <div class="custom-pagi pull-right">
+            <volist name="page_list" id="page_vo">
+                <switch name="page_vo.name">
+                    <case value="list">
+                        <a href="{:U('Earn/index', array('page'=>$page_vo['page']))}">{$page_vo.page}</a>
+                    </case>
+                </switch>
+            </volist>
+          </div>
         </div>
        </div>
       </div>
@@ -178,6 +195,17 @@
         title: '上传证据',
         url : url,
         width : '500',
+    });
+    d.showModal();
+    return false;
+  }
+
+  function viewTransPic(dom) {
+    var url = $(dom).attr('data-href');
+    var d = dialog({
+      title: '图片预览',
+      content : '<img src="'+url+'" width="200px" style="margin:0 auto;display:block;"/>',
+      width : '300px',
     });
     d.showModal();
     return false;

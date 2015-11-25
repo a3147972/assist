@@ -30,6 +30,7 @@ class EarnController extends BaseController
             $earn_id = array_column($list, 'id');
             $earn_id = array_unique($earn_id);
             $order_map['earn_id'] = array('in', $earn_id);
+            $order_map['status'] = array('neq', 0);
             $order_list = $orderModel->lists($order_map);
 
             if (!empty($order_list)) {
@@ -70,7 +71,7 @@ class EarnController extends BaseController
             }
             $this->assign('superior', $superior);
         }
-        $count = $model->count();
+        $count = $model->_count($map);
 
         //分页数组
         $page = new Page($count, $page_index, $page_size);

@@ -118,3 +118,9 @@ function msubstr($str, $start = 0, $length, $charset = "utf-8", $suffix = true)
     }
     return $suffix ? $slice . '...' : $slice;
 }
+
+function imgPath($path)
+{
+    $path = __ROOT__ . ltrim($path, '.');
+    return str_replace('//', '/', $path);
+}

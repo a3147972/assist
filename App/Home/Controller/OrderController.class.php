@@ -35,6 +35,9 @@ class OrderController extends BaseController
         }
     }
 
+    /**
+     * 上传转账图片
+     */
     public function updatePic()
     {
         if (!IS_POST) {
@@ -54,6 +57,35 @@ class OrderController extends BaseController
             $this->success('上传资料成功');
         } else {
             $this->error('上传资料失败');
+        }
+    }
+
+    /**
+     * 获取收益会员直接确认成功
+     */
+    public function ok()
+    {
+        $order_id = I('order_id');
+        $model = D('Order');
+        $map['order_id'] = $order_id;
+        $order_info = $model->_get($map);
+
+        $assist_info = D('Assist')->_get(array('id' => $order_info['assist_id']));
+
+        $model->startTrans();
+        //更改订单状态
+        $order_result = $model->where($map)->setField('status', 1);
+        //写入提供帮助者账户
+        $add_money_result = D('User')->changeRMoney($assist_info['user_id'], $assist_info['money'] * 1.1);
+        //写入钱包记录表
+        $add_log_result = D('RLog')->insert($assist_info['user_id'], 1, $assist_info['money'] * 1.1, 1, '提供帮助收益,订单号:' . $order_id);
+
+        if ($order_result && $add_money_result && $add_log_result) {
+            $model->commit();
+            $this->success('确认成功');
+        } else {
+            $model->rollback();
+            $this->error('确认失败');
         }
     }
 }
