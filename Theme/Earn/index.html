@@ -34,6 +34,9 @@
           <table class="table table-bordered table-donate table-gd">
         </if>
          <volist name="list" id="vo">
+         <if condition="empty($vo['order_list'])">
+          <php>break;</php>
+          </if>
           <tbody>
            <tr bgcolor="#1bb5ce">
             <td>
@@ -58,9 +61,6 @@
               <button class="btn btn-inverse btn-sm more">读取更多</button>
              </div>
              <div class="gd donate-body-1583770" id="gd_matching_list_1583770" style="display:none;">
-              <if condition="empty($vo['order_list'])">
-                <break />
-              </if>
               <volist name="vo.order_list" id="order_vo">
                 <table class="table table-donations">
                <tbody>
@@ -209,6 +209,9 @@
     });
     d.showModal();
     return false;
+  }
+  if ($('.table-donate tr').length <= 0) {
+    $('.table-donate').removeClass('table-gd');
   }
   </script>
  </body>

@@ -8,8 +8,8 @@ class EarnController extends BaseController
 {
     public function _filter()
     {
-        $map['user_id'] = session('user_info.id');
-
+        $user_id = I('user_id');
+        $map['user_id'] = isset($user_id) && !empty($user_id) ? $user_id : session('user_info.id');
         return $map;
     }
     public function index()
@@ -63,11 +63,12 @@ class EarnController extends BaseController
                 }
             }
             //查询当前用户的上级用户
-            if (session('user_info.pid') == 0) {
-                $superior['name'] = session('user_info.name');
-                $superior['phone'] = session('user_info.phone');
+            $user_info = D('User')->_get(array('id' => $map['user_id']));
+            if ($user_info['pid'] == 0) {
+                $superior['name'] = $user_info['name'];
+                $superior['phone'] = $user_info['phone'];
             } else {
-                $superior = D('User')->_get(array('id' => session('user_info.pid'), 'name,phone'));
+                $superior = D('User')->_get(array('id' => $user_info['pid'], 'name,phone'));
             }
             $this->assign('superior', $superior);
         }
@@ -135,11 +136,12 @@ class EarnController extends BaseController
                 }
             }
             //查询当前用户的上级用户
-            if (session('user_info.pid') == 0) {
-                $superior['name'] = session('user_info.name');
-                $superior['phone'] = session('user_info.phone');
+            $user_info = D('User')->_get(array('id' => $map['user_id']));
+            if ($user_info['pid'] == 0) {
+                $superior['name'] = $user_info['name'];
+                $superior['phone'] = $user_info['phone'];
             } else {
-                $superior = D('User')->_get(array('id' => session('user_info.pid'), 'name,phone'));
+                $superior = D('User')->_get(array('id' => $user_info['pid'], 'name,phone'));
             }
             $this->assign('superior', $superior);
         }

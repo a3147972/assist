@@ -119,11 +119,12 @@ class ReportModel extends BaseModel
 
         $user_id = array_column($list, 'user_id');
         $to_user_id = array_column($list, 'to_user_id');
-        $user_id = array_column($user_id, $to_user_id);
+        $user_id = array_merge($user_id, $to_user_id);
+
         $user_id = array_unique($user_id);
 
         $user_map['id'] = array('in', $user_id);
-        $user_fields = 'id as user_id,username as user_username,name as user_name';
+        $user_fields = 'id as user_id,username,name';
         $user_list = D('User')->_list($user_map, $user_fields);
         $user_list = array_column($user_list, null, 'user_id');
 
@@ -133,7 +134,6 @@ class ReportModel extends BaseModel
             $list[$_k]['to_user_username'] = $user_list[$_v['to_user_id']]['username'];
             $list[$_k]['to_user_name'] = $user_list[$_v['to_user_id']]['name'];
         }
-
         return $list;
     }
 }

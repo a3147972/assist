@@ -40,7 +40,7 @@
             <tr>
            <td align="center">{:$child_user_vo['id']}</td>
            <td align="center">{:$child_user_vo['username']}</td>
-           <td> <a class="btn btn-sm btn-success" href="http://www.nmm68.com/zh-CN/platform/view-downline-pd?uid=13911891">PD : 舍</a> <a class="btn btn-sm btn-primary" href="http://www.nmm68.com/zh-CN/platform/view-downline-gd?uid=13911891">GD ： 得</a> </td>
+           <td> <a class="btn btn-sm btn-success" href="{:U('Assist/index', array('user_id'=>$child_user_vo['id']))}">PD : 舍</a> <a class="btn btn-sm btn-primary" href="{:U('Earn/index', array('user_id'=>$child_user_vo['id']))}">GD ： 得</a> </td>
           </tr>
         </volist>
          </tbody>

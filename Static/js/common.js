@@ -23,6 +23,7 @@ function ajaxForm(dom){
                 var d = dialog({
                     title: '发生错误了!',
                     content: i.info,
+                    width:'500px',
                     ok : function(){
                         if(i.url) {
                             window.location.href = i.url;

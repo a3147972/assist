@@ -34,6 +34,9 @@
           <table class="table table-bordered table-donate table-gd">
         </if>
          <volist name="list" id="vo">
+          <if condition="empty($list['order_list'])">
+            <php>break;</php>
+          </if>
           <tbody>
            <tr bgcolor="#1bb5ce">
             <td>
@@ -194,6 +197,9 @@
     });
     d.showModal();
     return false;
+  }
+  if ($('.table-donate tr').length <= 0) {
+    $('.table-donate').removeClass('table-gd');
   }
   </script>
  </body>

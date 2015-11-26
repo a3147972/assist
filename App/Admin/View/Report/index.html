@@ -74,6 +74,7 @@
                         <th>举报理由</th>
                         <th>举报备注</th>
                         <th>举报时间</th>
+                        <th>状态</th>
                         <th>
                           操作
                         </th>
@@ -98,13 +99,19 @@
                           </switch>
                         </td>
                         <td>{$vo.reson}</td>
-                        <td>
-                          {$vo.reson}
-                        </td>
                         <td>{:date('Y-m-d H:i:s', $vo['create_time'])}</td>
                         <td>
-                          <a href="{:U('pass',array('id'=>$vo['id']))}" onclick="return ajaxBtn(this)">审核通过</a>
-                          <a href="{:U('close',array('id'=>$vo['id']))}" onclick="return ajaxBtn(this)">审核不通过</a>
+                          <switch name="vo.status">
+                            <case value="1">审核通过</case>
+                            <case value="-1">审核不通过</case>
+                            <case value="0">等待审核</case>
+                          </switch>
+                        </td>
+                        <td>
+                          <eq name="vo.status" value="0">
+                            <a href="" onclick="return ajaxBtn(this)" data-href="{:U('pass',array('id'=>$vo['id']))}">审核通过</a>
+                            <a href="" onclick="return ajaxBtn(this)" data-href="{:U('close',array('id'=>$vo['id']))}">审核不通过</a>
+                          </eq>
                         </td>
                       </tr>
                       </volist>

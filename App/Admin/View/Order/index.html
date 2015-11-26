@@ -86,7 +86,7 @@
                         <td>{$vo.assist_username}</td>
                         <td>{$vo.earn_username}</td>
                         <td>{$vo.money}</td>
-                        <td><img src="{$vo.transfer_pic}" alt=""></td>
+                        <td><img src="{$vo.transfer_pic|imgPath}" alt="" width="100px"></td>
                         <td>
                           <switch name="vo.status">
                             <case value="0">等待确认</case>
