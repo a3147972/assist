@@ -172,31 +172,56 @@ class AssistController extends Basecontroller
         $pay_password = I('post.pay_password');
         //账号判断
         if (in_array(session('user_info.status'), array(2, 3))) {
-            $this->error('账号已被冻结', U('User/black'));
+            $level_id = session('user_info.level_id');
+            //获取对应等级里的罚金
+            $level_info = D('UserLevel')->_get(array('id' => $level_id));
+            //获取冻结或拉黑原因
+            $status_map['user_id'] = session('user_info.id');
+            $status_map['status'] = session('user_info.status');
+            $status_info = D('UserStatusLog')->_get($map, 'desc', 'id desc');
+
+            $error_data['info'] = '您的账号已被';
+            $error_data['info'] .= session('user_info.status') == 2 ? '冻结' : '拉黑';
+            $error_data['info'] .= '如果想要解除需要扣除';
+            $error_data['info'] .= session('user_info.status') == 2 ? '奖金钱包' . $level_info['freeze_c_penalty'] . '元,收益钱包' . $level_info['freeze_r_penalty'] . '元' : '奖金钱包' . $level_info['black_c_penalty'] . '元,收益钱包' . $level_info['black_r_penalty'] . '元';
+            $error_data['status'] = -1;
+            $this->error($error_data, U('User/black'));
         }
         if (md5($pay_password) != session('user_info.pay_password')) {
-            $this->error('安全密码不正确');
+            $error_data['status'] = -2;
+            $error_data['info'] = '安全密码不正确';
+            $this->error($erorr_data);
         }
         $queue_result = $this->checkQuequeCount();
         if ($queue_result == -1) {
-            $this->error('您已达到每日最大排队次数');
+            $error_data['status'] = -3;
+            $error_data['info'] = '您已达到每日最大排队次数';
+            $this->error($erorr_data);
         }
         if ($queue_result == -2) {
-            $this->error('您已达到每月最大排队次数');
+            $error_data['status'] = -4;
+            $error_data['info'] = '您已达到每月最大排队次数';
+            $this->error($erorr_data);
         }
 
         if (empty($money)) {
-            $this->error('请输入金额');
+            $error_data['status'] = -5;
+            $error_data['info'] = '请输入金额';
+            $this->error($erorr_data);
         }
 
         if ($money < 1000 || $money % 1000 != 0) {
-            $this->error('金额必须大于1000且为1000的倍数');
+            $error_data['status'] = -6;
+            $error_data['info'] = '金额必须大于1000且为1000的倍数';
+            $this->error($erorr_data);
         }
 
         $needPinCount = $money / 1000;
 
         if ($needPinCount > session('user_info.pin')) {
-            $this->error('您的门票不足');
+            $error_data['status'] = -7;
+            $error_data['info'] = '您的门票不足';
+            $this->error($erorr_data);
         }
 
         $model = D('Assist');
@@ -214,7 +239,9 @@ class AssistController extends Basecontroller
             $this->success('操作成功');
         } else {
             $model->rollback();
-            $this->error('操作失败');
+            $error_data['status'] = -8;
+            $error_data['info'] = '操作失败';
+            $this->error($erorr_data);
         }
     }
 

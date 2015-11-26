@@ -215,17 +215,7 @@ class UserController extends BaseController
      */
     public function black()
     {
-        $level_id = session('user_info.level_id');
-        //获取对应等级里的罚金
-        $level_info = D('UserLevel')->_get(array('id' => $level_id));
-        //获取冻结或拉黑原因
-        $status_map['user_id'] = session('user_info.id');
-        $status_map['status'] = session('user_info.status');
-        $status_info = D('UserStatusLog')->_get($map, 'desc', 'id desc');
 
-        $this->assign('status', session('user_info.status'));
-        $this->assign('reson', $status_info['desc']);
-        $this->assign('level_info', $level_info);
         $this->display();
     }
 
@@ -266,7 +256,7 @@ class UserController extends BaseController
         $add_r_log = D('RLog')->insert(session('user_info.id'), 2, $r_penalty, 3, '账号惩罚扣除');
         //更改会员状态
         $change_status = $model->changeStatus(session('user_info.id'), 1);
-        $add_status_log = D('UserStatusLog')->insert(session('user_info.id', 1, '接受惩罚恢复正常'));
+        $add_status_log = D('UserStatusLog')->insert(session('user_info.id'), 1, '接受惩罚恢复正常');
 
         if ($deduct_c && $add_c_log && $deduct_r && $add_r_log && $change_status && $add_status_log) {
             $model->commit();

@@ -1,128 +1,204 @@
-     <div id="donationWrap">
-      <div class="row">
-       <div class="col-sm-6">
-        <a class="btn btn-block " id="pdBtn"> <i class="fa fa-fw fa-usd"></i> 舍: 提供帮助 </a>
+  <div id="donationWrap">
+   <div class="row">
+    <div class="col-sm-6">
+     <a class="btn btn-block " id="pdBtn"> <i class="fa fa-fw fa-usd"></i> 舍: 提供帮助 </a>
+    </div>
+    <div class="col-sm-6">
+     <a class="btn btn-block " id="gdBtn"> <i class="fa fa-fw fa-download"></i> 得： 获得收益 </a>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12" id="pdWrap" style="">
+     <div class="widget widget-body-white">
+      <form class="form-horizontal margin-none" name="buy_share_form" action="{:U('Assist/insert')}" method="post" onsubmit="return assistInsertForm(this)">
+       <div class="widget-head widget-head-blue">
+        <h4 class="heading">舍: 提供帮助</h4>
        </div>
-       <div class="col-sm-6">
-        <a class="btn btn-block " id="gdBtn"> <i class="fa fa-fw fa-download"></i> 得： 获得收益 </a>
-       </div>
-      </div>
-      <div class="row">
-       <div class="col-md-12" id="pdWrap" style="">
-        <div class="widget widget-body-white">
-         <form class="form-horizontal margin-none" name="buy_share_form" action="{:U('Assist/insert')}" method="post" onSubmit="return ajaxForm(this)">
-          <div class="widget-head widget-head-blue">
-           <h4 class="heading">舍: 提供帮助</h4>
-          </div>
-          <div class="widget-body">
-           <div class="form-group">
-            <label class="col-md-3 control-label">数额</label>
-            <div class="col-md-9">
-             <input class="form-control" id="pd_amount" name="money" value="0" type="text" autocomplete="off" />
-             <p class="help-block">您输入的数额 ： <span id="show_pd_amount">RMB0.00</span></p>
-             <p class="help-block">最低PD数额：<span class="red">RMB1,000.00</span></p>
-             <p class="help-block" style="color:red" id="pd_pin">此次执行需要0PIN。</p>
-            </div>
-           </div>
-           <div class="form-group">
-            <label class="col-md-3 control-label">安全密码</label>
-            <div class="col-md-9">
-             <input class="form-control" id="epassword2" name="pay_password" value="" type="password" placeholder="" />
-            </div>
-           </div>
-          </div>
-          <footer class="data-footer innerAll half text-right clearfix">
-           <button type="submit" class="btn btn-primary btn-sm">执行舍</button>
-          </footer>
-         </form>
+       <div class="widget-body">
+        <div class="form-group">
+         <label class="col-md-3 control-label">数额</label>
+         <div class="col-md-9">
+          <input class="form-control" id="pd_amount" name="money" value="0" type="text" autocomplete="off" />
+          <p class="help-block">您输入的数额 ： <span id="show_pd_amount">RMB0.00</span></p>
+          <p class="help-block">最低PD数额：<span class="red">RMB1,000.00</span></p>
+          <p class="help-block" style="color:red" id="pd_pin">此次执行需要0PIN。</p>
+         </div>
+        </div>
+        <div class="form-group">
+         <label class="col-md-3 control-label">安全密码</label>
+         <div class="col-md-9">
+          <input class="form-control" id="epassword2" name="pay_password" value="" type="password" placeholder="" />
+         </div>
         </div>
        </div>
-       <div class="col-md-12" id="gdWrap" style="">
-        <div class="widget widget-body-white">
-         <form class="form-horizontal margin-none" name="wallet_transfer_form" method="post" action="{:U('Earn/insert')}" onSubmit="return ajaxForm(this)">
-          <fieldset>
-           <div class="widget-head widget-head-blue">
-            <h4 class="heading">得： 获得收益</h4>
-           </div>
-           <div class="widget-body">
-            <div class="form-group">
-             <label class="col-md-3 control-label"> 可得总额:<span class="ast">*</span> </label>
-             <div class="col-md-9">
-              <input type="text" class="form-control " name="money" id="gd_amount" value="" placeholder="" autofocus="" />
-              <p class="help-block">您输入的数额 ： <span id="show_gd_amount">RMB0.00</span></p>
-              <p class="help-block">您现有的奖金钱包 余额： RMB{:session('user_info.c_money')}</p>
-              <p class="help-block">您现有的R钱包 余额： RMB{:session('user_info.r_money')}</p>
-              <p class="help-block">最低GD数额：<span id="minimum_amount" class="red">RMB100.00</span></p>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label"> 由钱包:<span class="ast">*</span> </label>
-             <div class="col-md-9">
-              <label class="radio "> <input type="radio" name="money_type" value="1" class="mt8" /> 奖金钱包 </label>
-              <label class="radio "> <input type="radio" name="money_type" value="2" class="mt8" checked="checked"/> 收益钱包 </label>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">支付宝账号（淘宝账号/手机号码/邮箱）:</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.alipay_account')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">开户银行:</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.bank_name')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">分行或支行的名称:</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.bank_address')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">省:</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.province')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">市 / 县:</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.city')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">账号:</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.bank_code')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">开户名:</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.bank_account')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">国际银行帐户号码 (IBAN Code):</label>
-             <div class="col-md-9">
-              <span>{:session('user_info.iban_code')}</span>
-             </div>
-            </div>
-            <div class="form-group">
-             <label class="col-md-3 control-label">安全密码:<span class="ast">*</span></label>
-             <div class="col-md-9">
-              <input type="password" class="form-control " name="pay_password" placeholder="安全密码" />
-             </div>
-            </div>
-           </div>
-           <div class="data-footer innerAll half text-right clearfix">
-            <button class="btn btn-primary btn-sm" type="submit" id="withdraw_btn" value="继续">继续</button>
-           </div>
-          </fieldset>
-         </form>
-        </div>
-       </div>
-      </div>
+       <footer class="data-footer innerAll half text-right clearfix">
+        <button type="submit" class="btn btn-primary btn-sm">执行舍</button>
+       </footer>
+      </form>
      </div>
+    </div>
+    <div class="col-md-12" id="gdWrap" style="">
+     <div class="widget widget-body-white">
+      <form class="form-horizontal margin-none" name="wallet_transfer_form" method="post" action="{:U('Earn/insert')}" onsubmit="return ajaxForm(this)">
+       <fieldset>
+        <div class="widget-head widget-head-blue">
+         <h4 class="heading">得： 获得收益</h4>
+        </div>
+        <div class="widget-body">
+         <div class="form-group">
+          <label class="col-md-3 control-label"> 可得总额:<span class="ast">*</span> </label>
+          <div class="col-md-9">
+           <input type="text" class="form-control " name="money" id="gd_amount" value="" placeholder="" autofocus="" />
+           <p class="help-block">您输入的数额 ： <span id="show_gd_amount">RMB0.00</span></p>
+           <p class="help-block">您现有的奖金钱包 余额： RMB{:session('user_info.c_money')}</p>
+           <p class="help-block">您现有的R钱包 余额： RMB{:session('user_info.r_money')}</p>
+           <p class="help-block">最低GD数额：<span id="minimum_amount" class="red">RMB100.00</span></p>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label"> 由钱包:<span class="ast">*</span> </label>
+          <div class="col-md-9">
+           <label class="radio "> <input type="radio" name="money_type" value="1" class="mt8" /> 奖金钱包 </label>
+           <label class="radio "> <input type="radio" name="money_type" value="2" class="mt8" checked="checked" /> 收益钱包 </label>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">支付宝账号（淘宝账号/手机号码/邮箱）:</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.alipay_account')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">开户银行:</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.bank_name')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">分行或支行的名称:</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.bank_address')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">省:</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.province')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">市 / 县:</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.city')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">账号:</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.bank_code')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">开户名:</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.bank_account')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">国际银行帐户号码 (IBAN Code):</label>
+          <div class="col-md-9">
+           <span>{:session('user_info.iban_code')}</span>
+          </div>
+         </div>
+         <div class="form-group">
+          <label class="col-md-3 control-label">安全密码:<span class="ast">*</span></label>
+          <div class="col-md-9">
+           <input type="password" class="form-control " name="pay_password" placeholder="安全密码" />
+          </div>
+         </div>
+        </div>
+        <div class="data-footer innerAll half text-right clearfix">
+         <button class="btn btn-primary btn-sm" type="submit" id="withdraw_btn" value="继续">继续</button>
+        </div>
+       </fieldset>
+      </form>
+     </div>
+    </div>
+   </div>
+  </div>
+<script>
+  function assistInsertForm(dom) {
+    var url = $(dom).attr('action');
+    var data = $(dom).serialize();
+
+    $.ajax({
+        url : url,
+        data : data,
+        type : 'post',
+        dataType : 'json',
+        success:function(i) {
+            if (i.status == 1) {
+                var d = dialog({
+                    title: '请求成功!',
+                    content: i.info,
+                    width:'500px',
+                    okValue : '确定',
+                    ok : function(){
+                        window.location.href = i.url;
+                    }
+                });
+                d.showModal();
+            } else {
+                if (i.info.status == -1) {
+                  var d = dialog({
+                    title: '发生错误了!',
+                    content: i.info.info,
+                    width : '500px',
+                    ok : function(){
+                      var result = true;
+                      result = relieve(result);
+                      if (result !== true) {
+                        alert(result);
+                        return false;
+                      }
+                      alert('账号恢复正常');
+                      window.location.reload();
+                    },
+                    okValue : '确定',
+                  });
+                } else {
+                  var d = dialog({
+                    title: '发生错误了!',
+                    content: i.info,
+                    width : '500px',
+                    ok : function(){
+                        if(i.url) {
+                            window.location.href = i.url;
+                        }
+                    },
+                    okValue : '确定',
+                  });
+                }
+                d.showModal();
+            }
+        }
+    })
+    return false;
+  }
+
+  //账号恢复正常
+  function relieve(result){
+    $.ajax({
+      url :"{:U('User/nomal')}",
+      type :'get',
+      dataType:'json',
+      async :false,
+      success:function(i) {
+        if (i.status == 0) {
+          result = i.info;
+        }
+      }
+    })
+    return result;
+  }
+</script>
