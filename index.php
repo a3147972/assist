@@ -21,12 +21,5 @@ define('APP_PATH', './App/');
 define('RUNTIME_PATH', './Cache/');
 define('APP_DEBUG', true);
 
-//获取当前网站域名路径
-$url = $_SERVER['REQUEST_SCHEME'] . '://';
-$url .= $_SERVER['SERVER_NAME'] . '/';
-$url .= dirname($_SERVER['SCRIPT_NAME']);
-$url = rtrim($url, '');
-define('SITE_URL', $url);
-
 // 引入ThinkPHP入口文件
 require './ThinkPHP/ThinkPHP.php';
